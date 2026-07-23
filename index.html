@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -252,9 +251,7 @@
         .page-btn { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 800; font-size: 0.9rem; color: var(--brand-dark); transition: var(--transition); }
         .page-btn:hover, .page-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
 
-        /* ==========================================
-           8. DEDICATED PRODUCT PAGE (#product/ID)
-           ========================================== */
+        /* DEDICATED PRODUCT PAGE (#product/ID) */
         #productDetailPage { display: none; padding: 30px 0 60px 0; }
         .breadcrumb-bar { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 24px; }
         .breadcrumb-bar a { color: var(--brand-leaf); }
@@ -266,7 +263,6 @@
         .p-detail-price { font-size: 1.8rem; font-weight: 900; color: var(--brand-green); margin-bottom: 16px; }
         .p-detail-desc { font-size: 0.98rem; color: var(--text-primary); line-height: 1.8; margin-bottom: 24px; }
 
-        /* DISTINCT COLORED DOCS CARDS WITH DOWNLOAD BUTTONS */
         .tech-sheet-card {
             background: linear-gradient(135deg, #0F2B1C 0%, #1A422B 100%);
             color: white; border-radius: var(--radius-lg); padding: 20px;
@@ -328,7 +324,6 @@
         .form-group label { display: block; font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; color: var(--brand-dark); }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
 
-        /* Dual Input File/URL Toggle */
         .dual-input-switch { display: flex; gap: 6px; margin-bottom: 6px; }
         .btn-switch-opt { padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 800; background: var(--bg-subtle); color: var(--brand-dark); cursor: pointer; }
         .btn-switch-opt.active { background: var(--brand-green); color: white; }
@@ -349,7 +344,7 @@
         .footer-bottom-row { padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
 
         /* ==========================================
-           9. MODERNized VIBRANT ADMIN DASHBOARD (#admin1)
+           9. MODERNIZED VIBRANT ADMIN DASHBOARD (#admin1)
            ========================================== */
         .admin-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F0F4F2; z-index: 5000; display: none; overflow-y: auto; }
         .admin-page.active { display: block; }
@@ -361,14 +356,8 @@
 
         .admin-content { padding: 28px; max-width: 1280px; margin: 0 auto; }
 
-        /* VIBRANT GRADIENT STATS METRICS CARDS */
-        .stats-grid-vibrant { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 28px; }
-        
-        .stat-card-vibrant {
-            padding: 24px; border-radius: var(--radius-lg); color: white;
-            box-shadow: var(--shadow-md); position: relative; overflow: hidden;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
+        .stats-grid-vibrant { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 28px; }
+        .stat-card-vibrant { padding: 24px; border-radius: var(--radius-lg); color: white; box-shadow: var(--shadow-md); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
 
         .stat-card-green { background: linear-gradient(135deg, #0D3320 0%, #1A5432 100%); border-right: 5px solid #2ECC71; }
         .stat-card-gold { background: linear-gradient(135deg, #8A6D1B 0%, #C8A135 100%); border-right: 5px solid #FFF; }
@@ -387,6 +376,10 @@
         .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
         .admin-table th, .admin-table td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle); }
         .admin-table th { background: var(--bg-body); font-weight: 800; color: var(--brand-dark); }
+
+        .btn-action-sm { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 800; margin-left: 4px; transition: var(--transition); }
+        .btn-edit-sm { background: var(--brand-gold); color: var(--brand-dark); }
+        .btn-delete-sm { background: var(--danger); color: white; }
 
         .toast { position: fixed; bottom: 24px; left: 24px; background: var(--brand-dark); color: white; padding: 12px 20px; border-radius: var(--radius-md); border-right: 4px solid var(--brand-gold); box-shadow: var(--shadow-lg); z-index: 6000; transform: translateY(100px); opacity: 0; transition: var(--transition); font-size: 0.88rem; font-weight: 700; }
         .toast.show { transform: translateY(0); opacity: 1; }
@@ -416,7 +409,7 @@
     <div id="app-loader">
         <div class="loader-spin"></div>
         <h3 style="font-weight:800; font-size:1.1rem;">العطارة التركمانية B2B</h3>
-        <p style="font-size:0.85rem; color:#A4B8AC;">جاري مزامنة بيانات السيرفر...</p>
+        <p style="font-size:0.85rem; color:#A4B8AC;">جاري مزامنة بيانات السيرفر الحية...</p>
     </div>
 
     <!-- PROMO OFFER BAR -->
@@ -711,6 +704,37 @@
         </div>
     </div>
 
+    <!-- EDIT PRODUCT MODAL (FULL EDITING CAPABILITY) -->
+    <div class="modal-overlay" id="editProductModal">
+        <div class="modal-dialog" style="max-width:650px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <h3 style="color:var(--brand-dark);">تعديل بيانات المنتج</h3>
+                <button onclick="closeModal('editProductModal')" style="font-size:1.3rem; background:none;">&times;</button>
+            </div>
+            <form onsubmit="handleSaveEditedProduct(event)">
+                <input type="hidden" id="epId">
+                <div class="form-group"><label>اسم المنتج</label><input type="text" id="epTitle" required></div>
+                <div class="form-group"><label>التصنيف</label><select id="epCategory" required></select></div>
+                <div class="form-group"><label>سعر الجملة (د.ج)</label><input type="number" id="epPrice" required></div>
+                <div class="form-group"><label>الوزن / الحجم</label><input type="text" id="epWeight" required></div>
+                <div class="form-group"><label>الحد الأدنى للطلب (MOQ)</label><input type="number" id="epMoq" required></div>
+                <div class="form-group"><label>وصف المنتج</label><textarea id="epDesc" rows="3" required></textarea></div>
+                
+                <div class="form-group">
+                    <label>صورة المنتج</label>
+                    <div class="dual-input-switch">
+                        <button type="button" class="btn-switch-opt active" id="btn-sw-epimg-url" onclick="switchDualInput('epImg', 'url')">🔗 رابط URL</button>
+                        <button type="button" class="btn-switch-opt" id="btn-sw-epimg-file" onclick="switchDualInput('epImg', 'file')">📁 رفع صورة جديدة</button>
+                    </div>
+                    <input type="url" id="epImgUrl" placeholder="https://..." class="dual-field-epImg">
+                    <input type="file" id="epImgFile" accept="image/*" class="dual-field-epImg" style="display:none;">
+                </div>
+
+                <button type="submit" class="btn-submit-action">حفظ التعديلات والتحديث</button>
+            </form>
+        </div>
+    </div>
+
     <!-- SECURE ADMIN LOGIN MODAL -->
     <div class="modal-overlay" id="adminLoginModal">
         <div class="modal-dialog" style="max-width:420px; text-align:center;">
@@ -785,15 +809,15 @@
         <div class="admin-header">
             <div>
                 <h2>لوحة تحكم الأدمن (العطارة التركمانية B2B)</h2>
-                <span style="font-size:0.8rem; opacity:0.8;">إدارة المبيعات، الطلبيات، المنتجات، المرفقات والهوية الحية</span>
+                <span style="font-size:0.8rem; opacity:0.8;">إدارة المبيعات، المنتجات، الإحصائيات، الحذف والتعديل المباشر</span>
             </div>
             <button onclick="exitAdmin()" style="background:var(--danger); color:white; padding:8px 16px; border-radius:6px; font-weight:700;">تسجيل الخروج</button>
         </div>
 
         <div class="admin-nav">
-            <button class="admin-nav-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات والرسم البياني</button>
+            <button class="admin-nav-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات الحقيقية</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات المباشرة (<span id="admOrdersBadge">0</span>)</button>
-            <button class="admin-nav-btn" onclick="switchAdminTab('products')">➕ إضافة وإدارة المنتجات والمرفقات</button>
+            <button class="admin-nav-btn" onclick="switchAdminTab('products')">➕ إضافة وتعديل المنتجات</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('categories')">📂 إدارة الفئات والتصنيفات</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('banner')">🖼️ الشعار وبانر الواجهة والعروض</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('ads')">📢 Meta Pixel والإعلانات المنبثقة</button>
@@ -802,38 +826,30 @@
         </div>
 
         <div class="admin-content">
-            <!-- TAB 1: VIBRANT STATS & CHARTS -->
+            <!-- TAB 1: REAL VIBRANT STATS & DYNAMIC CATEGORY BAR CHART -->
             <div id="admTab-stats" class="admin-tab-sec">
                 <div class="stats-grid-vibrant">
                     <div class="stat-card-vibrant stat-card-green">
-                        <div class="stat-label">إجمالي الزيارات اليومية</div>
-                        <div class="stat-val">3,120</div>
+                        <div class="stat-label">عدد المنتجات النشطة بالمتجر</div>
+                        <div class="stat-val" id="admTotalProdsCnt">0</div>
                     </div>
                     <div class="stat-card-vibrant stat-card-gold">
                         <div class="stat-label">الطلبيات قيد المعالجة</div>
                         <div class="stat-val" id="admNewOrdersCnt">0</div>
                     </div>
                     <div class="stat-card-vibrant stat-card-teal">
-                        <div class="stat-label">إجمالي المبيعات والأرباح</div>
+                        <div class="stat-label">إجمالي أرباح الجملة الحقيقية</div>
                         <div class="stat-val" id="admTotalRev">0 د.ج</div>
                     </div>
                     <div class="stat-card-vibrant stat-card-dark">
-                        <div class="stat-label">عدد المنتجات بالمتجر</div>
-                        <div class="stat-val" id="admTotalProdsCnt">0</div>
+                        <div class="stat-label">عدد التصنيفات الفعالة</div>
+                        <div class="stat-val" id="admTotalCatsCnt">0</div>
                     </div>
                 </div>
 
                 <div class="chart-box">
-                    <h3 style="color:var(--brand-dark);">مقارنة حركة الطلبات والزيارات الأسبوعية الحية</h3>
-                    <div class="chart-bars">
-                        <div class="chart-bar-single" style="height:45%;"><span>السبت</span></div>
-                        <div class="chart-bar-single" style="height:65%;"><span>الأحد</span></div>
-                        <div class="chart-bar-single" style="height:40%;"><span>الإثنين</span></div>
-                        <div class="chart-bar-single" style="height:85%;"><span>الثلاثاء</span></div>
-                        <div class="chart-bar-single" style="height:95%;"><span>الأربعاء</span></div>
-                        <div class="chart-bar-single" style="height:75%;"><span>الخميس</span></div>
-                        <div class="chart-bar-single" style="height:55%;"><span>الجمعة</span></div>
-                    </div>
+                    <h3 style="color:var(--brand-dark);">التوزيع الحقيقي للمنتجات حسب التصنيفات الفعالة</h3>
+                    <div class="chart-bars" id="dynamicCategoryChart"></div>
                 </div>
             </div>
 
@@ -860,9 +876,9 @@
                 </div>
             </div>
 
-            <!-- TAB 3: PRODUCTS WITH DUAL INPUT (URL OR FILE UPLOAD) -->
+            <!-- TAB 3: PRODUCTS FULL MANAGE & EDIT & DELETE -->
             <div id="admTab-products" class="admin-tab-sec" style="display:none;">
-                <div style="background:white; padding:24px; border-radius:12px; border:1px solid #ddd; max-width:700px; margin-bottom:24px; box-shadow:var(--shadow-xs);">
+                <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; margin-bottom:28px; box-shadow:var(--shadow-xs);">
                     <h3 style="color:var(--brand-dark);">إضافة منتج جديد للكتالوج (مع خيار رفع الملفات)</h3>
                     <form onsubmit="handleAdminAddProduct(event)" style="margin-top:16px;">
                         <div class="form-group"><label>اسم المنتج</label><input type="text" id="npTitle" required></div>
@@ -873,34 +889,34 @@
                         <div class="form-group"><label>الحد الأدنى للطلب (MOQ)</label><input type="number" min="1" value="5" id="npMoq" required></div>
                         <div class="form-group"><label>وصف المنتج التفصيلي</label><textarea id="npDesc" rows="3" required></textarea></div>
 
-                        <!-- DUAL INPUT 1: PRODUCT IMAGE -->
+                        <!-- DUAL INPUT 1 -->
                         <div class="form-group">
                             <label>صورة المنتج الرئيسية</label>
                             <div class="dual-input-switch">
-                                <button type="button" class="btn-switch-opt active" id="btn-sw-img-url" onclick="switchDualInput('npImg', 'url')">🔗 رابط URL</button>
-                                <button type="button" class="btn-switch-opt" id="btn-sw-img-file" onclick="switchDualInput('npImg', 'file')">📁 رفع من الجهاز</button>
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-npimg-url" onclick="switchDualInput('npImg', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-npimg-file" onclick="switchDualInput('npImg', 'file')">📁 رفع من الجهاز</button>
                             </div>
                             <input type="url" id="npImgUrl" placeholder="https://..." class="dual-field-npImg">
                             <input type="file" id="npImgFile" accept="image/*" class="dual-field-npImg" style="display:none;">
                         </div>
 
-                        <!-- DUAL INPUT 2: TECHNICAL DATA SHEET -->
+                        <!-- DUAL INPUT 2 -->
                         <div class="form-group">
                             <label>البطاقة الفنية للمنتج (PDF)</label>
                             <div class="dual-input-switch">
-                                <button type="button" class="btn-switch-opt active" id="btn-sw-tech-url" onclick="switchDualInput('npTech', 'url')">🔗 رابط URL</button>
-                                <button type="button" class="btn-switch-opt" id="btn-sw-tech-file" onclick="switchDualInput('npTech', 'file')">📁 رفع من الجهاز</button>
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-nptech-url" onclick="switchDualInput('npTech', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-nptech-file" onclick="switchDualInput('npTech', 'file')">📁 رفع من الجهاز</button>
                             </div>
                             <input type="url" id="npTechUrl" placeholder="https://..." class="dual-field-npTech">
                             <input type="file" id="npTechFile" accept=".pdf,image/*" class="dual-field-npTech" style="display:none;">
                         </div>
 
-                        <!-- DUAL INPUT 3: LAB CERTIFICATE -->
+                        <!-- DUAL INPUT 3 -->
                         <div class="form-group">
                             <label>شهادة التحاليل المخبرية (PDF)</label>
                             <div class="dual-input-switch">
-                                <button type="button" class="btn-switch-opt active" id="btn-sw-lab-url" onclick="switchDualInput('npLab', 'url')">🔗 رابط URL</button>
-                                <button type="button" class="btn-switch-opt" id="btn-sw-lab-file" onclick="switchDualInput('npLab', 'file')">📁 رفع من الجهاز</button>
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-nplab-url" onclick="switchDualInput('npLab', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-nplab-file" onclick="switchDualInput('npLab', 'file')">📁 رفع من الجهاز</button>
                             </div>
                             <input type="url" id="npLabUrl" placeholder="https://..." class="dual-field-npLab">
                             <input type="file" id="npLabFile" accept=".pdf,image/*" class="dual-field-npLab" style="display:none;">
@@ -909,28 +925,48 @@
                         <button type="submit" class="btn-submit-action" style="margin-top:10px;">حفظ ونشر المنتج للجميع</button>
                     </form>
                 </div>
+
+                <!-- TABLE FOR MANAGING EXISTING PRODUCTS (EDIT & DELETE) -->
+                <div class="admin-table-wrap">
+                    <h4 style="padding:16px; color:var(--brand-dark); border-bottom:1px solid var(--border-color);">قائمة المنتجات الحالية (تعديل وحذف)</h4>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>الصورة</th>
+                                <th>اسم المنتج</th>
+                                <th>التصنيف</th>
+                                <th>سعر الجملة</th>
+                                <th>MOQ</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admProductsManageTbody"></tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- TAB 4: CATEGORIES -->
+            <!-- TAB 4: CATEGORIES MANAGEMENT -->
             <div id="admTab-categories" class="admin-tab-sec" style="display:none;">
-                <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:550px; box-shadow:var(--shadow-xs);">
+                <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:550px; box-shadow:var(--shadow-xs); margin-bottom:24px;">
                     <h3>إضافة تصنيف جديد</h3>
                     <form onsubmit="handleAdminAddCat(event)" style="margin-top:14px;">
-                        <div class="form-group">
-                            <label>اسم التصنيف</label>
-                            <input type="text" id="ncInput" required placeholder="اسم التصنيف">
-                        </div>
+                        <div class="form-group"><label>اسم التصنيف</label><input type="text" id="ncInput" required placeholder="اسم التصنيف"></div>
                         <div class="form-group">
                             <label>صورة التصنيف</label>
                             <div class="dual-input-switch">
-                                <button type="button" class="btn-switch-opt active" id="btn-sw-cat-url" onclick="switchDualInput('ncImg', 'url')">🔗 رابط URL</button>
-                                <button type="button" class="btn-switch-opt" id="btn-sw-cat-file" onclick="switchDualInput('ncImg', 'file')">📁 رفع من الجهاز</button>
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-ncimg-url" onclick="switchDualInput('ncImg', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-ncimg-file" onclick="switchDualInput('ncImg', 'file')">📁 رفع من الجهاز</button>
                             </div>
                             <input type="url" id="ncImgUrl" placeholder="https://..." class="dual-field-ncImg">
                             <input type="file" id="ncImgFile" accept="image/*" class="dual-field-ncImg" style="display:none;">
                         </div>
                         <button type="submit" class="btn-submit-action">إضافة التصنيف للعامة</button>
                     </form>
+                </div>
+
+                <div class="admin-table-wrap" style="max-width:700px;">
+                    <h4 style="padding:16px; color:var(--brand-dark); border-bottom:1px solid var(--border-color);">إدارة التصنيفات المتاحة</h4>
+                    <div id="admCategoriesManageList" style="padding:16px; display:flex; flex-wrap:wrap; gap:10px;"></div>
                 </div>
             </div>
 
@@ -942,8 +978,8 @@
                         <div class="form-group">
                             <label>الشعار (Logo)</label>
                             <div class="dual-input-switch">
-                                <button type="button" class="btn-switch-opt active" id="btn-sw-logo-url" onclick="switchDualInput('ebLogo', 'url')">🔗 رابط URL</button>
-                                <button type="button" class="btn-switch-opt" id="btn-sw-logo-file" onclick="switchDualInput('ebLogo', 'file')">📁 رفع من الجهاز</button>
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-eblogo-url" onclick="switchDualInput('ebLogo', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-eblogo-file" onclick="switchDualInput('ebLogo', 'file')">📁 رفع من الجهاز</button>
                             </div>
                             <input type="url" id="ebLogoUrl" placeholder="https://..." class="dual-field-ebLogo">
                             <input type="file" id="ebLogoFile" accept="image/*" class="dual-field-ebLogo" style="display:none;">
@@ -952,8 +988,8 @@
                         <div class="form-group">
                             <label>صورة البانر الرئيسي</label>
                             <div class="dual-input-switch">
-                                <button type="button" class="btn-switch-opt active" id="btn-sw-ban-url" onclick="switchDualInput('ebBan', 'url')">🔗 رابط URL</button>
-                                <button type="button" class="btn-switch-opt" id="btn-sw-ban-file" onclick="switchDualInput('ebBan', 'file')">📁 رفع من الجهاز</button>
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-ebban-url" onclick="switchDualInput('ebBan', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-ebban-file" onclick="switchDualInput('ebBan', 'file')">📁 رفع من الجهاز</button>
                             </div>
                             <input type="url" id="ebImgUrl" placeholder="https://..." class="dual-field-ebBan">
                             <input type="file" id="ebImgFile" accept="image/*" class="dual-field-ebBan" style="display:none;">
@@ -1069,7 +1105,6 @@
         const itemsPerPage = 10;
         let currentPdpItem = null;
 
-        // HELPER: CONVERT LOCAL FILE TO BASE64
         function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -1079,7 +1114,6 @@
             });
         }
 
-        // HELPER: READ DUAL INPUT VALUE (URL OR FILE)
         async function getDualInputValue(groupPrefix) {
             const urlVal = document.getElementById(groupPrefix + "Url") ? document.getElementById(groupPrefix + "Url").value.trim() : "";
             const fileInput = document.getElementById(groupPrefix + "File");
@@ -1108,7 +1142,6 @@
             }
         }
 
-        // ROUTER & DOM INITIALIZATION
         window.addEventListener("DOMContentLoaded", () => {
             initWilayasDropdown();
             renderSocialIcons();
@@ -1197,6 +1230,8 @@
 
             const npSelect = document.getElementById("npCategory");
             if (npSelect) npSelect.innerHTML = categories.filter(c => c !== "الكل").map(c => `<option value="${c}">${c}</option>`).join('');
+            const epSelect = document.getElementById("epCategory");
+            if (epSelect) epSelect.innerHTML = categories.filter(c => c !== "الكل").map(c => `<option value="${c}">${c}</option>`).join('');
         }
 
         function setCategoryFilter(cat) {
@@ -1285,7 +1320,6 @@
             window.location.hash = `#product/${id}`;
         }
 
-        /* FULL PAGE DEDICATED VIEW FOR PRODUCT WITH COLORED CARDS AND DOWNLOAD BUTTONS */
         function showDedicatedProductPage(id) {
             const item = products.find(p => p.id === id);
             if (!item) { window.location.hash = "#catalog"; return; }
@@ -1304,20 +1338,17 @@
             document.getElementById("pdpDesc").innerText = item.desc || "منتج طبيعي نقي وأصيل مطابق لأعلى معايير الجودة للبيع بالجملة للمتاجر والموزعين.";
             document.getElementById("pdpQtyInput").value = item.moq;
 
-            // DISTINCT COLORED CARDS
             const techCard = document.getElementById("pdpTechSheetCard");
             const techBtn = document.getElementById("pdpTechSheetBtn");
             const labCard = document.getElementById("pdpLabCertCard");
             const labBtn = document.getElementById("pdpLabCertBtn");
 
             if (item.techSheet && item.techSheet !== "#" && item.techSheet.length > 5) {
-                techCard.style.display = "flex";
-                techBtn.href = item.techSheet;
+                techCard.style.display = "flex"; techBtn.href = item.techSheet;
             } else { techCard.style.display = "none"; }
 
             if (item.labCert && item.labCert !== "#" && item.labCert.length > 5) {
-                labCard.style.display = "flex";
-                labBtn.href = item.labCert;
+                labCard.style.display = "flex"; labBtn.href = item.labCert;
             } else { labCard.style.display = "none"; }
 
             document.getElementById("pdpAddToCartBtn").onclick = () => {
@@ -1414,9 +1445,10 @@
 
             closeModal("checkoutModal");
             showToast("تم إرسال الطلبية بنجاح! سيتصل بك فريق المبيعات فوراً.");
+            renderAdminRealStatsAndCharts();
         }
 
-        /* SECURE ADMIN LOGIN LOGIC */
+        /* SECURE ADMIN PANEL LOGIN */
         function triggerAdminPanel() {
             document.getElementById("adminLoginErr").style.display = "none";
             document.getElementById("adminPassInput").value = "";
@@ -1431,7 +1463,10 @@
                 document.getElementById("mainHomeView").style.display = "none";
                 document.getElementById("productDetailPage").style.display = "none";
                 document.getElementById("adminPage").classList.add("active");
+                renderAdminRealStatsAndCharts();
                 renderAdminOrders();
+                renderAdminManageProductsTable();
+                renderAdminManageCategoriesList();
             } else {
                 document.getElementById("adminLoginErr").style.display = "block";
             }
@@ -1448,21 +1483,50 @@
             document.getElementById("admTab-" + tab).style.display = "block";
             event.target.classList.add("active");
 
+            if (tab === "stats") renderAdminRealStatsAndCharts();
             if (tab === "orders") renderAdminOrders();
+            if (tab === "products") renderAdminManageProductsTable();
+            if (tab === "categories") renderAdminManageCategoriesList();
             if (tab === "socials") loadAdminSocialsForm();
             if (tab === "banner") loadAdminBannerForm();
             if (tab === "pages") loadAdminPagesForm();
         }
 
-        function renderAdminOrders() {
-            document.getElementById("admOrdersBadge").innerText = orders.length;
-            document.getElementById("admNewOrdersCnt").innerText = orders.filter(o => o.status === "قيد المعالجة").length;
-            document.getElementById("admTotalRev").innerText = orders.reduce((s, o) => s + o.total, 0).toLocaleString() + " د.ج";
+        /* 100% REAL DYNAMIC ANALYTICS & BAR CHART CALCULATIONS */
+        function renderAdminRealStatsAndCharts() {
             document.getElementById("admTotalProdsCnt").innerText = products.length;
+            document.getElementById("admTotalCatsCnt").innerText = categories.filter(c => c !== "الكل").length;
+            
+            const pendingCnt = orders.filter(o => o.status === "قيد المعالجة").length;
+            document.getElementById("admOrdersBadge").innerText = orders.length;
+            document.getElementById("admNewOrdersCnt").innerText = pendingCnt;
 
+            const totalRev = orders.filter(o => o.status !== "ملغية").reduce((sum, o) => sum + o.total, 0);
+            document.getElementById("admTotalRev").innerText = totalRev.toLocaleString() + " د.ج";
+
+            // DYNAMIC CATEGORY DISTRIBUTION BAR CHART
+            const chartContainer = document.getElementById("dynamicCategoryChart");
+            if (!chartContainer) return;
+
+            const realCats = categories.filter(c => c !== "الكل");
+            const maxProdsInCat = Math.max(...realCats.map(c => products.filter(p => p.category === c).length), 1);
+
+            chartContainer.innerHTML = realCats.map(cat => {
+                const count = products.filter(p => p.category === cat).length;
+                const percentage = Math.round((count / maxProdsInCat) * 100);
+                return `
+                    <div class="chart-bar-single" style="height:${Math.max(percentage, 15)}%;">
+                        <span>${count}</span>
+                        <div style="position:absolute; bottom:-22px; width:100%; font-size:0.72rem; font-weight:800; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${cat}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderAdminOrders() {
             const tbody = document.getElementById("admOrdersTbody");
             if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">لا توجد طلبيات حتى الآن</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">لا توجد طلبيات مسجلة حتى الآن</td></tr>`;
                 return;
             }
 
@@ -1493,7 +1557,7 @@
                 ord.status = newStatus;
                 localStorage.setItem('f_orders', JSON.stringify(orders));
                 showToast("تم تحديث حالة الطلب إلى: " + newStatus);
-                renderAdminOrders();
+                renderAdminRealStatsAndCharts();
             }
         }
 
@@ -1521,6 +1585,156 @@
             `);
             printWin.document.close();
             printWin.print();
+        }
+
+        /* MANAGING EXISTING PRODUCTS (FULL EDIT & DELETE) */
+        function renderAdminManageProductsTable() {
+            const tbody = document.getElementById("admProductsManageTbody");
+            if (!tbody) return;
+
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td><img src="${p.image}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;"></td>
+                    <td><strong>${p.name}</strong></td>
+                    <td>${p.category}</td>
+                    <td>${p.price.toLocaleString()} د.ج</td>
+                    <td>${p.moq} قطع</td>
+                    <td>
+                        <button class="btn-action-sm btn-edit-sm" onclick="openEditProductModal('${p.id}')">✏️ تعديل</button>
+                        <button class="btn-action-sm btn-delete-sm" onclick="deleteProduct('${p.id}')">🗑️ حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openEditProductModal(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+
+            document.getElementById("epId").value = item.id;
+            document.getElementById("epTitle").value = item.name;
+            document.getElementById("epCategory").value = item.category;
+            document.getElementById("epPrice").value = item.price;
+            document.getElementById("epWeight").value = item.weight;
+            document.getElementById("epMoq").value = item.moq;
+            document.getElementById("epDesc").value = item.desc || "";
+            document.getElementById("epImgUrl").value = item.image || "";
+
+            document.getElementById("editProductModal").classList.add("active");
+        }
+
+        async function handleSaveEditedProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById("epId").value;
+            const item = products.find(p => p.id === id);
+            if (!item) return;
+
+            const newImg = await getDualInputValue("epImg");
+
+            item.name = document.getElementById("epTitle").value;
+            item.category = document.getElementById("epCategory").value;
+            item.price = parseInt(document.getElementById("epPrice").value);
+            item.weight = document.getElementById("epWeight").value;
+            item.moq = parseInt(document.getElementById("epMoq").value) || 1;
+            item.desc = document.getElementById("epDesc").value;
+            if (newImg) item.image = newImg;
+
+            localStorage.setItem('f_products', JSON.stringify(products));
+            renderProductsPage();
+            renderAdminManageProductsTable();
+            closeModal("editProductModal");
+            showToast("تم تحديث بيانات المنتج بنجاح!");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("هل أنت تأكد من رغبتك في حذف هذا المنتج كلياً؟")) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('f_products', JSON.stringify(products));
+                renderProductsPage();
+                renderAdminManageProductsTable();
+                renderAdminRealStatsAndCharts();
+                showToast("تم حذف المنتج من المتجر!");
+            }
+        }
+
+        /* MANAGING CATEGORIES (EDIT & DELETE) */
+        function renderAdminManageCategoriesList() {
+            const container = document.getElementById("admCategoriesManageList");
+            if (!container) return;
+
+            container.innerHTML = categories.filter(c => c !== "الكل").map(cat => `
+                <div style="background:var(--bg-body); border:1px solid var(--border-color); padding:8px 14px; border-radius:var(--radius-md); display:flex; align-items:center; gap:10px; font-weight:800;">
+                    <span>${cat}</span>
+                    <button onclick="deleteCategory('${cat}')" style="color:var(--danger); font-size:0.8rem; background:none;">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteCategory(catName) {
+            if (confirm(`حذف تصنيف "${catName}"؟`)) {
+                categories = categories.filter(c => c !== catName);
+                visualCategoriesData = visualCategoriesData.filter(c => c.name !== catName);
+                localStorage.setItem('f_categories', JSON.stringify(categories));
+                localStorage.setItem('f_vis_cats', JSON.stringify(visualCategoriesData));
+                renderCategoryNav();
+                renderVisualCategoriesSlider();
+                renderAdminManageCategoriesList();
+                renderAdminRealStatsAndCharts();
+                showToast("تم حذف التصنيف!");
+            }
+        }
+
+        async function handleAdminAddProduct(e) {
+            e.preventDefault();
+            const imgVal = await getDualInputValue("npImg");
+            const techVal = await getDualInputValue("npTech");
+            const labVal = await getDualInputValue("npLab");
+
+            const np = {
+                id: "P-" + Date.now(),
+                name: document.getElementById("npTitle").value,
+                category: document.getElementById("npCategory").value,
+                price: parseInt(document.getElementById("npPrice").value),
+                weight: document.getElementById("npWeight").value,
+                pkgType: document.getElementById("npPkg").value || "كيس",
+                moq: parseInt(document.getElementById("npMoq").value) || 1,
+                desc: document.getElementById("npDesc").value,
+                image: imgVal || "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80",
+                techSheet: techVal || "#",
+                labCert: labVal || "#",
+                badge: "جديد", tagClass: "tag-new"
+            };
+
+            products.unshift(np);
+            localStorage.setItem('f_products', JSON.stringify(products));
+            renderProductsPage();
+            renderAdminManageProductsTable();
+            renderAdminRealStatsAndCharts();
+            showToast("تم إضافة المنتج بنجاح ونشره للعامة!");
+            e.target.reset();
+        }
+
+        async function handleAdminAddCat(e) {
+            e.preventDefault();
+            const v = document.getElementById("ncInput").value.trim();
+            const imgVal = await getDualInputValue("ncImg");
+
+            if (v && !categories.includes(v)) {
+                categories.push(v);
+                localStorage.setItem('f_categories', JSON.stringify(categories));
+                
+                if (imgVal) {
+                    visualCategoriesData.push({ name: v, img: imgVal });
+                    localStorage.setItem('f_vis_cats', JSON.stringify(visualCategoriesData));
+                    renderVisualCategoriesSlider();
+                }
+
+                renderCategoryNav();
+                renderAdminManageCategoriesList();
+                renderAdminRealStatsAndCharts();
+                showToast("تم إضافة التصنيف الجديد للجميع!");
+                e.target.reset();
+            }
         }
 
         function loadAdminSocialsForm() {
@@ -1599,56 +1813,6 @@
             pagesData.contact = document.getElementById("epContact").value;
             localStorage.setItem('f_pages', JSON.stringify(pagesData));
             showToast("تم حفظ نصوص الصفحات والمعلومات!");
-        }
-
-        // ADD NEW PRODUCT WITH DUAL INPUT (URL OR FILE) FOR IMAGE, TECH SHEET, LAB CERT
-        async function handleAdminAddProduct(e) {
-            e.preventDefault();
-            const imgVal = await getDualInputValue("npImg");
-            const techVal = await getDualInputValue("npTech");
-            const labVal = await getDualInputValue("npLab");
-
-            const np = {
-                id: "P-" + Date.now(),
-                name: document.getElementById("npTitle").value,
-                category: document.getElementById("npCategory").value,
-                price: parseInt(document.getElementById("npPrice").value),
-                weight: document.getElementById("npWeight").value,
-                pkgType: document.getElementById("npPkg").value || "كيس",
-                moq: parseInt(document.getElementById("npMoq").value) || 1,
-                desc: document.getElementById("npDesc").value,
-                image: imgVal || "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80",
-                techSheet: techVal || "#",
-                labCert: labVal || "#",
-                badge: "جديد", tagClass: "tag-new"
-            };
-
-            products.unshift(np);
-            localStorage.setItem('f_products', JSON.stringify(products));
-            renderProductsPage();
-            showToast("تم إضافة المنتج بنجاح ونشره للعامة!");
-            e.target.reset();
-        }
-
-        async function handleAdminAddCat(e) {
-            e.preventDefault();
-            const v = document.getElementById("ncInput").value.trim();
-            const imgVal = await getDualInputValue("ncImg");
-
-            if (v && !categories.includes(v)) {
-                categories.push(v);
-                localStorage.setItem('f_categories', JSON.stringify(categories));
-                
-                if (imgVal) {
-                    visualCategoriesData.push({ name: v, img: imgVal });
-                    localStorage.setItem('f_vis_cats', JSON.stringify(visualCategoriesData));
-                    renderVisualCategoriesSlider();
-                }
-
-                renderCategoryNav();
-                showToast("تم إضافة التصنيف الجديد للجميع!");
-                e.target.reset();
-            }
         }
 
         function toggleBackdrop(id, open) {
