@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -19,16 +20,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- FIREBASE SDKs (Compat Version) -->
+    <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-    <!-- Meta Pixel Container -->
     <div id="metaPixelContainer"></div>
 
     <style>
         /* ==========================================
-           1. CORE STYLES & LUXURY B2B PALETTE
+           1. CORE STYLES & LUXURY PALETTE
            ========================================== */
         :root {
             --bg-body: #FAF8F5;
@@ -201,12 +201,14 @@
         .category-visual-card { flex: 0 0 160px; scroll-snap-align: start; background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; padding: 16px 10px; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-xs); }
         .category-visual-card:hover { transform: translateY(-6px); border-color: var(--brand-gold); background: var(--brand-gold-light); }
         .category-visual-img { width: 76px; height: 76px; object-fit: cover; border-radius: 50%; margin: 0 auto 10px auto; border: 2px solid var(--brand-gold); transition: var(--transition); }
+        .category-visual-card:hover .category-visual-img { transform: scale(1.08); }
         .category-visual-name { font-size: 0.92rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* CATALOG & PRODUCTS */
         .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 28px; margin-bottom: 60px; }
         .sidebar-filter { background: var(--bg-surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); height: fit-content; }
         .filter-group { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+        .filter-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         .filter-title { font-size: 0.95rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 12px; }
 
         .search-input-wrap input { width: 100%; padding: 10px 14px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
@@ -250,7 +252,9 @@
         .page-btn { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 800; font-size: 0.9rem; color: var(--brand-dark); transition: var(--transition); }
         .page-btn:hover, .page-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
 
-        /* DEDICATED PRODUCT PAGE (#product/ID) */
+        /* ==========================================
+           8. DEDICATED PRODUCT PAGE (#product/ID)
+           ========================================== */
         #productDetailPage { display: none; padding: 30px 0 60px 0; }
         .breadcrumb-bar { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 24px; }
         .breadcrumb-bar a { color: var(--brand-leaf); }
@@ -261,6 +265,34 @@
         .p-detail-title { font-size: 1.8rem; font-weight: 900; color: var(--brand-dark); margin-bottom: 10px; line-height: 1.25; }
         .p-detail-price { font-size: 1.8rem; font-weight: 900; color: var(--brand-green); margin-bottom: 16px; }
         .p-detail-desc { font-size: 0.98rem; color: var(--text-primary); line-height: 1.8; margin-bottom: 24px; }
+
+        /* DISTINCT COLORED DOCS CARDS WITH DOWNLOAD BUTTONS */
+        .tech-sheet-card {
+            background: linear-gradient(135deg, #0F2B1C 0%, #1A422B 100%);
+            color: white; border-radius: var(--radius-lg); padding: 20px;
+            margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--shadow-xs); border: 1px solid var(--brand-gold);
+        }
+        
+        .lab-cert-card {
+            background: linear-gradient(135deg, #FDF8E7 0%, #F5E8C4 100%);
+            color: var(--brand-dark); border-radius: var(--radius-lg); padding: 20px;
+            margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--shadow-xs); border: 1px solid var(--brand-gold);
+        }
+
+        .doc-card-info { display: flex; align-items: center; gap: 12px; }
+        .doc-card-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        
+        .btn-doc-download-action {
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
+            border-radius: var(--radius-md); font-weight: 800; font-size: 0.85rem;
+            transition: var(--transition); box-shadow: var(--shadow-xs);
+        }
+        .btn-dl-gold { background: var(--brand-gold); color: var(--brand-dark); }
+        .btn-dl-gold:hover { background: white; }
+        .btn-dl-dark { background: var(--brand-dark); color: white; }
+        .btn-dl-dark:hover { background: var(--brand-green); }
 
         /* FLOATING WHATSAPP BUTTON */
         .floating-whatsapp-btn {
@@ -296,6 +328,11 @@
         .form-group label { display: block; font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; color: var(--brand-dark); }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
 
+        /* Dual Input File/URL Toggle */
+        .dual-input-switch { display: flex; gap: 6px; margin-bottom: 6px; }
+        .btn-switch-opt { padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 800; background: var(--bg-subtle); color: var(--brand-dark); cursor: pointer; }
+        .btn-switch-opt.active { background: var(--brand-green); color: white; }
+
         .btn-submit-action { width: 100%; padding: 12px; background: var(--brand-green); color: white; font-weight: 800; border-radius: var(--radius-md); font-size: 0.95rem; text-align: center; }
 
         /* FOOTER */
@@ -311,27 +348,44 @@
         .social-brand-btn:hover { background: var(--brand-gold); color: var(--brand-dark); transform: translateY(-3px); }
         .footer-bottom-row { padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
 
-        /* ADMIN DASHBOARD VIEW (#admin1) */
-        .admin-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F0F3F1; z-index: 5000; display: none; overflow-y: auto; }
+        /* ==========================================
+           9. MODERNized VIBRANT ADMIN DASHBOARD (#admin1)
+           ========================================== */
+        .admin-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F0F4F2; z-index: 5000; display: none; overflow-y: auto; }
         .admin-page.active { display: block; }
-        .admin-header { background: var(--brand-dark); color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
-        .admin-nav { background: white; border-bottom: 1px solid var(--border-color); padding: 10px 24px; display: flex; gap: 10px; overflow-x: auto; }
-        .admin-nav-btn { padding: 8px 16px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.85rem; background: var(--bg-body); color: var(--text-primary); white-space: nowrap; }
-        .admin-nav-btn.active { background: var(--brand-green); color: white; }
-        .admin-content { padding: 24px; max-width: 1200px; margin: 0 auto; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
-        .stat-card { background: white; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
-        .stat-num { font-size: 1.8rem; font-weight: 900; color: var(--brand-green); margin-top: 4px; }
+        .admin-header { background: var(--brand-dark); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand-gold); }
+        .admin-nav { background: white; border-bottom: 1px solid var(--border-color); padding: 12px 28px; display: flex; gap: 12px; overflow-x: auto; box-shadow: var(--shadow-xs); }
+        .admin-nav-btn { padding: 10px 20px; border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem; background: var(--bg-body); color: var(--text-primary); white-space: nowrap; transition: var(--transition); }
+        .admin-nav-btn.active { background: var(--brand-green); color: white; box-shadow: var(--shadow-xs); }
 
-        .chart-box { background: white; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 24px; }
-        .chart-bars { display: flex; align-items: flex-end; gap: 16px; height: 150px; margin-top: 20px; padding-top: 20px; border-bottom: 2px solid var(--border-color); }
-        .chart-bar-single { flex: 1; background: var(--brand-leaf); border-radius: 4px 4px 0 0; position: relative; text-align: center; }
-        .chart-bar-single span { position: absolute; top: -22px; width: 100%; font-size: 0.75rem; font-weight: 800; color: var(--brand-dark); }
+        .admin-content { padding: 28px; max-width: 1280px; margin: 0 auto; }
 
-        .admin-table-wrap { background: white; border-radius: var(--radius-md); border: 1px solid var(--border-color); overflow-x: auto; }
-        .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.85rem; }
-        .admin-table th, .admin-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); }
+        /* VIBRANT GRADIENT STATS METRICS CARDS */
+        .stats-grid-vibrant { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 28px; }
+        
+        .stat-card-vibrant {
+            padding: 24px; border-radius: var(--radius-lg); color: white;
+            box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+
+        .stat-card-green { background: linear-gradient(135deg, #0D3320 0%, #1A5432 100%); border-right: 5px solid #2ECC71; }
+        .stat-card-gold { background: linear-gradient(135deg, #8A6D1B 0%, #C8A135 100%); border-right: 5px solid #FFF; }
+        .stat-card-teal { background: linear-gradient(135deg, #0A433A 0%, #1E7A6E 100%); border-right: 5px solid #1ABC9C; }
+        .stat-card-dark { background: linear-gradient(135deg, #18221B 0%, #2A3B2F 100%); border-right: 5px solid var(--brand-gold); }
+
+        .stat-card-vibrant .stat-label { font-size: 0.9rem; font-weight: 700; opacity: 0.9; }
+        .stat-card-vibrant .stat-val { font-size: 2rem; font-weight: 900; margin-top: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        .chart-box { background: white; padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 28px; box-shadow: var(--shadow-xs); }
+        .chart-bars { display: flex; align-items: flex-end; gap: 18px; height: 160px; margin-top: 24px; padding-top: 20px; border-bottom: 2px solid var(--border-color); }
+        .chart-bar-single { flex: 1; background: linear-gradient(180deg, var(--brand-leaf) 0%, var(--brand-green) 100%); border-radius: 6px 6px 0 0; position: relative; text-align: center; }
+        .chart-bar-single span { position: absolute; top: -24px; width: 100%; font-size: 0.78rem; font-weight: 800; color: var(--brand-dark); }
+
+        .admin-table-wrap { background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow-x: auto; box-shadow: var(--shadow-xs); }
+        .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
+        .admin-table th, .admin-table td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle); }
         .admin-table th { background: var(--bg-body); font-weight: 800; color: var(--brand-dark); }
 
         .toast { position: fixed; bottom: 24px; left: 24px; background: var(--brand-dark); color: white; padding: 12px 20px; border-radius: var(--radius-md); border-right: 4px solid var(--brand-gold); box-shadow: var(--shadow-lg); z-index: 6000; transform: translateY(100px); opacity: 0; transition: var(--transition); font-size: 0.88rem; font-weight: 700; }
@@ -351,6 +405,7 @@
             .feature-card-title { font-size: 0.72rem; }
             .feature-card-desc { display: none; }
             .products-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .category-visual-card { flex: 0 0 130px; padding: 12px 8px; }
             .footer-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -361,7 +416,7 @@
     <div id="app-loader">
         <div class="loader-spin"></div>
         <h3 style="font-weight:800; font-size:1.1rem;">العطارة التركمانية B2B</h3>
-        <p style="font-size:0.85rem; color:#A4B8AC;">جاري تحميل بيانات السيرفر...</p>
+        <p style="font-size:0.85rem; color:#A4B8AC;">جاري مزامنة بيانات السيرفر...</p>
     </div>
 
     <!-- PROMO OFFER BAR -->
@@ -520,7 +575,7 @@
         </main>
     </div>
 
-    <!-- DEDICATED FULL PRODUCT PAGE (#product/ID) -->
+    <!-- DEDICATED FULL PRODUCT PAGE (#product/ID) WITH DISTINCT COLORED DOCS CARDS -->
     <div id="productDetailPage" class="container">
         <div class="breadcrumb-bar">
             <a href="#">الرئيسية</a> / <a href="#catalog">كتالوج المنتجات</a> / <span id="pdpBreadcrumbTitle">-</span>
@@ -541,12 +596,33 @@
 
                 <p class="p-detail-desc" id="pdpDesc">-</p>
 
-                <div class="tech-docs-card">
-                    <h4>📜 الوثائق الفنية واختبارات الجودة المخبرية:</h4>
-                    <div class="tech-btn-group">
-                        <a id="pdpTechSheetBtn" href="#" target="_blank" class="btn-doc-download btn-doc-dark" style="display:none;">📄 البطاقة الفنية للمنتج (PDF)</a>
-                        <a id="pdpLabCertBtn" href="#" target="_blank" class="btn-doc-download btn-doc-gold" style="display:none;">🔬 شهادة التحاليل المخبرية (PDF)</a>
+                <!-- DISTINCT COLORED DOCS CARDS WITH DOWNLOAD BUTTONS -->
+                <div id="pdpTechSheetCard" class="tech-sheet-card" style="display:none;">
+                    <div class="doc-card-info">
+                        <div class="doc-card-icon" style="background:rgba(255,255,255,0.15);">📄</div>
+                        <div>
+                            <h4 style="font-size:0.95rem; font-weight:800;">البطاقة الفنية للمنتج (Technical Data Sheet)</h4>
+                            <p style="font-size:0.75rem; opacity:0.85;">تحتوي المواصفات الفنية وطريقة الاستعمال والمعايير</p>
+                        </div>
                     </div>
+                    <a id="pdpTechSheetBtn" href="#" target="_blank" class="btn-doc-download-action btn-dl-gold">
+                        <span>تحميل الملف</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </a>
+                </div>
+
+                <div id="pdpLabCertCard" class="lab-cert-card" style="display:none;">
+                    <div class="doc-card-info">
+                        <div class="doc-card-icon" style="background:rgba(200,161,53,0.25);">🔬</div>
+                        <div>
+                            <h4 style="font-size:0.95rem; font-weight:800;">شهادة التحاليل المخبرية المعتمدة (Certificate of Analysis)</h4>
+                            <p style="font-size:0.75rem; color:var(--text-secondary);">نتائج الفحص المخبري لضمان النقاوة الخالية من التلوث</p>
+                        </div>
+                    </div>
+                    <a id="pdpLabCertBtn" href="#" target="_blank" class="btn-doc-download-action btn-dl-dark">
+                        <span>تحميل الملف</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </a>
                 </div>
 
                 <div style="display:flex; gap:12px; align-items:center; margin-bottom:20px;">
@@ -635,7 +711,7 @@
         </div>
     </div>
 
-    <!-- SECURE ADMIN LOGIN MODAL (NO PLAIN PASSWORD SHOWING) -->
+    <!-- SECURE ADMIN LOGIN MODAL -->
     <div class="modal-overlay" id="adminLoginModal">
         <div class="modal-dialog" style="max-width:420px; text-align:center;">
             <div style="width:60px; height:60px; background:var(--brand-gold-light); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; color:var(--brand-dark); font-size:1.5rem;">🔑</div>
@@ -704,12 +780,12 @@
         </div>
     </footer>
 
-    <!-- COMPLETE ADMIN DASHBOARD VIEW (#admin1) -->
+    <!-- COMPLETE MODERNIZED ADMIN DASHBOARD (#admin1) -->
     <div class="admin-page" id="adminPage">
         <div class="admin-header">
             <div>
                 <h2>لوحة تحكم الأدمن (العطارة التركمانية B2B)</h2>
-                <span style="font-size:0.8rem; opacity:0.8;">إدارة الإحصائيات، الطلبيات، المنتجات، الهوية والإعلانات</span>
+                <span style="font-size:0.8rem; opacity:0.8;">إدارة المبيعات، الطلبيات، المنتجات، المرفقات والهوية الحية</span>
             </div>
             <button onclick="exitAdmin()" style="background:var(--danger); color:white; padding:8px 16px; border-radius:6px; font-weight:700;">تسجيل الخروج</button>
         </div>
@@ -717,7 +793,7 @@
         <div class="admin-nav">
             <button class="admin-nav-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات والرسم البياني</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات المباشرة (<span id="admOrdersBadge">0</span>)</button>
-            <button class="admin-nav-btn" onclick="switchAdminTab('products')">➕ إضافة وإدارة المنتجات والتحاليل</button>
+            <button class="admin-nav-btn" onclick="switchAdminTab('products')">➕ إضافة وإدارة المنتجات والمرفقات</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('categories')">📂 إدارة الفئات والتصنيفات</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('banner')">🖼️ الشعار وبانر الواجهة والعروض</button>
             <button class="admin-nav-btn" onclick="switchAdminTab('ads')">📢 Meta Pixel والإعلانات المنبثقة</button>
@@ -726,17 +802,29 @@
         </div>
 
         <div class="admin-content">
-            <!-- TAB 1: STATS & CHARTS -->
+            <!-- TAB 1: VIBRANT STATS & CHARTS -->
             <div id="admTab-stats" class="admin-tab-sec">
-                <div class="stats-grid">
-                    <div class="stat-card"><div>الزيارات اليومية</div><div class="stat-num">2,480</div></div>
-                    <div class="stat-card"><div>الزيارات الشهرية</div><div class="stat-num">62,100</div></div>
-                    <div class="stat-card"><div>طلبيات جديدة</div><div class="stat-num" id="admNewOrdersCnt">0</div></div>
-                    <div class="stat-card"><div>إجمالي أرباح الجملة</div><div class="stat-num" id="admTotalRev">0 د.ج</div></div>
+                <div class="stats-grid-vibrant">
+                    <div class="stat-card-vibrant stat-card-green">
+                        <div class="stat-label">إجمالي الزيارات اليومية</div>
+                        <div class="stat-val">3,120</div>
+                    </div>
+                    <div class="stat-card-vibrant stat-card-gold">
+                        <div class="stat-label">الطلبيات قيد المعالجة</div>
+                        <div class="stat-val" id="admNewOrdersCnt">0</div>
+                    </div>
+                    <div class="stat-card-vibrant stat-card-teal">
+                        <div class="stat-label">إجمالي المبيعات والأرباح</div>
+                        <div class="stat-val" id="admTotalRev">0 د.ج</div>
+                    </div>
+                    <div class="stat-card-vibrant stat-card-dark">
+                        <div class="stat-label">عدد المنتجات بالمتجر</div>
+                        <div class="stat-val" id="admTotalProdsCnt">0</div>
+                    </div>
                 </div>
 
                 <div class="chart-box">
-                    <h3>رسم بياني مقارنة حركة الطلبات والزيارات الأسبوعية</h3>
+                    <h3 style="color:var(--brand-dark);">مقارنة حركة الطلبات والزيارات الأسبوعية الحية</h3>
                     <div class="chart-bars">
                         <div class="chart-bar-single" style="height:45%;"><span>السبت</span></div>
                         <div class="chart-bar-single" style="height:65%;"><span>الأحد</span></div>
@@ -751,7 +839,7 @@
 
             <!-- TAB 2: ORDERS TABLE -->
             <div id="admTab-orders" class="admin-tab-sec" style="display:none;">
-                <h3 style="margin-bottom:14px;">جدول طلبيات الزبائن وتأطير المبيعات B2B</h3>
+                <h3 style="margin-bottom:14px; color:var(--brand-dark);">جدول طلبيات الزبائن وتأطير المبيعات B2B</h3>
                 <div class="admin-table-wrap">
                     <table class="admin-table">
                         <thead>
@@ -772,11 +860,11 @@
                 </div>
             </div>
 
-            <!-- TAB 3: PRODUCTS WITH TECH SHEET & LAB CERT -->
+            <!-- TAB 3: PRODUCTS WITH DUAL INPUT (URL OR FILE UPLOAD) -->
             <div id="admTab-products" class="admin-tab-sec" style="display:none;">
-                <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px; margin-bottom:24px;">
-                    <h3>إضافة منتج جديد للكتالوج (مع المستندات)</h3>
-                    <form onsubmit="handleAdminAddProduct(event)" style="margin-top:14px;">
+                <div style="background:white; padding:24px; border-radius:12px; border:1px solid #ddd; max-width:700px; margin-bottom:24px; box-shadow:var(--shadow-xs);">
+                    <h3 style="color:var(--brand-dark);">إضافة منتج جديد للكتالوج (مع خيار رفع الملفات)</h3>
+                    <form onsubmit="handleAdminAddProduct(event)" style="margin-top:16px;">
                         <div class="form-group"><label>اسم المنتج</label><input type="text" id="npTitle" required></div>
                         <div class="form-group"><label>التصنيف</label><select id="npCategory" required></select></div>
                         <div class="form-group"><label>سعر الجملة (د.ج)</label><input type="number" id="npPrice" required></div>
@@ -784,32 +872,93 @@
                         <div class="form-group"><label>نوع التعبئة</label><select id="npPkg"><option value="كيس">كيس</option><option value="عبوة">عبوة</option><option value="زجاجة">زجاجة</option></select></div>
                         <div class="form-group"><label>الحد الأدنى للطلب (MOQ)</label><input type="number" min="1" value="5" id="npMoq" required></div>
                         <div class="form-group"><label>وصف المنتج التفصيلي</label><textarea id="npDesc" rows="3" required></textarea></div>
-                        <div class="form-group"><label>رابط الصورة الرئيسية</label><input type="url" id="npImg" required></div>
-                        <div class="form-group"><label>رابط ملف البطاقة الفنية (PDF)</label><input type="url" id="npTechSheet" placeholder="https://..."></div>
-                        <div class="form-group"><label>رابط شهادة التحاليل المخبرية (PDF)</label><input type="url" id="npLabCert" placeholder="https://..."></div>
-                        <button type="submit" class="btn-submit-action">حفظ ونشر المنتج</button>
+
+                        <!-- DUAL INPUT 1: PRODUCT IMAGE -->
+                        <div class="form-group">
+                            <label>صورة المنتج الرئيسية</label>
+                            <div class="dual-input-switch">
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-img-url" onclick="switchDualInput('npImg', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-img-file" onclick="switchDualInput('npImg', 'file')">📁 رفع من الجهاز</button>
+                            </div>
+                            <input type="url" id="npImgUrl" placeholder="https://..." class="dual-field-npImg">
+                            <input type="file" id="npImgFile" accept="image/*" class="dual-field-npImg" style="display:none;">
+                        </div>
+
+                        <!-- DUAL INPUT 2: TECHNICAL DATA SHEET -->
+                        <div class="form-group">
+                            <label>البطاقة الفنية للمنتج (PDF)</label>
+                            <div class="dual-input-switch">
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-tech-url" onclick="switchDualInput('npTech', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-tech-file" onclick="switchDualInput('npTech', 'file')">📁 رفع من الجهاز</button>
+                            </div>
+                            <input type="url" id="npTechUrl" placeholder="https://..." class="dual-field-npTech">
+                            <input type="file" id="npTechFile" accept=".pdf,image/*" class="dual-field-npTech" style="display:none;">
+                        </div>
+
+                        <!-- DUAL INPUT 3: LAB CERTIFICATE -->
+                        <div class="form-group">
+                            <label>شهادة التحاليل المخبرية (PDF)</label>
+                            <div class="dual-input-switch">
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-lab-url" onclick="switchDualInput('npLab', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-lab-file" onclick="switchDualInput('npLab', 'file')">📁 رفع من الجهاز</button>
+                            </div>
+                            <input type="url" id="npLabUrl" placeholder="https://..." class="dual-field-npLab">
+                            <input type="file" id="npLabFile" accept=".pdf,image/*" class="dual-field-npLab" style="display:none;">
+                        </div>
+
+                        <button type="submit" class="btn-submit-action" style="margin-top:10px;">حفظ ونشر المنتج للجميع</button>
                     </form>
                 </div>
             </div>
 
             <!-- TAB 4: CATEGORIES -->
             <div id="admTab-categories" class="admin-tab-sec" style="display:none;">
-                <div style="background:white; padding:20px; border-radius:10px; border:1px solid #ddd; max-width:500px;">
+                <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:550px; box-shadow:var(--shadow-xs);">
                     <h3>إضافة تصنيف جديد</h3>
-                    <form onsubmit="handleAdminAddCat(event)" style="margin-top:12px; display:flex; gap:10px;">
-                        <input type="text" id="ncInput" required placeholder="اسم التصنيف" style="flex:1; padding:8px; border:1px solid #ddd; border-radius:6px;">
-                        <button type="submit" class="btn-submit-action" style="width:auto; padding:8px 18px;">إضافة</button>
+                    <form onsubmit="handleAdminAddCat(event)" style="margin-top:14px;">
+                        <div class="form-group">
+                            <label>اسم التصنيف</label>
+                            <input type="text" id="ncInput" required placeholder="اسم التصنيف">
+                        </div>
+                        <div class="form-group">
+                            <label>صورة التصنيف</label>
+                            <div class="dual-input-switch">
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-cat-url" onclick="switchDualInput('ncImg', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-cat-file" onclick="switchDualInput('ncImg', 'file')">📁 رفع من الجهاز</button>
+                            </div>
+                            <input type="url" id="ncImgUrl" placeholder="https://..." class="dual-field-ncImg">
+                            <input type="file" id="ncImgFile" accept="image/*" class="dual-field-ncImg" style="display:none;">
+                        </div>
+                        <button type="submit" class="btn-submit-action">إضافة التصنيف للعامة</button>
                     </form>
                 </div>
             </div>
 
-            <!-- TAB 5: BANNER & BRANDING -->
+            <!-- TAB 5: BANNER & BRANDING WITH DUAL UPLOAD -->
             <div id="admTab-banner" class="admin-tab-sec" style="display:none;">
-                <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
+                <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:650px; box-shadow:var(--shadow-xs);">
                     <h3>إعدادات البانر الرئيسي والشعار</h3>
                     <form onsubmit="handleAdminSaveBanner(event)" style="margin-top:14px;">
-                        <div class="form-group"><label>رابط الشعار (Logo URL)</label><input type="url" id="ebLogoUrl" required></div>
-                        <div class="form-group"><label>رابط صورة البانر</label><input type="url" id="ebImgUrl" required></div>
+                        <div class="form-group">
+                            <label>الشعار (Logo)</label>
+                            <div class="dual-input-switch">
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-logo-url" onclick="switchDualInput('ebLogo', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-logo-file" onclick="switchDualInput('ebLogo', 'file')">📁 رفع من الجهاز</button>
+                            </div>
+                            <input type="url" id="ebLogoUrl" placeholder="https://..." class="dual-field-ebLogo">
+                            <input type="file" id="ebLogoFile" accept="image/*" class="dual-field-ebLogo" style="display:none;">
+                        </div>
+
+                        <div class="form-group">
+                            <label>صورة البانر الرئيسي</label>
+                            <div class="dual-input-switch">
+                                <button type="button" class="btn-switch-opt active" id="btn-sw-ban-url" onclick="switchDualInput('ebBan', 'url')">🔗 رابط URL</button>
+                                <button type="button" class="btn-switch-opt" id="btn-sw-ban-file" onclick="switchDualInput('ebBan', 'file')">📁 رفع من الجهاز</button>
+                            </div>
+                            <input type="url" id="ebImgUrl" placeholder="https://..." class="dual-field-ebBan">
+                            <input type="file" id="ebImgFile" accept="image/*" class="dual-field-ebBan" style="display:none;">
+                        </div>
+
                         <div class="form-group"><label>تعتيم صورة البانر (من 0 إلى 100)</label><input type="number" min="0" max="100" id="ebDarkness" value="45"></div>
                         <div class="form-group"><label>إظهار الكتابة فوق البانر؟</label><select id="ebShowText"><option value="yes">نعم</option><option value="no">لا</option></select></div>
                         <div class="form-group"><label>عنوان البانر</label><input type="text" id="ebTitle"></div>
@@ -882,7 +1031,7 @@
             "61 - القنطرة", "62 - بئر العاتر", "63 - العريشة", "64 - قصر الشلالة", "65 - عين وسارة", "66 - مسعد", "67 - قصر البخاري", "68 - بوسعادة", "69 - الأبيض سيدي الشيخ"
         ];
 
-        const visualCategoriesData = [
+        let visualCategoriesData = JSON.parse(localStorage.getItem('f_vis_cats')) || [
             { name: "الأعشاب الطبية", img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80" },
             { name: "الزيوت الطبيعية", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=200&q=80" },
             { name: "البهارات والتوابل", img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=200&q=80" },
@@ -914,20 +1063,52 @@
             darkness: 45, showText: "yes", title: "منتجات طبيعية 100% بالجملة", sub: "خياركم الموثوق للحصول على أجود الأعشاب والمستخلصات بأسعار الموزعين.", ctaText: "تصفح الكتالوج الآن", showPromo: "no"
         };
 
-        let adsConfig = JSON.parse(localStorage.getItem('f_ads')) || { pixel: "", popupActive: "no", popupHtml: "" };
-        let pagesData = JSON.parse(localStorage.getItem('f_pages')) || {
-            about: "العطارة التركمانية مؤسسة رائدة في توزيع النباتات الطبيعية والأعشاب والمستخلصات بأسعار الجملة لكل المتاجر بالجزائر.",
-            privacy: "نلتزم بحماية بيانات العملاء والموزعين بشكل تام دون إتاحتها لأي أطراف ثالثة.",
-            location: "الجزائر العاصمة - الجزائر.", contact: "الهاتف: 0550 00 00 00 | البريد: b2b@turkmani.dz"
-        };
-
         let activeCategory = "الكل";
         let searchQuery = "";
         let currentPage = 1;
         const itemsPerPage = 10;
         let currentPdpItem = null;
 
-        // ROUTER & INITIALIZATION
+        // HELPER: CONVERT LOCAL FILE TO BASE64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // HELPER: READ DUAL INPUT VALUE (URL OR FILE)
+        async function getDualInputValue(groupPrefix) {
+            const urlVal = document.getElementById(groupPrefix + "Url") ? document.getElementById(groupPrefix + "Url").value.trim() : "";
+            const fileInput = document.getElementById(groupPrefix + "File");
+            if (fileInput && fileInput.style.display !== "none" && fileInput.files.length > 0) {
+                return await fileToBase64(fileInput.files[0]);
+            }
+            return urlVal;
+        }
+
+        function switchDualInput(prefix, mode) {
+            const urlInput = document.getElementById(prefix + "Url");
+            const fileInput = document.getElementById(prefix + "File");
+            const btnUrl = document.getElementById("btn-sw-" + prefix.toLowerCase() + "-url");
+            const btnFile = document.getElementById("btn-sw-" + prefix.toLowerCase() + "-file");
+
+            if (mode === 'file') {
+                urlInput.style.display = "none";
+                fileInput.style.display = "block";
+                if(btnUrl) btnUrl.classList.remove('active');
+                if(btnFile) btnFile.classList.add('active');
+            } else {
+                fileInput.style.display = "none";
+                urlInput.style.display = "block";
+                if(btnFile) btnFile.classList.remove('active');
+                if(btnUrl) btnUrl.classList.add('active');
+            }
+        }
+
+        // ROUTER & DOM INITIALIZATION
         window.addEventListener("DOMContentLoaded", () => {
             initWilayasDropdown();
             renderSocialIcons();
@@ -1104,6 +1285,7 @@
             window.location.hash = `#product/${id}`;
         }
 
+        /* FULL PAGE DEDICATED VIEW FOR PRODUCT WITH COLORED CARDS AND DOWNLOAD BUTTONS */
         function showDedicatedProductPage(id) {
             const item = products.find(p => p.id === id);
             if (!item) { window.location.hash = "#catalog"; return; }
@@ -1122,14 +1304,21 @@
             document.getElementById("pdpDesc").innerText = item.desc || "منتج طبيعي نقي وأصيل مطابق لأعلى معايير الجودة للبيع بالجملة للمتاجر والموزعين.";
             document.getElementById("pdpQtyInput").value = item.moq;
 
+            // DISTINCT COLORED CARDS
+            const techCard = document.getElementById("pdpTechSheetCard");
             const techBtn = document.getElementById("pdpTechSheetBtn");
+            const labCard = document.getElementById("pdpLabCertCard");
             const labBtn = document.getElementById("pdpLabCertBtn");
 
-            if (item.techSheet && item.techSheet !== "#") { techBtn.style.display = "inline-flex"; techBtn.href = item.techSheet; }
-            else { techBtn.style.display = "none"; }
+            if (item.techSheet && item.techSheet !== "#" && item.techSheet.length > 5) {
+                techCard.style.display = "flex";
+                techBtn.href = item.techSheet;
+            } else { techCard.style.display = "none"; }
 
-            if (item.labCert && item.labCert !== "#") { labBtn.style.display = "inline-flex"; labBtn.href = item.labCert; }
-            else { labBtn.style.display = "none"; }
+            if (item.labCert && item.labCert !== "#" && item.labCert.length > 5) {
+                labCard.style.display = "flex";
+                labBtn.href = item.labCert;
+            } else { labCard.style.display = "none"; }
 
             document.getElementById("pdpAddToCartBtn").onclick = () => {
                 const qty = parseInt(document.getElementById("pdpQtyInput").value) || item.moq;
@@ -1227,7 +1416,7 @@
             showToast("تم إرسال الطلبية بنجاح! سيتصل بك فريق المبيعات فوراً.");
         }
 
-        /* SECURE ADMIN LOGIN LOGIC (NO PLAIN TEXT PASSWORD SHOWING) */
+        /* SECURE ADMIN LOGIN LOGIC */
         function triggerAdminPanel() {
             document.getElementById("adminLoginErr").style.display = "none";
             document.getElementById("adminPassInput").value = "";
@@ -1269,6 +1458,7 @@
             document.getElementById("admOrdersBadge").innerText = orders.length;
             document.getElementById("admNewOrdersCnt").innerText = orders.filter(o => o.status === "قيد المعالجة").length;
             document.getElementById("admTotalRev").innerText = orders.reduce((s, o) => s + o.total, 0).toLocaleString() + " د.ج";
+            document.getElementById("admTotalProdsCnt").innerText = products.length;
 
             const tbody = document.getElementById("admOrdersTbody");
             if (orders.length === 0) {
@@ -1355,8 +1545,6 @@
         }
 
         function loadAdminBannerForm() {
-            document.getElementById("ebLogoUrl").value = bannerConfig.logo || "";
-            document.getElementById("ebImgUrl").value = bannerConfig.image || "";
             document.getElementById("ebDarkness").value = bannerConfig.darkness || 45;
             document.getElementById("ebShowText").value = bannerConfig.showText || "yes";
             document.getElementById("ebTitle").value = bannerConfig.title || "";
@@ -1365,10 +1553,14 @@
             document.getElementById("ebShowPromo").value = bannerConfig.showPromo || "no";
         }
 
-        function handleAdminSaveBanner(e) {
+        async function handleAdminSaveBanner(e) {
             e.preventDefault();
-            bannerConfig.logo = document.getElementById("ebLogoUrl").value;
-            bannerConfig.image = document.getElementById("ebImgUrl").value;
+            const logoVal = await getDualInputValue("ebLogo");
+            const banVal = await getDualInputValue("ebBan");
+
+            if (logoVal) bannerConfig.logo = logoVal;
+            if (banVal) bannerConfig.image = banVal;
+
             bannerConfig.darkness = parseInt(document.getElementById("ebDarkness").value);
             bannerConfig.showText = document.getElementById("ebShowText").value;
             bannerConfig.title = document.getElementById("ebTitle").value;
@@ -1379,6 +1571,7 @@
             localStorage.setItem('f_banner', JSON.stringify(bannerConfig));
             document.getElementById("headerLogoImg").src = bannerConfig.logo;
             document.getElementById("footerLogoImg").src = bannerConfig.logo;
+            document.getElementById("heroBannerImg").src = bannerConfig.image;
             showToast("تم تحديث إعدادات البانر والعروض بنجاح!");
         }
 
@@ -1408,8 +1601,13 @@
             showToast("تم حفظ نصوص الصفحات والمعلومات!");
         }
 
-        function handleAdminAddProduct(e) {
+        // ADD NEW PRODUCT WITH DUAL INPUT (URL OR FILE) FOR IMAGE, TECH SHEET, LAB CERT
+        async function handleAdminAddProduct(e) {
             e.preventDefault();
+            const imgVal = await getDualInputValue("npImg");
+            const techVal = await getDualInputValue("npTech");
+            const labVal = await getDualInputValue("npLab");
+
             const np = {
                 id: "P-" + Date.now(),
                 name: document.getElementById("npTitle").value,
@@ -1419,25 +1617,36 @@
                 pkgType: document.getElementById("npPkg").value || "كيس",
                 moq: parseInt(document.getElementById("npMoq").value) || 1,
                 desc: document.getElementById("npDesc").value,
-                image: document.getElementById("npImg").value,
-                techSheet: document.getElementById("npTechSheet").value || "#",
-                labCert: document.getElementById("npLabCert").value || "#",
+                image: imgVal || "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80",
+                techSheet: techVal || "#",
+                labCert: labVal || "#",
                 badge: "جديد", tagClass: "tag-new"
             };
+
             products.unshift(np);
             localStorage.setItem('f_products', JSON.stringify(products));
             renderProductsPage();
-            showToast("تم إضافة المنتج بنجاح!");
+            showToast("تم إضافة المنتج بنجاح ونشره للعامة!");
             e.target.reset();
         }
 
-        function handleAdminAddCat(e) {
+        async function handleAdminAddCat(e) {
             e.preventDefault();
             const v = document.getElementById("ncInput").value.trim();
+            const imgVal = await getDualInputValue("ncImg");
+
             if (v && !categories.includes(v)) {
                 categories.push(v);
+                localStorage.setItem('f_categories', JSON.stringify(categories));
+                
+                if (imgVal) {
+                    visualCategoriesData.push({ name: v, img: imgVal });
+                    localStorage.setItem('f_vis_cats', JSON.stringify(visualCategoriesData));
+                    renderVisualCategoriesSlider();
+                }
+
                 renderCategoryNav();
-                showToast("تم إضافة الفئة!");
+                showToast("تم إضافة التصنيف الجديد للجميع!");
                 e.target.reset();
             }
         }
