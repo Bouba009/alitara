@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- Meta Data -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>العطارة التركمانية | منصة مبيعات الجملة B2B</title>
+    <meta name="description" content="منصة مبيعات الجملة B2B للأعشاب الطبيعية، الزيوت النقية، التوابل والصابون الطبيعي في الجزائر لكافة الولايات.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph SEO -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="العطارة التركمانية | منصة مبيعات الجملة B2B">
+    <meta property="og:description" content="تزويد الموزعين والمتاجر بأجود الأعشاب والمنتجات الطبيعية النقية بأسعار الجملة التنافسية.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- FIREBASE SDKs (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Meta Pixel Container -->
+    <div id="metaPixelContainer"></div>
+
+    <style>
+        /* ==========================================
+           1. CORE STYLES & LUXURY B2B PALETTE
+           ========================================== */
+        :root {
+            --bg-body: #FAF8F5;
+            --bg-surface: #FFFFFF;
+            --bg-subtle: #F2ECE4;
+            
+            --brand-dark: #0A1C12;
+            --brand-green: #143622;
+            --brand-leaf: #1F5234;
+            --brand-gold: #C8A135;
+            --brand-gold-dark: #A48122;
+            --brand-gold-light: #FBF6E9;
+
+            --text-primary: #101E16;
+            --text-secondary: #4E6054;
+
+            --border-color: #E0DAD0;
+            --border-subtle: #EBE6DC;
+
+            --danger: #D9383A;
+            --success: #218A60;
+
+            --shadow-xs: 0 2px 6px rgba(10, 28, 18, 0.04);
+            --shadow-sm: 0 4px 14px rgba(10, 28, 18, 0.06);
+            --shadow-md: 0 8px 24px rgba(10, 28, 18, 0.1);
+            --shadow-lg: 0 20px 48px rgba(10, 28, 18, 0.16);
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button, input, select, textarea { font-family: inherit; outline: none; border: none; }
+        button { cursor: pointer; }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+
+        /* Splash Loader */
+        #app-loader {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--brand-dark); z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; transition: opacity 0.4s ease;
+        }
+        .loader-spin {
+            width: 48px; height: 48px; border: 4px solid rgba(200, 161, 53, 0.2);
+            border-top-color: var(--brand-gold); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin-bottom: 16px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* ==========================================
+           2. TICKER BANNER
+           ========================================== */
+        .top-ticker {
+            background: var(--brand-dark);
+            color: #E2ECE6;
+            font-size: 0.82rem;
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 1px solid rgba(200, 161, 53, 0.25);
+            direction: ltr;
+        }
+
+        .ticker-track {
+            display: flex;
+            white-space: nowrap;
+            gap: 50px;
+            animation: moveTickerLeftToRight 26s linear infinite;
+            width: max-content;
+            direction: rtl;
+        }
+        .ticker-track:hover { animation-play-state: paused; }
+        .ticker-item { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+        .ticker-item strong { color: var(--brand-gold); font-weight: 800; }
+
+        @keyframes moveTickerLeftToRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .promo-offer-bar {
+            background: var(--brand-green);
+            color: white;
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            border-bottom: 2px solid var(--brand-gold);
+            display: none;
+        }
+
+        /* ==========================================
+           3. HEADER & NAVIGATION
+           ========================================== */
+        .header {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: var(--shadow-xs);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between; height: 72px;
+        }
+
+        .header-brand { display: flex; align-items: center; gap: 12px; }
+
+        .btn-drawer-menu {
+            width: 42px; height: 42px; background: var(--bg-subtle);
+            border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+            color: var(--brand-dark); border: 1px solid var(--border-color);
+        }
+
+        .logo-small { display: flex; align-items: center; gap: 10px; }
+        .logo-small img { width: 42px; height: 42px; object-fit: contain; border-radius: 50%; border: 1px solid var(--border-color); }
+        .logo-text h1 { font-size: 1.15rem; font-weight: 900; color: var(--brand-dark); line-height: 1.1; }
+        .logo-text span { font-size: 0.7rem; color: var(--text-secondary); font-weight: 700; }
+
+        .nav-menu { display: flex; gap: 24px; }
+        .nav-link { font-weight: 700; color: var(--text-primary); font-size: 0.92rem; transition: var(--transition); }
+        .nav-link:hover, .nav-link.active { color: var(--brand-leaf); }
+
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+
+        .action-circle-btn {
+            position: relative; background: var(--bg-subtle);
+            width: 42px; height: 42px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--brand-dark); border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .action-circle-btn:hover { background: var(--brand-gold); border-color: var(--brand-gold); transform: translateY(-2px); }
+
+        .badge-pill {
+            position: absolute; top: -4px; right: -4px;
+            background: var(--brand-gold); color: var(--brand-dark);
+            font-size: 0.72rem; font-weight: 900; min-width: 20px; height: 20px;
+            padding: 0 4px; border-radius: var(--radius-full);
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* ==========================================
+           4. HERO BANNER
+           ========================================== */
+        .hero-banner {
+            position: relative;
+            min-height: 250px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 16px 0 24px 0;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-md);
+            background-color: var(--brand-dark);
+        }
+
+        .hero-banner-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.55; transition: var(--transition);
+        }
+
+        .hero-content {
+            position: relative; z-index: 2; text-align: center; color: white; padding: 32px 20px; max-width: 760px;
+        }
+
+        .hero-badge {
+            display: inline-block; background: rgba(200, 161, 53, 0.25);
+            border: 1px solid var(--brand-gold); color: var(--brand-gold);
+            padding: 4px 14px; border-radius: var(--radius-full);
+            font-size: 0.8rem; font-weight: 800; margin-bottom: 12px;
+        }
+
+        .hero-content h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; line-height: 1.25; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 1rem; color: #E8F0EC; text-shadow: 0 1px 6px rgba(0,0,0,0.5); margin-bottom: 16px; }
+
+        .btn-hero-cta {
+            display: inline-block; background: var(--brand-gold); color: var(--brand-dark);
+            padding: 10px 26px; border-radius: var(--radius-md); font-weight: 800;
+            transition: var(--transition); box-shadow: var(--shadow-sm);
+        }
+        .btn-hero-cta:hover { background: white; transform: translateY(-2px); }
+
+        /* ==========================================
+           5. SINGLE ROW FEATURES STRIP
+           ========================================== */
+        .features-strip-wrapper { margin-bottom: 30px; }
+        .features-grid-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+            background: var(--bg-surface); border-radius: var(--radius-lg); padding: 18px 16px;
+            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card-item {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 6px; border-left: 1px solid var(--border-subtle);
+        }
+        .feature-card-item:last-child { border-left: none; }
+
+        .feature-icon-box {
+            width: 50px; height: 50px; background: var(--brand-gold-light);
+            border: 1px solid rgba(200, 161, 53, 0.35); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--brand-green); margin-bottom: 8px; transition: var(--transition);
+        }
+        .feature-card-item:hover .feature-icon-box {
+            background: var(--brand-green); color: var(--brand-gold); border-color: var(--brand-green);
+        }
+
+        .feature-card-title { font-weight: 800; font-size: 0.92rem; color: var(--brand-dark); }
+        .feature-card-desc { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
+
+        /* ==========================================
+           6. CATEGORIES SHOWCASE SLIDER
+           ========================================== */
+        .categories-showcase-section { margin-bottom: 40px; }
+
+        .section-header-title {
+            font-size: 1.35rem; font-weight: 900; color: var(--brand-dark);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section-header-title::before {
+            content: ''; width: 5px; height: 22px; background: var(--brand-gold); border-radius: var(--radius-full);
+        }
+
+        .slider-control-btn {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            color: var(--brand-dark); font-weight: 800; font-size: 1.1rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); box-shadow: var(--shadow-xs);
+        }
+        .slider-control-btn:hover {
+            background: var(--brand-green); color: white; border-color: var(--brand-green);
+        }
+
+        .categories-cards-slider {
+            display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+            scroll-snap-type: x mandatory; padding: 10px 4px 18px 4px;
+            scrollbar-width: thin; scrollbar-color: var(--brand-gold) var(--bg-subtle);
+        }
+
+        .categories-cards-slider::-webkit-scrollbar { height: 6px; }
+        .categories-cards-slider::-webkit-scrollbar-track { background: var(--bg-subtle); border-radius: var(--radius-full); }
+        .categories-cards-slider::-webkit-scrollbar-thumb { background: var(--brand-gold); border-radius: var(--radius-full); }
+
+        .category-visual-card {
+            flex: 0 0 160px; scroll-snap-align: start; background: var(--bg-surface);
+            border-radius: var(--radius-lg); border: 1px solid var(--border-color);
+            text-align: center; padding: 16px 10px; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-xs);
+        }
+        .category-visual-card:hover { transform: translateY(-6px); border-color: var(--brand-gold); background: var(--brand-gold-light); }
+
+        .category-visual-img {
+            width: 76px; height: 76px; object-fit: cover; border-radius: 50%;
+            margin: 0 auto 10px auto; border: 2px solid var(--brand-gold); transition: var(--transition);
+        }
+        .category-visual-card:hover .category-visual-img { transform: scale(1.08); }
+
+        .category-visual-name { font-size: 0.92rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .category-visual-count { font-size: 0.72rem; color: var(--text-secondary); font-weight: 700; }
+
+        /* ==========================================
+           7. CATALOG & PRODUCTS
+           ========================================== */
+        .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 28px; margin-bottom: 60px; }
+
+        .sidebar-filter {
+            background: var(--bg-surface); border-radius: var(--radius-lg); padding: 20px;
+            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); height: fit-content;
+        }
+
+        .filter-group { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
+        .filter-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .filter-title { font-size: 0.95rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 12px; }
+
+        .search-input-wrap input {
+            width: 100%; padding: 10px 14px; background: var(--bg-body);
+            border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem;
+        }
+
+        .category-nav-list { display: flex; flex-direction: column; gap: 6px; }
+        .category-nav-btn {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px; background: transparent; border-radius: var(--radius-md);
+            color: var(--text-primary); font-size: 0.88rem; font-weight: 700; width: 100%;
+        }
+        .category-nav-btn.active { background: var(--brand-green); color: white; }
+
+        .products-grid-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+            background: var(--bg-surface); padding: 12px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);
+        }
+
+        .sort-select-modern {
+            padding: 8px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color);
+            background: var(--bg-body); color: var(--brand-dark); font-weight: 800; font-size: 0.88rem; cursor: pointer;
+        }
+
+        .products-cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px;
+        }
+
+        .product-card {
+            background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-color);
+            overflow: hidden; display: flex; flex-direction: column; position: relative; transition: var(--transition);
+        }
+        .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--brand-leaf); }
+
+        .card-img-container { position: relative; width: 100%; height: 185px; background: #F4F0E8; cursor: pointer; }
+        .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .badge-tag-pill {
+            position: absolute; top: 10px; right: 10px; padding: 3px 10px; border-radius: var(--radius-full);
+            font-size: 0.72rem; font-weight: 800; z-index: 2;
+        }
+        .tag-popular { background: var(--brand-dark); color: var(--brand-gold); }
+        .tag-new { background: var(--brand-leaf); color: white; }
+
+        .btn-wishlist-toggle {
+            position: absolute; top: 10px; left: 10px; width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9); display: flex; align-items: center; justify-content: center;
+            color: #999; z-index: 2; transition: var(--transition);
+        }
+        .btn-wishlist-toggle.active { color: var(--danger); }
+
+        .card-body { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-name { font-size: 1rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 4px; cursor: pointer; }
+
+        .moq-highlight-bar {
+            background: var(--brand-gold-light); border: 1px dashed var(--brand-gold); color: var(--brand-gold-dark);
+            padding: 4px 8px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 800; margin-bottom: 12px;
+            display: flex; justify-content: space-between;
+        }
+
+        .price-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+        .price-val { font-size: 1.2rem; font-weight: 900; color: var(--brand-green); }
+
+        .qty-control-box { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 8px; }
+        .qty-btn { width: 36px; height: 36px; background: var(--bg-body); font-weight: 800; font-size: 1.1rem; }
+        .qty-num-input { width: 100%; text-align: center; background: transparent; font-weight: 800; font-size: 0.9rem; }
+
+        .btn-cart-add {
+            width: 100%; padding: 11px; background: var(--brand-green); color: white;
+            border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: var(--transition); box-shadow: var(--shadow-xs);
+        }
+        .btn-cart-add:hover { background: var(--brand-dark); transform: translateY(-1px); }
+
+        .pagination-container {
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            margin-top: 35px; margin-bottom: 20px;
+        }
+        .page-btn {
+            width: 40px; height: 40px; border-radius: var(--radius-md);
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            font-weight: 800; font-size: 0.9rem; color: var(--brand-dark); transition: var(--transition);
+        }
+        .page-btn:hover, .page-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
+
+        /* ==========================================
+           8. DEDICATED FULL PRODUCT PAGE VIEW (#product/ID)
+           ========================================== */
+        #productDetailPage {
+            display: none;
+            padding: 30px 0 60px 0;
+        }
+
+        .breadcrumb-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .breadcrumb-bar a { color: var(--brand-leaf); }
+
+        .p-detail-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 40px;
+        }
+
+        .p-detail-img-box {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+        }
+
+        .p-detail-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .p-detail-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--brand-dark);
+            margin-bottom: 10px;
+            line-height: 1.25;
+        }
+
+        .p-detail-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--brand-green);
+            margin-bottom: 16px;
+        }
+
+        .p-detail-meta-pill {
+            display: inline-block;
+            background: var(--bg-subtle);
+            color: var(--brand-leaf);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .p-detail-desc {
+            font-size: 0.98rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .tech-docs-card {
+            background: var(--brand-gold-light);
+            border: 1px solid rgba(200, 161, 53, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .tech-docs-card h4 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--brand-dark);
+            margin-bottom: 12px;
+        }
+
+        .tech-btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-doc-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .btn-doc-dark { background: var(--brand-dark); color: white; }
+        .btn-doc-gold { background: var(--brand-gold); color: var(--brand-dark); }
+        .btn-doc-download:hover { transform: translateY(-2px); box-shadow: var(--shadow-xs); }
+
+        /* ==========================================
+           9. FLOATING WHATSAPP BUTTON (BRAND THEMED)
+           ========================================== */
+        .floating-whatsapp-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            width: 58px;
+            height: 58px;
+            background: var(--brand-green); /* SITE BRAND THEMED */
+            border: 2px solid var(--brand-gold);
+            color: var(--brand-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(10, 28, 18, 0.35);
+            z-index: 4000;
+            transition: var(--transition);
+            animation: whatsappPulseSiteTheme 2s infinite;
+        }
+
+        .floating-whatsapp-btn:hover {
+            transform: scale(1.1);
+            background: var(--brand-dark);
+            color: white;
+        }
+
+        @keyframes whatsappPulseSiteTheme {
+            0% { box-shadow: 0 0 0 0 rgba(200, 161, 53, 0.5); }
+            70% { box-shadow: 0 0 0 16px rgba(200, 161, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(200, 161, 53, 0); }
+        }
+
+        /* ==========================================
+           10. DRAWERS & MODALS
+           ========================================== */
+        .drawer-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 28, 18, 0.65); backdrop-filter: blur(6px);
+            z-index: 2500; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+        .side-drawer-panel {
+            position: fixed; top: 0; right: 0; width: 390px; max-width: 88%; height: 100%;
+            background: var(--bg-surface); z-index: 2600; box-shadow: var(--shadow-lg);
+            transform: translateX(100%); transition: transform 0.35s ease;
+            display: flex; flex-direction: column; padding: 24px;
+        }
+        .drawer-backdrop.open .side-drawer-panel { transform: translateX(0); }
+
+        .drawer-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 18px; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65); backdrop-filter: blur(6px); z-index: 3000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: var(--transition); padding: 16px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+        .modal-dialog {
+            background: white; width: 100%; max-width: 580px; border-radius: var(--radius-lg);
+            padding: 26px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;
+            transform: scale(0.92) translateY(20px); transition: var(--transition);
+        }
+        .modal-overlay.active .modal-dialog { transform: scale(1) translateY(0); }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; color: var(--brand-dark); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); font-size: 0.88rem;
+        }
+
+        .btn-submit-action {
+            width: 100%; padding: 12px; background: var(--brand-green); color: white;
+            font-weight: 800; border-radius: var(--radius-md); font-size: 0.95rem; text-align: center;
+        }
+
+        /* ==========================================
+           11. FOOTER
+           ========================================== */
+        .footer {
+            background: var(--brand-dark);
+            color: #C0D1C7;
+            padding: 60px 0 30px 0;
+            border-top: 4px solid var(--brand-gold);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1.6fr;
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo-large {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+        }
+        .footer-logo-large img {
+            width: 70px; height: 70px; object-fit: contain; border-radius: 50%; border: 2px solid var(--brand-gold);
+        }
+        .footer-logo-large h3 { color: white; font-size: 1.5rem; font-weight: 900; line-height: 1.1; }
+
+        .footer-map-frame {
+            width: 100%; height: 140px; border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.15); overflow: hidden; margin-top: 10px;
+        }
+
+        .social-icons-group { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+
+        .social-brand-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center;
+            color: var(--brand-gold); transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .social-brand-btn:hover { background: var(--brand-gold); color: var(--brand-dark); transform: translateY(-3px); }
+
+        .footer-bottom-row {
+            padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;
+        }
+
+        /* ==========================================
+           12. ADMIN DASHBOARD VIEW (#admin1)
+           ========================================== */
+        .admin-page {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #F0F3F1; z-index: 5000; display: none; overflow-y: auto;
+        }
+        .admin-page.active { display: block; }
+
+        .admin-header {
+            background: var(--brand-dark); color: white; padding: 16px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .admin-nav {
+            background: white; border-bottom: 1px solid var(--border-color); padding: 10px 24px;
+            display: flex; gap: 10px; overflow-x: auto;
+        }
+
+        .admin-nav-btn {
+            padding: 8px 16px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.85rem;
+            background: var(--bg-body); color: var(--text-primary); white-space: nowrap;
+        }
+        .admin-nav-btn.active { background: var(--brand-green); color: white; }
+
+        .admin-content { padding: 24px; max-width: 1200px; margin: 0 auto; }
+
+        .toast {
+            position: fixed; bottom: 24px; left: 24px; background: var(--brand-dark); color: white;
+            padding: 12px 20px; border-radius: var(--radius-md); border-right: 4px solid var(--brand-gold);
+            box-shadow: var(--shadow-lg); z-index: 6000; transform: translateY(100px); opacity: 0;
+            transition: var(--transition); font-size: 0.88rem; font-weight: 700;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        @media (max-width: 992px) {
+            .nav-menu { display: none; }
+            .catalog-layout { grid-template-columns: 1fr; }
+            .sidebar-filter { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .p-detail-layout { grid-template-columns: 1fr; gap: 20px; }
+            .p-detail-img-box { height: 280px; }
+        }
+        @media (max-width: 600px) {
+            .features-grid-row { grid-template-columns: repeat(4, 1fr); padding: 8px 4px; gap: 4px; }
+            .feature-card-item { border-left: none; }
+            .feature-icon-box { width: 38px; height: 38px; }
+            .feature-card-title { font-size: 0.72rem; }
+            .feature-card-desc { display: none; }
+            .products-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .category-visual-card { flex: 0 0 130px; padding: 12px 8px; }
+            .category-visual-img { width: 60px; height: 60px; }
+            .category-visual-name { font-size: 0.8rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- APP SPLASH LOADER -->
+    <div id="app-loader">
+        <div class="loader-spin"></div>
+        <h3 style="font-weight:800; font-size:1.1rem;">العطارة التركمانية B2B</h3>
+        <p style="font-size:0.85rem; color:#A4B8AC;">جاري تحميل بيانات السيرفر...</p>
+    </div>
+
+    <!-- PROMO OFFER BAR -->
+    <div class="promo-offer-bar" id="promoOfferBar">
+        🔥 عرض خاص للشركاء والموزعين: خصم 15% على كافّة الطلبيات التي تتجاوز 100,000 د.ج!
+    </div>
+
+    <!-- 1. TICKER BANNER -->
+    <div class="top-ticker">
+        <div class="ticker-track">
+            <div class="ticker-item">🚚 توصيل سريع لجميع الولايات <strong>(69 ولاية)</strong></div>
+            <div class="ticker-item">✨ عروض خاصة للشركاء والموزعين وخصومات كبرى على كميات الجملة</div>
+            <div class="ticker-item">🌿 أعشاب ونباتات طبيعية 100% مضمونة النقاوة والجودة</div>
+            <div class="ticker-item">📦 تعبئة وتغليف احترافي مهيأ لإعادة البيع مباشرة</div>
+            <!-- Duplication -->
+            <div class="ticker-item">🚚 توصيل سريع لجميع الولايات <strong>(69 ولاية)</strong></div>
+            <div class="ticker-item">✨ عروض خاصة للشركاء والموزعين وخصومات كبرى على كميات الجملة</div>
+            <div class="ticker-item">🌿 أعشاب ونباتات طبيعية 100% مضمونة النقاوة والجودة</div>
+            <div class="ticker-item">📦 تعبئة وتغليف احترافي مهيأ لإعادة البيع مباشرة</div>
+        </div>
+    </div>
+
+    <!-- 2. HEADER -->
+    <header class="header">
+        <div class="container header-inner">
+            <div class="header-brand">
+                <button class="btn-drawer-menu" id="openMenuDrawerBtn" title="القائمة الجانبية">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="18" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+
+                <a href="#" class="logo-small">
+                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=100&q=80" id="headerLogoImg" alt="العطارة التركمانية">
+                    <div class="logo-text">
+                        <h1>العطارة التركمانية</h1>
+                        <span>منتجات طبيعية وأصيلة B2B</span>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active">الرئيسية</a>
+                <a href="#categoriesSection" class="nav-link">التصنيفات</a>
+                <a href="#catalog" class="nav-link">كتالوج المنتجات</a>
+                <a href="#" onclick="openPageModal('من نحن')" class="nav-link">من نحن</a>
+                <a href="#" onclick="openPageModal('اتصل بنا')" class="nav-link">اتصل بنا</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-circle-btn" id="openWishlistBtn" title="المفضلة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="badge-pill" id="wishlistBadgeCount">0</span>
+                </button>
+
+                <button class="action-circle-btn" id="openCartBtn" title="السلة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span class="badge-pill" id="cartBadgeCount">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN HOME VIEW CONTAINER -->
+    <div id="mainHomeView">
+        <!-- 3. HERO BANNER -->
+        <div class="container">
+            <section class="hero-banner" id="heroBannerWrapper">
+                <img src="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80" id="heroBannerImg" class="hero-banner-img" alt="منتجات طبيعية">
+                <div class="hero-content" id="heroContentBox">
+                    <div class="hero-badge">🌿 منصة مبيعات الجملة B2B</div>
+                    <h2 id="heroBannerTitle">منتجات طبيعية 100% بالجملة</h2>
+                    <p id="heroBannerSub">خياركم الموثوق للحصول على أجود الأعشاب، الزيوت، والبهارات الطبيعية بأفضل الأسعار للموزعين والمحلات التجاريـة.</p>
+                    <a href="#catalog" id="heroCtaBtn" class="btn-hero-cta">تصفح الكتالوج الآن</a>
+                </div>
+            </section>
+        </div>
+
+        <!-- 4. FEATURES STRIP -->
+        <div class="container features-strip-wrapper">
+            <div class="features-grid-row">
+                <div class="feature-card-item">
+                    <div class="feature-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                    <div class="feature-card-title">توصيل سريع</div>
+                    <div class="feature-card-desc">لكافة الولايات (69 ولاية)</div>
+                </div>
+                <div class="feature-card-item">
+                    <div class="feature-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    </div>
+                    <div class="feature-card-title">دفع وعروض تنافسية</div>
+                    <div class="feature-card-desc">تسهيلات خاصة للموزعين</div>
+                </div>
+                <div class="feature-card-item">
+                    <div class="feature-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <div class="feature-card-title">تغليف احترافي</div>
+                    <div class="feature-card-desc">جاهز لإعادة البيع فوراً</div>
+                </div>
+                <div class="feature-card-item">
+                    <div class="feature-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <div class="feature-card-title">جودة مضمونة</div>
+                    <div class="feature-card-desc">منتجات طبيعية 100%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. CATEGORIES SHOWCASE SLIDER (RTL CORRECTION: RIGHT ARROW -> RIGHT, LEFT ARROW -> LEFT) -->
+        <section class="container categories-showcase-section" id="categoriesSection">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 class="section-header-title">تصفح المنتجات حسب الفئة</h3>
+                <div style="display:flex; gap:8px;">
+                    <!-- Right Arrow: Scrolls Right in RTL -->
+                    <button class="slider-control-btn" onclick="slideCategories(220)" title="السابق">❯</button>
+                    <!-- Left Arrow: Scrolls Left in RTL -->
+                    <button class="slider-control-btn" onclick="slideCategories(-220)" title="التالي">❮</button>
+                </div>
+            </div>
+            
+            <div class="categories-cards-slider" id="visualCategoriesSlider"></div>
+        </section>
+
+        <!-- 6. MAIN CATALOG & PRODUCTS WITH PAGINATION -->
+        <main class="container" id="catalog">
+            <div class="catalog-layout">
+                <!-- Sidebar Filters -->
+                <aside class="sidebar-filter">
+                    <div class="filter-group">
+                        <div class="filter-title">تصفية المنتجات</div>
+                        <div class="search-input-wrap">
+                            <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title">التصنيفات</div>
+                        <div class="category-nav-list" id="categoryNavList"></div>
+                    </div>
+                </aside>
+
+                <!-- Products Container -->
+                <section>
+                    <div class="products-grid-header">
+                        <div style="font-weight:800; color:var(--brand-dark); font-size:0.95rem;">قائمة المنتجات الطبيعية بالجملة</div>
+                        <select id="sortSelect" class="sort-select-modern">
+                            <option value="popular">الأكثر مبيعاً</option>
+                            <option value="price-low">السعر: المنخفض للأعلى</option>
+                            <option value="price-high">السعر: الأعلى للمنخفض</option>
+                        </select>
+                    </div>
+
+                    <div class="products-cards-grid" id="productsGrid"></div>
+
+                    <!-- Pagination Container -->
+                    <div class="pagination-container" id="paginationControls"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- DEDICATED FULL PRODUCT PAGE CONTAINER (#product/ID) -->
+    <div id="productDetailPage" class="container">
+        <div class="breadcrumb-bar">
+            <a href="#">الرئيسية</a> / <a href="#catalog">كتالوج المنتجات</a> / <span id="pdpBreadcrumbTitle">-</span>
+        </div>
+
+        <div class="p-detail-layout">
+            <div>
+                <div class="p-detail-img-box">
+                    <img id="pdpImg" src="" alt="منتج">
+                </div>
+            </div>
+            <div>
+                <span class="p-detail-meta-pill" id="pdpCategory">-</span>
+                <h1 class="p-detail-title" id="pdpTitle">-</h1>
+                <div class="p-detail-price" id="pdpPrice">-</div>
+                
+                <div class="moq-highlight-bar" id="pdpMoq" style="margin-bottom:20px; font-size:0.88rem; padding:8px 12px;">-</div>
+
+                <p class="p-detail-desc" id="pdpDesc">-</p>
+
+                <!-- Technical & Lab Cert Card -->
+                <div class="tech-docs-card">
+                    <h4>📜 الوثائق الفنية واختبارات الجودة المخبرية:</h4>
+                    <div class="tech-btn-group">
+                        <a id="pdpTechSheetBtn" href="#" target="_blank" class="btn-doc-download btn-doc-dark" style="display:none;">📄 البطاقة الفنية للمنتج (PDF)</a>
+                        <a id="pdpLabCertBtn" href="#" target="_blank" class="btn-doc-download btn-doc-gold" style="display:none;">🔬 شهادة التحاليل المخبرية (PDF)</a>
+                    </div>
+                </div>
+
+                <!-- Quantity & Purchase Controls -->
+                <div style="display:flex; gap:12px; align-items:center; margin-bottom:20px;">
+                    <div class="qty-control-box" style="width:140px; margin-bottom:0;">
+                        <button class="qty-btn" onclick="adjustPdpQty(-1)">-</button>
+                        <input type="number" id="pdpQtyInput" value="1" class="qty-num-input" readonly>
+                        <button class="qty-btn" onclick="adjustPdpQty(1)">+</button>
+                    </div>
+                    <button class="btn-cart-add" id="pdpAddToCartBtn" style="flex:1; padding:12px;">إضافة لسلة الجملة 🛒</button>
+                </div>
+
+                <a href="#catalog" style="display:inline-block; font-weight:800; color:var(--brand-leaf); text-decoration:underline;">← العودة لتصفح باقي المنتجات</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. FLOATING WHATSAPP BUTTON (SITE BRAND THEMED: DARK GREEN + GOLD) -->
+    <a href="https://wa.me/213550000000" id="floatingWhatsappBtn" target="_blank" class="floating-whatsapp-btn" title="تواصل معنا عبر الواتساب">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </a>
+
+    <!-- 8. DRAWERS & MODALS -->
+    <div class="drawer-backdrop" id="menuDrawerBackdrop">
+        <aside class="side-drawer-panel">
+            <div class="drawer-head">
+                <h3 style="font-size:1.1rem;">القائمة الرئيسية</h3>
+                <button onclick="toggleBackdrop('menuDrawerBackdrop', false)" style="font-size:1.3rem; background:none;">&times;</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <a href="#" onclick="openPageModal('من نحن'); toggleBackdrop('menuDrawerBackdrop', false);" style="padding:12px; background:var(--bg-subtle); border-radius:var(--radius-md); font-weight:700;">🌿 من نحن</a>
+                <a href="#" onclick="openPageModal('سياسة الخصوصية'); toggleBackdrop('menuDrawerBackdrop', false);" style="padding:12px; background:var(--bg-subtle); border-radius:var(--radius-md); font-weight:700;">🔒 سياسة الخصوصية</a>
+                <a href="#" onclick="openPageModal('مقرنا'); toggleBackdrop('menuDrawerBackdrop', false);" style="padding:12px; background:var(--bg-subtle); border-radius:var(--radius-md); font-weight:700;">📍 مقرنا الرئيسي</a>
+                <a href="#" onclick="openPageModal('اتصل بنا'); toggleBackdrop('menuDrawerBackdrop', false);" style="padding:12px; background:var(--bg-subtle); border-radius:var(--radius-md); font-weight:700;">📞 اتصل بنا</a>
+            </div>
+        </aside>
+    </div>
+
+    <div class="drawer-backdrop" id="wishlistDrawerBackdrop">
+        <aside class="side-drawer-panel">
+            <div class="drawer-head">
+                <h3>المفضلة ♥</h3>
+                <button onclick="toggleBackdrop('wishlistDrawerBackdrop', false)" style="font-size:1.3rem; background:none;">&times;</button>
+            </div>
+            <div id="wishlistContainer"></div>
+        </aside>
+    </div>
+
+    <div class="drawer-backdrop" id="cartDrawerBackdrop">
+        <aside class="side-drawer-panel">
+            <div class="drawer-head">
+                <h3>سلة المشتريات 📦</h3>
+                <button onclick="toggleBackdrop('cartDrawerBackdrop', false)" style="font-size:1.3rem; background:none;">&times;</button>
+            </div>
+            <div id="cartItemsContainer" style="flex:1; overflow-y:auto;"></div>
+            <div style="padding-top:16px; border-top:1px solid var(--border-color); margin-top:10px;">
+                <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; color:var(--brand-green); margin-bottom:12px;">
+                    <span>الإجمالي:</span>
+                    <span id="cartGrandTotalVal">0 د.ج</span>
+                </div>
+                <button class="btn-submit-action" onclick="openCheckoutModal()">إكمال إجراءات الطلبية</button>
+            </div>
+        </aside>
+    </div>
+
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-dialog">
+            <h3 style="margin-bottom:14px; color:var(--brand-dark);">إدخال معلومات الطلبية</h3>
+            <form onsubmit="handleOrderSubmit(event)">
+                <div class="form-group"><label>اسم الشركة / الزبون</label><input type="text" id="custName" required></div>
+                <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="custPhone" required></div>
+                <div class="form-group"><label>الولاية (69 ولاية)</label><select id="custWilaya" required></select></div>
+                <div class="form-group"><label>العنوان التفصيلي</label><input type="text" id="custAddress" required></div>
+                <div class="form-group"><label>ملاحظات</label><textarea id="custNotes" rows="2"></textarea></div>
+                <button type="submit" class="btn-submit-action" style="margin-top:10px;">تأكيد وإرسال الطلبية</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="pagesModal">
+        <div class="modal-dialog">
+            <h3 id="pagesModalTitle" style="color:var(--brand-dark); margin-bottom:12px;">-</h3>
+            <div id="pagesModalBody" style="font-size:0.95rem; line-height:1.7;">-</div>
+            <button onclick="closeModal('pagesModal')" class="btn-submit-action" style="margin-top:20px; background:var(--brand-dark);">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- 9. FOOTER WITH SOCIAL MEDIA BEFORE MAP -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Col 1 -->
+                <div>
+                    <div class="footer-logo-large">
+                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=100&q=80" id="footerLogoImg" alt="العطارة التركمانية">
+                        <div>
+                            <h3>العطارة التركمانية</h3>
+                            <span style="font-size:0.8rem; color:var(--brand-gold);">منصة مبيعات الجملة B2B</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.88rem; line-height:1.6;">
+                        المؤسسة الأولى والمتخصصة في توريد وتوزيع النباتات والزيوت والأعشاب الطبيعية والمستخلصات النقية بأسعار الجملة لكل المتاجر بالجزائر.
+                    </p>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 style="color:white; font-size:1.1rem; margin-bottom:16px;">روابط سريعة</h4>
+                    <p style="margin-bottom:8px;"><a href="#" onclick="openPageModal('من نحن')">من نحن</a></p>
+                    <p style="margin-bottom:8px;"><a href="#" onclick="openPageModal('سياسة الخصوصية')">سياسة الخصوصية</a></p>
+                    <p style="margin-bottom:8px;"><a href="#" onclick="openPageModal('مقرنا')">مقرنا الرئيسي</a></p>
+                    <p style="margin-bottom:8px;"><a href="#" onclick="openPageModal('اتصل بنا')">اتصل بنا</a></p>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 style="color:white; font-size:1.1rem; margin-bottom:16px;">معلومات الاتصال</h4>
+                    <p style="margin-bottom:8px;">📞 الهاتف: 0550 00 00 00</p>
+                    <p style="margin-bottom:8px;">✉️ البريد: b2b@turkmani.dz</p>
+                    <p style="margin-bottom:8px;">📍 الجزائر العاصمة، الجزائر</p>
+                </div>
+
+                <!-- Col 4: SOCIAL MEDIA FIRST, THEN MAP -->
+                <div>
+                    <h4 style="color:white; font-size:1.1rem; margin-bottom:12px;">منصات التواصل الاجتماعي</h4>
+                    <div class="social-icons-group" id="footerSocialIconsGroup"></div>
+
+                    <h4 style="color:white; font-size:1.05rem; margin-bottom:10px;">مقرنا الرئيسي (الخريطة)</h4>
+                    <div class="footer-map-frame">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102353.48666324268!2d3.0032958!3d36.753768!2m3!1f0!1f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb2f8541a7d11%3A0x88981f727d09613a!2sAlgiers!5e0!3m2!1sen!2sdz!4v1680000000000!5m2!1sen!2sdz" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-row">
+                <div>جميع الحقوق محفوظة © 2026 العطارة التركمانية B2B</div>
+                <div>منصة بيع الجملة المعتمدة</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 10. ADMIN DASHBOARD VIEW (#admin1) -->
+    <div class="admin-page" id="adminPage">
+        <div class="admin-header">
+            <div>
+                <h2>لوحة تحكم الأدمن (العطارة التركمانية B2B)</h2>
+                <span style="font-size:0.8rem; opacity:0.8;">إدارة الفئات، التواصل والمبيعات</span>
+            </div>
+            <button onclick="exitAdmin()" style="background:var(--danger); color:white; padding:8px 16px; border-radius:6px; font-weight:700;">خروج</button>
+        </div>
+
+        <div class="admin-nav">
+            <button class="admin-nav-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات</button>
+            <button class="admin-nav-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات</button>
+            <button class="admin-nav-btn" onclick="switchAdminTab('products')">➕ إضافة منتج جديد</button>
+            <button class="admin-nav-btn" onclick="switchAdminTab('categories')">📂 إدارة التصنيفات</button>
+            <button class="admin-nav-btn" onclick="switchAdminTab('socials')">🌐 روابط منصات التواصل</button>
+        </div>
+
+        <div class="admin-content">
+            <div id="admTab-stats" class="admin-tab-sec">
+                <div style="background:white; padding:20px; border-radius:10px; border:1px solid #ddd;">
+                    <h3>إحصائيات النظام</h3>
+                    <p style="margin-top:8px;">إجمالي المبيعات والزيارات اليومية.</p>
+                </div>
+            </div>
+
+            <div id="admTab-orders" class="admin-tab-sec" style="display:none;">
+                <h3>جدول طلبيات الجملة B2B</h3>
+                <p style="margin-top:10px;">لا توجد طلبيات جديدة حالياً.</p>
+            </div>
+
+            <div id="admTab-products" class="admin-tab-sec" style="display:none;">
+                <div style="background:white; padding:20px; border-radius:10px; max-width:600px;">
+                    <h3>إضافة منتج جديد للكتالوج</h3>
+                    <form onsubmit="handleAdminAddProduct(event)" style="margin-top:14px;">
+                        <div class="form-group"><label>اسم المنتج</label><input type="text" id="npTitle" required></div>
+                        <div class="form-group"><label>التصنيف</label><select id="npCategory" required></select></div>
+                        <div class="form-group"><label>سعر الجملة (د.ج)</label><input type="number" id="npPrice" required></div>
+                        <div class="form-group"><label>الوزن / الحجم</label><input type="text" id="npWeight" required></div>
+                        <div class="form-group"><label>الحد الأدنى للطلب (MOQ)</label><input type="number" min="1" value="5" id="npMoq" required></div>
+                        <div class="form-group"><label>الوصف</label><textarea id="npDesc" rows="2" required></textarea></div>
+                        <div class="form-group"><label>رابط الصورة</label><input type="url" id="npImg" required></div>
+                        <div class="form-group"><label>رابط البطاقة الفنية (PDF)</label><input type="url" id="npTechSheet"></div>
+                        <div class="form-group"><label>رابط شهادة التحاليل (PDF)</label><input type="url" id="npLabCert"></div>
+                        <button type="submit" class="btn-submit-action">حفظ المنتج</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="admTab-categories" class="admin-tab-sec" style="display:none;">
+                <div style="background:white; padding:20px; border-radius:10px; max-width:500px;">
+                    <h3>إضافة تصنيف جديد</h3>
+                    <form onsubmit="handleAdminAddCat(event)" style="margin-top:12px; display:flex; gap:10px;">
+                        <input type="text" id="ncInput" required placeholder="اسم التصنيف" style="flex:1; padding:8px; border:1px solid #ddd; border-radius:6px;">
+                        <button type="submit" class="btn-submit-action" style="width:auto; padding:8px 18px;">إضافة</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="admTab-socials" class="admin-tab-sec" style="display:none;">
+                <div style="background:white; padding:22px; border-radius:10px; max-width:600px; border:1px solid #ddd;">
+                    <h3>إدارة روابط منصات التواصل الاجتماعي</h3>
+                    <form onsubmit="handleAdminSaveSocials(event)" style="margin-top:14px;">
+                        <div class="form-group"><label>رابط Facebook</label><input type="url" id="admFbUrl" required></div>
+                        <div class="form-group"><label>رابط Instagram</label><input type="url" id="admIgUrl" required></div>
+                        <div class="form-group"><label>رابط WhatsApp (رقم أو رابط wa.me)</label><input type="text" id="admWaUrl" required></div>
+                        <div class="form-group"><label>رابط TikTok</label><input type="url" id="admTtUrl" required></div>
+                        <div class="form-group"><label>رابط LinkedIn</label><input type="url" id="admLiUrl" required></div>
+                        <button type="submit" class="btn-submit-action">حفظ وتحديث الروابط</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast"><span id="toastTxt">تمت العملية بنجاح</span></div>
+
+    <!-- ==========================================
+       JAVASCRIPT APPLICATION LOGIC
+       ========================================== -->
+    <script>
+        // Algerian 69 Wilayas Data
+        const algeriaWilayas = [
+            "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
+            "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر العاصمة", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
+            "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة",
+            "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة",
+            "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان", "49 - تيميمون", "50 - برج باجي مختار",
+            "51 - أولاد جلال", "52 - بني عباس", "53 - عين صالح", "54 - عين قزام", "55 - تقرت", "56 - جانت", "57 - المغير", "58 - المنيعة", "59 - آفلو", "60 - بريكة",
+            "61 - القنطرة", "62 - بئر العاتر", "63 - العريشة", "64 - قصر الشلالة", "65 - عين وسارة", "66 - مسعد", "67 - قصر البخاري", "68 - بوسعادة", "69 - الأبيض سيدي الشيخ"
+        ];
+
+        // VISUAL CATEGORIES DATA
+        const visualCategoriesData = [
+            { name: "الأعشاب الطبية", img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80" },
+            { name: "الزيوت الطبيعية", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=200&q=80" },
+            { name: "البهارات والتوابل", img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=200&q=80" },
+            { name: "العسل الطبيعي", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=200&q=80" },
+            { name: "الصابون والمنتجات", img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=200&q=80" },
+            { name: "المساحيق الطبيعية", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=200&q=80" }
+        ];
+
+        // SOCIAL MEDIA LINKS DYNAMIC STATE
+        let socialLinks = JSON.parse(localStorage.getItem('f_socials')) || {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            whatsapp: "https://wa.me/213550000000",
+            tiktok: "https://tiktok.com",
+            linkedin: "https://linkedin.com"
+        };
+
+        // PRODUCTS DATA
+        let products = JSON.parse(localStorage.getItem('f_products')) || [
+            { id: "1", name: "زيت الزيتون البكر الممتاز", category: "الزيوت الطبيعية", weight: "250 مل", price: 1650, moq: 10, pkgType: "زجاجة", desc: "زيت زيتون معصور على البارد نقي 100% موجه للاستهلاك الطبي والصيدلاني والأغذية الصحية.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", techSheet: "https://example.com/tech.pdf", labCert: "https://example.com/lab.pdf" },
+            { id: "2", name: "أوراق السنا الطبيعية", category: "الأعشاب الطبية", weight: "500 غ", price: 1200, moq: 5, pkgType: "كيس", desc: "أوراق سنا مكي مجففة طبيعياً بدون مواد حافظة ذات معايير جودة عالية.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80" },
+            { id: "3", name: "بابونج أزهار نقي", category: "الأعشاب الطبية", weight: "500 غ", price: 980, moq: 5, pkgType: "كيس", desc: "أزهار بابونج ذهبية معطرة ذات نقاوة ورائحة عطرية فواحة.", badge: null, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
+            { id: "4", name: "قرفة أعواد فاخرة", category: "البهارات والتوابل", weight: "500 غ", price: 1100, moq: 10, pkgType: "كيس", desc: "أعواد قرفة سيلانية فاخرة ذات رائحة ونكهة ممتازة.", badge: null, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" },
+            { id: "5", name: "مسحوق المورينغا عضوي", category: "المساحيق الطبيعية", weight: "250 غ", price: 900, moq: 10, pkgType: "كيس", desc: "مسحوق أوراق مورينغا خضراء نادرة مطحونة بدقة عالية.", badge: "جديد", tagClass: "tag-new", image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" },
+            { id: "6", name: "عسل الجبل الملكي", category: "العسل الطبيعي", weight: "1 كغ", price: 3500, moq: 6, pkgType: "عبوة", desc: "عسل طبيعي حر نقي مجني من المناحل الجبلية.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=400&q=80" }
+        ];
+
+        let categories = ["الكل", "الأعشاب الطبية", "الزيوت الطبيعية", "البهارات والتوابل", "العسل الطبيعي", "الصابون والمنتجات", "المساحيق الطبيعية"];
+        let cart = JSON.parse(localStorage.getItem('f_cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('f_wishlist')) || [];
+        let activeCategory = "الكل";
+        let searchQuery = "";
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let currentPdpItem = null;
+
+        // SPA HASH ROUTER
+        window.addEventListener("DOMContentLoaded", () => {
+            initWilayasDropdown();
+            renderSocialIcons();
+            renderVisualCategoriesSlider();
+            renderCategoryNav();
+            renderProductsPage();
+            updateBadges();
+
+            // Setup Router Listener
+            window.addEventListener('hashchange', handleRouting);
+            handleRouting();
+
+            setTimeout(() => {
+                const loader = document.getElementById("app-loader");
+                if (loader) { loader.style.opacity = "0"; setTimeout(() => loader.style.display = "none", 400); }
+            }, 300);
+        });
+
+        function handleRouting() {
+            const hash = window.location.hash;
+
+            if (hash === "#admin1") {
+                triggerAdminPanel();
+                return;
+            }
+
+            if (hash.startsWith("#product/")) {
+                const prodId = hash.replace("#product/", "");
+                showDedicatedProductPage(prodId);
+                return;
+            }
+
+            // Default Main View
+            document.getElementById("productDetailPage").style.display = "none";
+            document.getElementById("mainHomeView").style.display = "block";
+            document.getElementById("adminPage").classList.remove("active");
+        }
+
+        function initWilayasDropdown() {
+            document.getElementById("custWilaya").innerHTML = algeriaWilayas.map(w => `<option value="${w}">${w}</option>`).join('');
+        }
+
+        /* RENDER SOCIAL ICONS IN FOOTER */
+        function renderSocialIcons() {
+            const container = document.getElementById("footerSocialIconsGroup");
+            if (!container) return;
+
+            const waHref = socialLinks.whatsapp.startsWith("http") ? socialLinks.whatsapp : `https://wa.me/${socialLinks.whatsapp.replace(/\D/g,'')}`;
+
+            container.innerHTML = `
+                <a href="${socialLinks.facebook}" target="_blank" class="social-brand-btn" title="Facebook">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="${socialLinks.instagram}" target="_blank" class="social-brand-btn" title="Instagram">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="${waHref}" target="_blank" class="social-brand-btn" title="WhatsApp">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                </a>
+                <a href="${socialLinks.tiktok}" target="_blank" class="social-brand-btn" title="TikTok">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.57-1.32 1.55-1.36 2.55-.07.99.33 2.03 1.08 2.69.75.67 1.83.95 2.81.76.93-.17 1.78-.8 2.22-1.64.44-.81.56-1.78.53-2.69.03-5.32.01-10.64.02-15.96z"/></svg>
+                </a>
+                <a href="${socialLinks.linkedin}" target="_blank" class="social-brand-btn" title="LinkedIn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+            `;
+
+            const floatBtn = document.getElementById("floatingWhatsappBtn");
+            if (floatBtn) floatBtn.href = waHref;
+        }
+
+        /* RENDER VISUAL CATEGORIES SLIDER (FIXED RTL SCROLL) */
+        function renderVisualCategoriesSlider() {
+            const container = document.getElementById("visualCategoriesSlider");
+            container.innerHTML = visualCategoriesData.map(c => {
+                const count = products.filter(p => p.category.includes(c.name) || c.name.includes(p.category)).length;
+                return `
+                    <div class="category-visual-card" onclick="filterByVisualCategory('${c.name}')">
+                        <img src="${c.img}" class="category-visual-img" alt="${c.name}">
+                        <div class="category-visual-name">${c.name}</div>
+                        <div class="category-visual-count">${count} منتج متوفر</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // FIXED RTL SCROLL DIRECTION
+        function slideCategories(offset) {
+            const slider = document.getElementById("visualCategoriesSlider");
+            // In RTL, scrollBy direction depends on browser implementation; handling both smoothly
+            slider.scrollBy({ left: -offset, behavior: 'smooth' });
+        }
+
+        function filterByVisualCategory(catName) {
+            const match = categories.find(c => c.includes(catName) || catName.includes(c)) || catName;
+            setCategoryFilter(match);
+            document.getElementById("catalog").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderCategoryNav() {
+            const nav = document.getElementById("categoryNavList");
+            nav.innerHTML = categories.map(cat => {
+                const cnt = cat === "الكل" ? products.length : products.filter(p => p.category === cat).length;
+                return `
+                    <button class="category-nav-btn ${cat === activeCategory ? 'active' : ''}" onclick="setCategoryFilter('${cat}')">
+                        <span>${cat}</span>
+                        <span style="font-size:0.7rem; background:rgba(0,0,0,0.06); padding:2px 8px; border-radius:10px;">${cnt}</span>
+                    </button>
+                `;
+            }).join('');
+
+            const npSelect = document.getElementById("npCategory");
+            if (npSelect) npSelect.innerHTML = categories.filter(c => c !== "الكل").map(c => `<option value="${c}">${c}</option>`).join('');
+        }
+
+        function setCategoryFilter(cat) {
+            activeCategory = cat;
+            currentPage = 1;
+            renderCategoryNav();
+            renderProductsPage();
+        }
+
+        function renderProductsPage() {
+            const grid = document.getElementById("productsGrid");
+            let filtered = products.filter(p => {
+                const matchCat = activeCategory === "الكل" || p.category === activeCategory;
+                const matchSearch = p.name.includes(searchQuery);
+                return matchCat && matchSearch;
+            });
+
+            const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const paginatedItems = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+            if (paginatedItems.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">لا توجد منتجات مطابقة في هذا التصنيف.</div>`;
+                document.getElementById("paginationControls").innerHTML = "";
+                return;
+            }
+
+            grid.innerHTML = paginatedItems.map(item => `
+                <div class="product-card">
+                    <div class="card-img-container" onclick="openProductDetail('${item.id}')">
+                        ${item.badge ? `<span class="badge-tag-pill ${item.tagClass}">${item.badge}</span>` : ''}
+                        <button class="btn-wishlist-toggle ${wishlist.includes(item.id) ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist('${item.id}')">♥</button>
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="product-name" onclick="openProductDetail('${item.id}')">${item.name}</h3>
+                        <div class="moq-highlight-bar">
+                            <span>أقل كمية للطلب:</span>
+                            <span>${item.moq} قطع</span>
+                        </div>
+                        <div class="price-row">
+                            <span style="font-size:0.75rem; color:var(--text-secondary);">سعر الجملة</span>
+                            <span class="price-val">${item.price.toLocaleString()} <small style="font-size:0.75rem;">د.ج</small></span>
+                        </div>
+                        <div class="qty-control-box">
+                            <button class="qty-btn" onclick="adjustCardQty('${item.id}', -1)">-</button>
+                            <input type="number" id="cardQty-${item.id}" value="${item.moq}" class="qty-num-input" readonly>
+                            <button class="qty-btn" onclick="adjustCardQty('${item.id}', 1)">+</button>
+                        </div>
+                        <button class="btn-cart-add" onclick="addToCart('${item.id}')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            إضافة لسلة الجملة
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            renderPaginationControls(totalPages);
+        }
+
+        function renderPaginationControls(totalPages) {
+            const container = document.getElementById("paginationControls");
+            if (totalPages <= 1) { container.innerHTML = ""; return; }
+
+            let html = "";
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderProductsPage();
+            document.getElementById("catalog").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function adjustCardQty(id, delta) {
+            const input = document.getElementById(`cardQty-${id}`);
+            const item = products.find(p => p.id === id);
+            let val = (parseInt(input.value) || item.moq) + delta;
+            if (val < item.moq) val = item.moq;
+            input.value = val;
+        }
+
+        // NAVIGATE TO DEDICATED PRODUCT PAGE (#product/ID)
+        function openProductDetail(id) {
+            window.location.hash = `#product/${id}`;
+        }
+
+        // RENDER FULL DEDICATED PRODUCT PAGE
+        function showDedicatedProductPage(id) {
+            const item = products.find(p => p.id === id);
+            if (!item) {
+                window.location.hash = "#catalog";
+                return;
+            }
+
+            currentPdpItem = item;
+
+            // Hide Main Home & Show Product View
+            document.getElementById("mainHomeView").style.display = "none";
+            document.getElementById("adminPage").classList.remove("active");
+            document.getElementById("productDetailPage").style.display = "block";
+
+            // Populate Item Details
+            document.getElementById("pdpBreadcrumbTitle").innerText = item.name;
+            document.getElementById("pdpTitle").innerText = item.name;
+            document.getElementById("pdpImg").src = item.image;
+            document.getElementById("pdpCategory").innerText = item.category + " • " + (item.pkgType || "تعبئة فاخرة");
+            document.getElementById("pdpPrice").innerText = item.price.toLocaleString() + " د.ج (سعر الجملة)";
+            document.getElementById("pdpMoq").innerText = `الحد الأدنى للطلب التجاري (MOQ): ${item.moq} قطعة / الوزن: ${item.weight}`;
+            document.getElementById("pdpDesc").innerText = item.desc || "منتج طبيعي نقي وأصيل مطابق لأعلى معايير الجودة للبيع بالجملة للمتاجر والموزعين.";
+
+            // Reset PDP Quantity Picker
+            document.getElementById("pdpQtyInput").value = item.moq;
+
+            // Tech & Lab Certificates
+            const techBtn = document.getElementById("pdpTechSheetBtn");
+            const labBtn = document.getElementById("pdpLabCertBtn");
+
+            if (item.techSheet && item.techSheet !== "#") {
+                techBtn.style.display = "inline-flex"; techBtn.href = item.techSheet;
+            } else { techBtn.style.display = "none"; }
+
+            if (item.labCert && item.labCert !== "#") {
+                labBtn.style.display = "inline-flex"; labBtn.href = item.labCert;
+            } else { labBtn.style.display = "none"; }
+
+            // Add to Cart Button Logic
+            document.getElementById("pdpAddToCartBtn").onclick = () => {
+                const qty = parseInt(document.getElementById("pdpQtyInput").value) || item.moq;
+                addToCartCustomQty(item.id, qty);
+            };
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function adjustPdpQty(delta) {
+            if (!currentPdpItem) return;
+            const input = document.getElementById("pdpQtyInput");
+            let val = (parseInt(input.value) || currentPdpItem.moq) + delta;
+            if (val < currentPdpItem.moq) val = currentPdpItem.moq;
+            input.value = val;
+        }
+
+        function addToCartCustomQty(id, qty) {
+            const item = products.find(p => p.id === id);
+            const exist = cart.find(c => c.id === id);
+            if (exist) exist.qty += qty;
+            else cart.push({ ...item, qty });
+
+            localStorage.setItem('f_cart', JSON.stringify(cart));
+            updateBadges();
+            showToast(`تمت إضافة ${qty} قطعة من ${item.name} للسلة`);
+        }
+
+        function addToCart(id) {
+            const input = document.getElementById(`cardQty-${id}`);
+            const qty = input ? parseInt(input.value) : 1;
+            addToCartCustomQty(id, qty);
+        }
+
+        function toggleWishlist(id) {
+            if (wishlist.includes(id)) wishlist = wishlist.filter(i => i !== id);
+            else wishlist.push(id);
+            localStorage.setItem('f_wishlist', JSON.stringify(wishlist));
+            updateBadges();
+            renderProductsPage();
+        }
+
+        function updateBadges() {
+            document.getElementById("cartBadgeCount").innerText = cart.reduce((s, i) => s + i.qty, 0);
+            document.getElementById("wishlistBadgeCount").innerText = wishlist.length;
+        }
+
+        function renderCartDrawer() {
+            const container = document.getElementById("cartItemsContainer");
+            if (cart.length === 0) {
+                container.innerHTML = `<p style="text-align:center; padding:30px; color:var(--text-secondary);">السلة فارغة حالياً</p>`;
+                document.getElementById("cartGrandTotalVal").innerText = "0 د.ج";
+                return;
+            }
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                const sub = item.price * item.qty;
+                total += sub;
+                return `
+                    <div style="display:flex; align-items:center; gap:12px; padding:10px; background:var(--bg-body); border-radius:8px; margin-bottom:8px;">
+                        <img src="${item.image}" style="width:50px; height:50px; object-fit:cover; border-radius:6px;">
+                        <div style="flex:1;">
+                            <h4 style="font-size:0.85rem; font-weight:800;">${item.name}</h4>
+                            <div style="font-size:0.8rem; color:var(--brand-green); font-weight:800;">${item.price} د.ج x ${item.qty} = ${sub.toLocaleString()} د.ج</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById("cartGrandTotalVal").innerText = total.toLocaleString() + " د.ج";
+        }
+
+        function handleOrderSubmit(e) {
+            e.preventDefault();
+            cart = [];
+            localStorage.setItem('f_cart', JSON.stringify(cart));
+            updateBadges();
+            closeModal("checkoutModal");
+            showToast("تم إرسال الطلبية بنجاح! سيتصل بك فريق المبيعات فوراً.");
+        }
+
+        function triggerAdminPanel() {
+            const pass = prompt("أدخل كلمة مرور الأدمن (abobob123@):");
+            if (pass === "abobob123@") {
+                document.getElementById("mainHomeView").style.display = "none";
+                document.getElementById("productDetailPage").style.display = "none";
+                document.getElementById("adminPage").classList.add("active");
+                loadAdminSocialsForm();
+            } else if (pass !== null) alert("كلمة المرور غير صحيحة!");
+        }
+
+        function exitAdmin() {
+            document.getElementById("adminPage").classList.remove("active");
+            window.location.hash = "";
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll(".admin-tab-sec").forEach(el => el.style.display = "none");
+            document.querySelectorAll(".admin-nav-btn").forEach(btn => btn.classList.remove("active"));
+            document.getElementById("admTab-" + tab).style.display = "block";
+            event.target.classList.add("active");
+
+            if (tab === "socials") loadAdminSocialsForm();
+        }
+
+        function loadAdminSocialsForm() {
+            document.getElementById("admFbUrl").value = socialLinks.facebook;
+            document.getElementById("admIgUrl").value = socialLinks.instagram;
+            document.getElementById("admWaUrl").value = socialLinks.whatsapp;
+            document.getElementById("admTtUrl").value = socialLinks.tiktok;
+            document.getElementById("admLiUrl").value = socialLinks.linkedin;
+        }
+
+        function handleAdminSaveSocials(e) {
+            e.preventDefault();
+            socialLinks.facebook = document.getElementById("admFbUrl").value.trim();
+            socialLinks.instagram = document.getElementById("admIgUrl").value.trim();
+            socialLinks.whatsapp = document.getElementById("admWaUrl").value.trim();
+            socialLinks.tiktok = document.getElementById("admTtUrl").value.trim();
+            socialLinks.linkedin = document.getElementById("admLiUrl").value.trim();
+
+            localStorage.setItem('f_socials', JSON.stringify(socialLinks));
+            renderSocialIcons();
+            showToast("تم حفظ وتحديث روابط التواصل بنجاح!");
+        }
+
+        function handleAdminAddProduct(e) {
+            e.preventDefault();
+            const np = {
+                id: "P-" + Date.now(),
+                name: document.getElementById("npTitle").value,
+                category: document.getElementById("npCategory").value,
+                price: parseInt(document.getElementById("npPrice").value),
+                weight: document.getElementById("npWeight").value,
+                moq: parseInt(document.getElementById("npMoq").value) || 1,
+                desc: document.getElementById("npDesc").value,
+                image: document.getElementById("npImg").value,
+                techSheet: document.getElementById("npTechSheet").value || "#",
+                labCert: document.getElementById("npLabCert").value || "#",
+                badge: "جديد", tagClass: "tag-new"
+            };
+            products.unshift(np);
+            localStorage.setItem('f_products', JSON.stringify(products));
+            renderProductsPage();
+            showToast("تم إضافة المنتج بنجاح!");
+            e.target.reset();
+        }
+
+        function handleAdminAddCat(e) {
+            e.preventDefault();
+            const v = document.getElementById("ncInput").value.trim();
+            if (v && !categories.includes(v)) {
+                categories.push(v);
+                renderCategoryNav();
+                showToast("تم إضافة الفئة!");
+                e.target.reset();
+            }
+        }
+
+        function toggleBackdrop(id, open) {
+            const el = document.getElementById(id);
+            if (open) el.classList.add("open");
+            else el.classList.remove("open");
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+
+        function openPageModal(title) {
+            document.getElementById("pagesModalTitle").innerText = title;
+            document.getElementById("pagesModalBody").innerText = "معلومات عن " + title + " الخاصة بالمؤسسة.";
+            document.getElementById("pagesModal").classList.add("active");
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) { showToast("السلة فارغة!"); return; }
+            toggleBackdrop("cartDrawerBackdrop", false);
+            document.getElementById("checkoutModal").classList.add("active");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastTxt").innerText = msg;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+
+        // Event Attachments
+        document.getElementById("openMenuDrawerBtn").addEventListener("click", () => toggleBackdrop("menuDrawerBackdrop", true));
+        document.getElementById("openCartBtn").addEventListener("click", () => { renderCartDrawer(); toggleBackdrop("cartDrawerBackdrop", true); });
+        document.getElementById("openWishlistBtn").addEventListener("click", () => toggleBackdrop("wishlistDrawerBackdrop", true));
+        document.getElementById("searchInput").addEventListener("input", (e) => { searchQuery = e.target.value.trim(); currentPage = 1; renderProductsPage(); });
+    </script>
+</body>
+</html>
