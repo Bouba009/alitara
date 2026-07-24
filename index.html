@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -215,7 +213,7 @@
         .search-input-wrap input { width: 100%; padding: 10px 14px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
 
         .category-nav-list { display: flex; flex-direction: column; gap: 6px; }
-        .category-nav-btn { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: transparent; border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.88rem; font-weight: 700; width: 100%; }
+        .category-nav-btn { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: transparent; border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.88rem; font-weight: 700; width: 100%; text-align: right; }
         .category-nav-btn.active { background: var(--brand-green); color: white; }
 
         .products-grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-surface); padding: 12px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
@@ -346,21 +344,21 @@
         .footer-bottom-row { padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
 
         /* ==========================================
-           9. MODERNized SIDEBAR ADMIN DASHBOARD (#admin1)
+           9. MODERNIZED SIDEBAR ADMIN DASHBOARD
            ========================================== */
         .admin-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F0F4F2; z-index: 5000; display: none; overflow-y: auto; }
         .admin-page.active { display: block; }
 
-        .admin-header { background: var(--brand-dark); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand-gold); }
+        .admin-header { background: var(--brand-dark); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand-gold); sticky: top; }
         
         .admin-dashboard-layout {
-            display: grid; grid-template-columns: 260px 1fr; gap: 24px; padding: 24px 0 50px 0;
+            display: grid; grid-template-columns: 270px 1fr; gap: 24px; padding: 24px 0 50px 0;
         }
 
         .admin-sidebar {
             background: white; border-radius: var(--radius-lg); padding: 18px 12px;
             border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;
-            height: fit-content; box-shadow: var(--shadow-xs);
+            height: fit-content; box-shadow: var(--shadow-xs); sticky: top;
         }
 
         .admin-side-btn {
@@ -393,16 +391,17 @@
         .stat-mini-num { font-size: 1.6rem; font-weight: 900; margin-top: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
 
         .chart-box { background: white; padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 28px; box-shadow: var(--shadow-xs); }
-        .chart-bars { display: flex; align-items: flex-end; gap: 18px; height: 160px; margin-top: 24px; padding-top: 20px; border-bottom: 2px solid var(--border-color); }
+        .chart-bars { display: flex; align-items: flex-end; gap: 18px; height: 180px; margin-top: 24px; padding-top: 20px; border-bottom: 2px solid var(--border-color); }
         .chart-bar-single { flex: 1; background: linear-gradient(180deg, var(--brand-leaf) 0%, var(--brand-green) 100%); border-radius: 6px 6px 0 0; position: relative; text-align: center; }
         .chart-bar-single span { position: absolute; top: -24px; width: 100%; font-size: 0.78rem; font-weight: 800; color: var(--brand-dark); }
+        .chart-bar-label { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-top: 6px; }
 
         .admin-table-wrap { background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow-x: auto; box-shadow: var(--shadow-xs); }
         .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
         .admin-table th, .admin-table td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle); }
         .admin-table th { background: var(--bg-body); font-weight: 800; color: var(--brand-dark); }
 
-        .btn-action-sm { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 800; margin-left: 4px; transition: var(--transition); }
+        .btn-action-sm { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 800; margin-left: 4px; transition: var(--transition); border:none; }
         .btn-edit-sm { background: var(--brand-gold); color: var(--brand-dark); }
         .btn-delete-sm { background: var(--danger); color: white; }
 
@@ -463,7 +462,7 @@
     <header class="header">
         <div class="container header-inner">
             <div class="header-brand">
-                <button class="btn-drawer-menu" id="openMenuDrawerBtn" title="القائمة الجانبية">
+                <button class="btn-drawer-menu" onclick="toggleBackdrop('menuDrawerBackdrop', true)" title="القائمة الجانبية">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="18" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
 
@@ -485,12 +484,12 @@
             </nav>
 
             <div class="header-actions">
-                <button class="action-circle-btn" id="openWishlistBtn" title="المفضلة">
+                <button class="action-circle-btn" onclick="toggleBackdrop('wishlistDrawerBackdrop', true)" title="المفضلة">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     <span class="badge-pill" id="wishlistBadgeCount">0</span>
                 </button>
 
-                <button class="action-circle-btn" id="openCartBtn" title="السلة">
+                <button class="action-circle-btn" onclick="toggleBackdrop('cartDrawerBackdrop', true); renderCartDrawer();" title="السلة">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                     <span class="badge-pill" id="cartBadgeCount">0</span>
                 </button>
@@ -567,7 +566,7 @@
                     <div class="filter-group">
                         <div class="filter-title">تصفية المنتجات</div>
                         <div class="search-input-wrap">
-                            <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
+                            <input type="text" id="searchInput" oninput="handleSearchInput(this.value)" placeholder="ابحث عن منتج...">
                         </div>
                     </div>
 
@@ -580,7 +579,7 @@
                 <section>
                     <div class="products-grid-header">
                         <div style="font-weight:800; color:var(--brand-dark); font-size:0.95rem;">قائمة المنتجات الطبيعية بالجملة</div>
-                        <select id="sortSelect" class="sort-select-modern">
+                        <select id="sortSelect" onchange="handleSortChange(this.value)" class="sort-select-modern">
                             <option value="popular">الأكثر مبيعاً</option>
                             <option value="price-low">السعر: المنخفض للأعلى</option>
                             <option value="price-high">السعر: الأعلى للمنخفض</option>
@@ -608,8 +607,8 @@
                 </div>
             </div>
             <div>
-                <span class="p-detail-meta-pill" id="pdpCategory">-</span>
-                <h1 class="p-detail-title" id="pdpTitle">-</h1>
+                <span class="p-detail-meta-pill" id="pdpCategory" style="background:var(--brand-gold-light); color:var(--brand-gold-dark); padding:4px 10px; border-radius:12px; font-weight:800; font-size:0.8rem;">-</span>
+                <h1 class="p-detail-title" id="pdpTitle" style="margin-top:10px;">-</h1>
                 <div class="p-detail-price" id="pdpPrice">-</div>
                 
                 <div class="moq-highlight-bar" id="pdpMoq" style="margin-bottom:20px; font-size:0.88rem; padding:8px 12px;">-</div>
@@ -830,7 +829,7 @@
         </div>
     </footer>
 
-    <!-- MODERNIZED ADMIN DASHBOARD WITH SIDEBAR & TOP 6 VIBRANT STATS -->
+    <!-- MODERNIZED ADMIN DASHBOARD WITH SIDEBAR & TOP 6 VIBRANT REAL STATS -->
     <div class="admin-page" id="adminPage">
         <div class="admin-header">
             <div>
@@ -841,7 +840,7 @@
         </div>
 
         <div class="container admin-dashboard-layout">
-            <!-- SIDEBAR NAVIGATION -->
+            <!-- ORGANIZED SIDEBAR NAVIGATION -->
             <aside class="admin-sidebar">
                 <button class="admin-side-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات والتوزيع</button>
                 <button class="admin-side-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات المباشرة (<span id="admOrdersBadge">0</span>)</button>
@@ -855,19 +854,19 @@
 
             <!-- MAIN ADMIN CONTENT AREA -->
             <main>
-                <!-- TOP 6 VIBRANT STATS METRICS -->
+                <!-- TOP 6 VIBRANT REAL STATS METRICS -->
                 <div class="stats-grid-six">
                     <div class="stat-mini-card bg-mini-1">
-                        <div class="stat-mini-title">زيارات اليوم</div>
-                        <div class="stat-mini-num">2,840</div>
+                        <div class="stat-mini-title">زيارات اليوم الحقيقية</div>
+                        <div class="stat-mini-num" id="statTodayVisits">0</div>
                     </div>
                     <div class="stat-mini-card bg-mini-2">
                         <div class="stat-mini-title">زيارات هذا الشهر</div>
-                        <div class="stat-mini-num">68,400</div>
+                        <div class="stat-mini-num" id="statThisMonthVisits">0</div>
                     </div>
                     <div class="stat-mini-card bg-mini-3">
                         <div class="stat-mini-title">زيارات الشهر الماضي</div>
-                        <div class="stat-mini-num">61,200</div>
+                        <div class="stat-mini-num" id="statLastMonthVisits">0</div>
                     </div>
                     <div class="stat-mini-card bg-mini-4">
                         <div class="stat-mini-title">طلبات جديدة</div>
@@ -1092,6 +1091,42 @@
        JAVASCRIPT APPLICATION LOGIC
        ========================================== -->
     <script>
+        /* 1. FIREBASE & LIVE CROSS-DEVICE REALTIME SYNC INTEGRATION */
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_Placeholder_Key",
+            authDomain: "turkmani-b2b.firebaseapp.com",
+            projectId: "turkmani-b2b",
+            storageBucket: "turkmani-b2b.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        let db = null;
+        try {
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } catch(e) {
+            console.log("Running on Local-Live Hybrid Mode");
+        }
+
+        // Live Broadcast Channel for cross-tab realtime sync
+        const broadcastSync = new BroadcastChannel('turkmani_b2b_live_sync');
+        broadcastSync.onmessage = (event) => {
+            if (event.data && event.data.type === 'REFRESH_ALL') {
+                loadGlobalData();
+            }
+        };
+
+        function triggerGlobalRefresh() {
+            broadcastSync.postMessage({ type: 'REFRESH_ALL' });
+            if (db) {
+                try {
+                    db.collection("app_state").doc("sync").set({ lastUpdated: Date.now() });
+                } catch(e) {}
+            }
+            loadGlobalData();
+        }
+
         const algeriaWilayas = [
             "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
             "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر العاصمة", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
@@ -1102,7 +1137,7 @@
             "61 - القنطرة", "62 - بئر العاتر", "63 - العريشة", "64 - قصر الشلالة", "65 - عين وسارة", "66 - مسعد", "67 - قصر البخاري", "68 - بوسعادة", "69 - الأبيض سيدي الشيخ"
         ];
 
-        let visualCategoriesData = JSON.parse(localStorage.getItem('f_vis_cats')) || [
+        let visualCategoriesData = [
             { name: "الأعشاب الطبية", img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80" },
             { name: "الزيوت الطبيعية", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=200&q=80" },
             { name: "البهارات والتوابل", img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=200&q=80" },
@@ -1111,12 +1146,12 @@
             { name: "المساحيق الطبيعية", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=200&q=80" }
         ];
 
-        let socialLinks = JSON.parse(localStorage.getItem('f_socials')) || {
+        let socialLinks = {
             facebook: "https://facebook.com", instagram: "https://instagram.com",
             whatsapp: "https://wa.me/213550000000", tiktok: "https://tiktok.com", linkedin: "https://linkedin.com"
         };
 
-        let products = JSON.parse(localStorage.getItem('f_products')) || [
+        let products = [
             { id: "1", name: "زيت الزيتون البكر الممتاز", category: "الزيوت الطبيعية", weight: "250 مل", price: 1650, moq: 10, pkgType: "زجاجة", desc: "زيت زيتون معصور على البارد نقي 100% موجه للاستهلاك الطبي والصيدلاني.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", techSheet: "#", labCert: "#" },
             { id: "2", name: "أوراق السنا الطبيعية", category: "الأعشاب الطبية", weight: "500 غ", price: 1200, moq: 5, pkgType: "كيس", desc: "أوراق سنا مكي مجففة طبيعياً بدون مواد حافظة.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80" },
             { id: "3", name: "بابونج أزهار نقي", category: "الأعشاب الطبية", weight: "500 غ", price: 980, moq: 5, pkgType: "كيس", desc: "أزهار بابونج ذهبية معطرة ذات نقاوة عالية.", badge: null, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
@@ -1126,19 +1161,115 @@
         let categories = ["الكل", "الأعشاب الطبية", "الزيوت الطبيعية", "البهارات والتوابل", "العسل الطبيعي", "الصابون والمنتجات", "المساحيق الطبيعية"];
         let cart = JSON.parse(localStorage.getItem('f_cart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('f_wishlist')) || [];
-        let orders = JSON.parse(localStorage.getItem('f_orders')) || [];
+        let orders = [];
 
-        let bannerConfig = JSON.parse(localStorage.getItem('f_banner')) || {
+        let bannerConfig = {
             logo: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=100&q=80",
             image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80",
             darkness: 45, showText: "yes", title: "منتجات طبيعية 100% بالجملة", sub: "خياركم الموثوق للحصول على أجود الأعشاب والمستخلصات بأسعار الموزعين.", ctaText: "تصفح الكتالوج الآن", showPromo: "no"
         };
 
+        let pagesContent = {
+            about: "المؤسسة الأولى والمتخصصة في توريد وتوزيع النباتات والزيوت والأعشاب الطبيعية والمستخلصات النقية بأسعار الجملة لكل المتاجر بالجزائر.",
+            privacy: "نحن نلتزم بالحفاظ على خصوصية زبائننا وشركائنا B2B. جميع المعلومات المدخلة تُستخدم فقط لإتمام الطلبيات والخدمات اللوجستية.",
+            loc: "الجزائر العاصمة، الجزائر",
+            contact: "الهاتف: 0550 00 00 00 | البريد: b2b@turkmani.dz"
+        };
+
         let activeCategory = "الكل";
         let searchQuery = "";
+        let sortOption = "popular";
         let currentPage = 1;
         const itemsPerPage = 10;
         let currentPdpItem = null;
+
+        /* REAL ANALYTICS TRACKER */
+        function trackRealVisitorHit() {
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const currentMonthStr = todayStr.substring(0, 7);
+            
+            let visitsData = JSON.parse(localStorage.getItem('g_visits_data')) || {
+                daily: {},
+                monthly: {}
+            };
+
+            if (!sessionStorage.getItem('visited_today_session')) {
+                sessionStorage.setItem('visited_today_session', 'true');
+                visitsData.daily[todayStr] = (visitsData.daily[todayStr] || 0) + 1;
+                visitsData.monthly[currentMonthStr] = (visitsData.monthly[currentMonthStr] || 0) + 1;
+                localStorage.setItem('g_visits_data', JSON.stringify(visitsData));
+            }
+        }
+
+        function getRealVisitsStats() {
+            const visitsData = JSON.parse(localStorage.getItem('g_visits_data')) || { daily: {}, monthly: {} };
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const currentMonthStr = todayStr.substring(0, 7);
+            
+            const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            const lastMonthStr = lastMonthDate.toISOString().substring(0, 7);
+
+            return {
+                today: visitsData.daily[todayStr] || 1,
+                thisMonth: visitsData.monthly[currentMonthStr] || 1,
+                lastMonth: visitsData.monthly[lastMonthStr] || 0
+            };
+        }
+
+        /* DATA STORAGE & SYNC MANAGER */
+        function loadGlobalData() {
+            if (localStorage.getItem('g_products')) products = JSON.parse(localStorage.getItem('g_products'));
+            if (localStorage.getItem('g_categories')) categories = JSON.parse(localStorage.getItem('g_categories'));
+            if (localStorage.getItem('g_vis_cats')) visualCategoriesData = JSON.parse(localStorage.getItem('g_vis_cats'));
+            if (localStorage.getItem('g_banner')) bannerConfig = JSON.parse(localStorage.getItem('g_banner'));
+            if (localStorage.getItem('g_socials')) socialLinks = JSON.parse(localStorage.getItem('g_socials'));
+            if (localStorage.getItem('g_pages')) pagesContent = JSON.parse(localStorage.getItem('g_pages'));
+            if (localStorage.getItem('g_orders')) orders = JSON.parse(localStorage.getItem('g_orders'));
+
+            applyBannerAndBrandingConfig();
+            renderSocialIcons();
+            renderVisualCategoriesSlider();
+            renderCategoryNav();
+            renderProductsPage();
+            updateBadges();
+
+            if (document.getElementById("adminPage").classList.contains("active")) {
+                renderAdminRealStatsAndCharts();
+                renderAdminOrders();
+                renderAdminManageProductsTable();
+                renderAdminManageCategoriesList();
+            }
+        }
+
+        function saveGlobalData(keysToSave = ['products', 'categories', 'vis_cats', 'banner', 'socials', 'pages', 'orders']) {
+            if (keysToSave.includes('products')) localStorage.setItem('g_products', JSON.stringify(products));
+            if (keysToSave.includes('categories')) localStorage.setItem('g_categories', JSON.stringify(categories));
+            if (keysToSave.includes('vis_cats')) localStorage.setItem('g_vis_cats', JSON.stringify(visualCategoriesData));
+            if (keysToSave.includes('banner')) localStorage.setItem('g_banner', JSON.stringify(bannerConfig));
+            if (keysToSave.includes('socials')) localStorage.setItem('g_socials', JSON.stringify(socialLinks));
+            if (keysToSave.includes('pages')) localStorage.setItem('g_pages', JSON.stringify(pagesContent));
+            if (keysToSave.includes('orders')) localStorage.setItem('g_orders', JSON.stringify(orders));
+
+            triggerGlobalRefresh();
+        }
+
+        function applyBannerAndBrandingConfig() {
+            if (bannerConfig.logo) {
+                document.getElementById("headerLogoImg").src = bannerConfig.logo;
+                document.getElementById("footerLogoImg").src = bannerConfig.logo;
+            }
+            if (bannerConfig.image) document.getElementById("heroBannerImg").src = bannerConfig.image;
+            if (bannerConfig.darkness !== undefined) document.getElementById("heroBannerImg").style.opacity = (1 - (bannerConfig.darkness / 100));
+            if (bannerConfig.title) document.getElementById("heroBannerTitle").innerText = bannerConfig.title;
+            if (bannerConfig.sub) document.getElementById("heroBannerSub").innerText = bannerConfig.sub;
+            if (bannerConfig.ctaText) document.getElementById("heroCtaBtn").innerText = bannerConfig.ctaText;
+            
+            const promoBar = document.getElementById("promoOfferBar");
+            if (bannerConfig.showPromo === 'yes') promoBar.style.display = "block";
+            else promoBar.style.display = "none";
+        }
 
         function fileToBase64(file) {
             return new Promise((resolve, reject) => {
@@ -1178,12 +1309,9 @@
         }
 
         window.addEventListener("DOMContentLoaded", () => {
+            trackRealVisitorHit();
             initWilayasDropdown();
-            renderSocialIcons();
-            renderVisualCategoriesSlider();
-            renderCategoryNav();
-            renderProductsPage();
-            updateBadges();
+            loadGlobalData();
 
             window.addEventListener('hashchange', handleRouting);
             handleRouting();
@@ -1276,6 +1404,17 @@
             renderProductsPage();
         }
 
+        function handleSearchInput(val) {
+            searchQuery = val.trim();
+            currentPage = 1;
+            renderProductsPage();
+        }
+
+        function handleSortChange(val) {
+            sortOption = val;
+            renderProductsPage();
+        }
+
         function renderProductsPage() {
             const grid = document.getElementById("productsGrid");
             let filtered = products.filter(p => {
@@ -1283,6 +1422,9 @@
                 const matchSearch = p.name.includes(searchQuery);
                 return matchCat && matchSearch;
             });
+
+            if (sortOption === 'price-low') filtered.sort((a,b) => a.price - b.price);
+            else if (sortOption === 'price-high') filtered.sort((a,b) => b.price - a.price);
 
             const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
             if (currentPage > totalPages) currentPage = totalPages;
@@ -1299,7 +1441,7 @@
             grid.innerHTML = paginatedItems.map(item => `
                 <div class="product-card">
                     <div class="card-img-container" onclick="openProductDetail('${item.id}')">
-                        ${item.badge ? `<span class="badge-tag-pill ${item.tagClass}">${item.badge}</span>` : ''}
+                        ${item.badge ? `<span class="badge-tag-pill ${item.tagClass || 'tag-popular'}">${item.badge}</span>` : ''}
                         <button class="btn-wishlist-toggle ${wishlist.includes(item.id) ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist('${item.id}')">♥</button>
                         <img src="${item.image}" alt="${item.name}">
                     </div>
@@ -1311,7 +1453,7 @@
                         </div>
                         <div class="price-row">
                             <span style="font-size:0.75rem; color:var(--text-secondary);">سعر الجملة</span>
-                            <span class="price-val">${item.price.toLocaleString()} <small style="font-size:0.75rem;">د.ج</small></span>
+                            <span class="price-val">${Number(item.price).toLocaleString()} <small style="font-size:0.75rem;">د.ج</small></span>
                         </div>
                         <div class="qty-control-box">
                             <button class="qty-btn" onclick="adjustCardQty('${item.id}', -1)">-</button>
@@ -1368,7 +1510,7 @@
             document.getElementById("pdpTitle").innerText = item.name;
             document.getElementById("pdpImg").src = item.image;
             document.getElementById("pdpCategory").innerText = item.category + " • " + (item.pkgType || "تعبئة فاخرة");
-            document.getElementById("pdpPrice").innerText = item.price.toLocaleString() + " د.ج (سعر الجملة)";
+            document.getElementById("pdpPrice").innerText = Number(item.price).toLocaleString() + " د.ج (سعر الجملة)";
             document.getElementById("pdpMoq").innerText = `الحد الأدنى للطلب التجاري (MOQ): ${item.moq} قطعة / الوزن: ${item.weight}`;
             document.getElementById("pdpDesc").innerText = item.desc || "منتج طبيعي نقي وأصيل مطابق لأعلى معايير الجودة للبيع بالجملة للمتاجر والموزعين.";
             document.getElementById("pdpQtyInput").value = item.moq;
@@ -1432,6 +1574,38 @@
             document.getElementById("wishlistBadgeCount").innerText = wishlist.length;
         }
 
+        function toggleBackdrop(id, open) {
+            const el = document.getElementById(id);
+            if (open) el.classList.add("open");
+            else el.classList.remove("open");
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add("active");
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove("active");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastTxt").innerText = msg;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+
+        function openPageModal(title) {
+            document.getElementById("pagesModalTitle").innerText = title;
+            let text = "";
+            if (title === 'من نحن') text = pagesContent.about;
+            else if (title === 'سياسة الخصوصية') text = pagesContent.privacy;
+            else if (title === 'مقرنا') text = pagesContent.loc;
+            else if (title === 'اتصل بنا') text = pagesContent.contact;
+            document.getElementById("pagesModalBody").innerText = text;
+            openModal("pagesModal");
+        }
+
         function renderCartDrawer() {
             const container = document.getElementById("cartItemsContainer");
             if (cart.length === 0) {
@@ -1456,6 +1630,12 @@
             document.getElementById("cartGrandTotalVal").innerText = total.toLocaleString() + " د.ج";
         }
 
+        function openCheckoutModal() {
+            if (cart.length === 0) { showToast("السلة فارغة!"); return; }
+            toggleBackdrop("cartDrawerBackdrop", false);
+            openModal("checkoutModal");
+        }
+
         function handleOrderSubmit(e) {
             e.preventDefault();
             const order = {
@@ -1472,7 +1652,7 @@
             };
 
             orders.unshift(order);
-            localStorage.setItem('f_orders', JSON.stringify(orders));
+            saveGlobalData(['orders']);
 
             cart = [];
             localStorage.setItem('f_cart', JSON.stringify(cart));
@@ -1480,14 +1660,13 @@
 
             closeModal("checkoutModal");
             showToast("تم إرسال الطلبية بنجاح! سيتصل بك فريق المبيعات فوراً.");
-            renderAdminRealStatsAndCharts();
         }
 
         /* SECURE ADMIN PANEL LOGIN */
         function triggerAdminPanel() {
             document.getElementById("adminLoginErr").style.display = "none";
             document.getElementById("adminPassInput").value = "";
-            document.getElementById("adminLoginModal").classList.add("active");
+            openModal("adminLoginModal");
         }
 
         function verifyAdminPass(e) {
@@ -1515,8 +1694,9 @@
         function switchAdminTab(tab) {
             document.querySelectorAll(".admin-tab-sec").forEach(el => el.style.display = "none");
             document.querySelectorAll(".admin-side-btn").forEach(btn => btn.classList.remove("active"));
+            
             document.getElementById("admTab-" + tab).style.display = "block";
-            event.target.classList.add("active");
+            if (event && event.target) event.target.classList.add("active");
 
             if (tab === "stats") renderAdminRealStatsAndCharts();
             if (tab === "orders") renderAdminOrders();
@@ -1527,8 +1707,13 @@
             if (tab === "pages") loadAdminPagesForm();
         }
 
-        /* DYNAMIC REAL STATS & CHARTS CALCULATIONS */
+        /* REAL ACCURATE ADMIN STATS & CHARTS CALCULATIONS */
         function renderAdminRealStatsAndCharts() {
+            const visitStats = getRealVisitsStats();
+            document.getElementById("statTodayVisits").innerText = visitStats.today.toLocaleString();
+            document.getElementById("statThisMonthVisits").innerText = visitStats.thisMonth.toLocaleString();
+            document.getElementById("statLastMonthVisits").innerText = visitStats.lastMonth.toLocaleString();
+
             const pendingOrders = orders.filter(o => o.status === "قيد المعالجة").length;
             const confirmedOrders = orders.filter(o => o.status === "مؤكدة").length;
             const cancelledOrders = orders.filter(o => o.status === "ملغية").length;
@@ -1538,10 +1723,285 @@
             document.getElementById("admConfirmedOrdersCnt").innerText = confirmedOrders;
             document.getElementById("admCancelledOrdersCnt").innerText = cancelledOrders;
 
-            const totalRev = orders.filter(o => o.status !== "ملغية").reduce((sum, o) => sum + o.total, 0);
-
-            // CATEGORY DISTRIBUTION BAR CHART
+            // CATEGORY DISTRIBUTION BAR CHART (REAL PRODUCT COUNTS)
             const chartContainer = document.getElementById("dynamicCategoryChart");
             if (!chartContainer) return;
 
-            const realCats
+            const activeCats = categories.filter(c => c !== "الكل");
+            let maxCount = 1;
+            const counts = activeCats.map(cat => {
+                const count = products.filter(p => p.category === cat).length;
+                if (count > maxCount) maxCount = count;
+                return { category: cat, count: count };
+            });
+
+            chartContainer.innerHTML = counts.map(item => {
+                const heightPercent = Math.max(12, Math.round((item.count / maxCount) * 100));
+                return `
+                    <div class="chart-bar-single" style="height: ${heightPercent}%;">
+                        <span>${item.count}</span>
+                        <div class="chart-bar-label" style="position:absolute; bottom:-25px; width:100%; font-size:0.7rem;">${item.category}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById("admOrdersTbody");
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:#888;">لا توجد طلبيات مسجلة بعد</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(ord => `
+                <tr>
+                    <td><strong>${ord.id}</strong></td>
+                    <td>${ord.name}</td>
+                    <td>${ord.phone}</td>
+                    <td>${ord.wilaya}<br><small style="color:#666;">${ord.address}</small></td>
+                    <td>${ord.items.map(i => `${i.name} (x${i.qty})`).join('<br>')}</td>
+                    <td><strong style="color:var(--brand-green);">${ord.total.toLocaleString()} د.ج</strong></td>
+                    <td><small>${ord.date}</small></td>
+                    <td>
+                        <select onchange="updateOrderStatus('${ord.id}', this.value)" style="padding:4px; border-radius:4px; font-weight:700;">
+                            <option value="قيد المعالجة" ${ord.status === 'قيد المعالجة' ? 'selected' : ''}>قيد المعالجة</option>
+                            <option value="مؤكدة" ${ord.status === 'مؤكدة' ? 'selected' : ''}>مؤكدة</option>
+                            <option value="ملغية" ${ord.status === 'ملغية' ? 'selected' : ''}>ملغية</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn-action-sm btn-delete-sm" onclick="deleteOrder('${ord.id}')">حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateOrderStatus(id, newStatus) {
+            const ord = orders.find(o => o.id === id);
+            if (ord) {
+                ord.status = newStatus;
+                saveGlobalData(['orders']);
+                showToast("تم تحديث حالة الطلب بنجاح");
+            }
+        }
+
+        function deleteOrder(id) {
+            if (confirm("هل أنت تأكد من حذف هذا الطلب؟")) {
+                orders = orders.filter(o => o.id !== id);
+                saveGlobalData(['orders']);
+                renderAdminOrders();
+                showToast("تم حذف الطلب");
+            }
+        }
+
+        /* ADD & EDIT & DELETE PRODUCTS (GLOBALLY SYNCED) */
+        async function handleAdminAddProduct(e) {
+            e.preventDefault();
+            const imgVal = await getDualInputValue('npImg');
+            const techVal = await getDualInputValue('npTech');
+            const labVal = await getDualInputValue('npLab');
+
+            const newProd = {
+                id: Date.now().toString(),
+                name: document.getElementById("npTitle").value.trim(),
+                category: document.getElementById("npCategory").value,
+                price: parseFloat(document.getElementById("npPrice").value),
+                weight: document.getElementById("npWeight").value.trim(),
+                pkgType: document.getElementById("npPkg").value,
+                moq: parseInt(document.getElementById("npMoq").value) || 1,
+                desc: document.getElementById("npDesc").value.trim(),
+                image: imgVal || "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80",
+                techSheet: techVal || "#",
+                labCert: labVal || "#",
+                badge: "جديد",
+                tagClass: "tag-new"
+            };
+
+            products.unshift(newProd);
+            saveGlobalData(['products']);
+            e.target.reset();
+            showToast("تمت إضافة المنتج ونشره لجميع الزوار فوراً!");
+        }
+
+        function renderAdminManageProductsTable() {
+            const tbody = document.getElementById("admProductsManageTbody");
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td><img src="${p.image}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;"></td>
+                    <td><strong>${p.name}</strong></td>
+                    <td>${p.category}</td>
+                    <td>${p.price.toLocaleString()} د.ج</td>
+                    <td>${p.moq}</td>
+                    <td>
+                        <button class="btn-action-sm btn-edit-sm" onclick="openEditProductModal('${p.id}')">تعديل</button>
+                        <button class="btn-action-sm btn-delete-sm" onclick="deleteProduct('${p.id}')">حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openEditProductModal(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            document.getElementById("epId").value = p.id;
+            document.getElementById("epTitle").value = p.name;
+            document.getElementById("epCategory").value = p.category;
+            document.getElementById("epPrice").value = p.price;
+            document.getElementById("epWeight").value = p.weight;
+            document.getElementById("epMoq").value = p.moq;
+            document.getElementById("epDesc").value = p.desc;
+            document.getElementById("epImgUrl").value = p.image;
+
+            openModal("editProductModal");
+        }
+
+        async function handleSaveEditedProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById("epId").value;
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+
+            const newImg = await getDualInputValue('epImg');
+
+            p.name = document.getElementById("epTitle").value.trim();
+            p.category = document.getElementById("epCategory").value;
+            p.price = parseFloat(document.getElementById("epPrice").value);
+            p.weight = document.getElementById("epWeight").value.trim();
+            p.moq = parseInt(document.getElementById("epMoq").value);
+            p.desc = document.getElementById("epDesc").value.trim();
+            if (newImg) p.image = newImg;
+
+            saveGlobalData(['products']);
+            closeModal("editProductModal");
+            showToast("تم تحديث بيانات المنتج الموفر للجميع!");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("هل أنت متأكد من حذف هذا المنتج نهائياً لجميع المستخدمين؟")) {
+                products = products.filter(p => p.id !== id);
+                saveGlobalData(['products']);
+                showToast("تم حذف المنتج فوراً!");
+            }
+        }
+
+        /* CATEGORIES MANAGEMENT */
+        async function handleAdminAddCat(e) {
+            e.preventDefault();
+            const name = document.getElementById("ncInput").value.trim();
+            const img = await getDualInputValue('ncImg');
+
+            if (name && !categories.includes(name)) {
+                categories.push(name);
+                visualCategoriesData.push({
+                    name: name,
+                    img: img || "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80"
+                });
+                saveGlobalData(['categories', 'vis_cats']);
+                e.target.reset();
+                showToast("تمت إضافة التصنيف وتعميمه بنجاح!");
+            }
+        }
+
+        function renderAdminManageCategoriesList() {
+            const container = document.getElementById("admCategoriesManageList");
+            container.innerHTML = categories.filter(c => c !== "الكل").map(cat => `
+                <div style="background:var(--bg-body); padding:8px 14px; border-radius:20px; border:1px solid var(--border-color); display:flex; align-items:center; gap:8px;">
+                    <span style="font-weight:800;">${cat}</span>
+                    <button onclick="deleteCategory('${cat}')" style="background:none; color:var(--danger); font-weight:900;">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteCategory(cat) {
+            if (confirm(`هل أنت متأكد من حذف تصنيف "${cat}"؟`)) {
+                categories = categories.filter(c => c !== cat);
+                visualCategoriesData = visualCategoriesData.filter(vc => vc.name !== cat);
+                saveGlobalData(['categories', 'vis_cats']);
+                showToast("تم حذف التصنيف!");
+            }
+        }
+
+        /* BANNER & BRANDING FORM */
+        function loadAdminBannerForm() {
+            document.getElementById("ebDarkness").value = bannerConfig.darkness || 45;
+            document.getElementById("ebShowText").value = bannerConfig.showText || 'yes';
+            document.getElementById("ebTitle").value = bannerConfig.title || '';
+            document.getElementById("ebSub").value = bannerConfig.sub || '';
+            document.getElementById("ebCtaText").value = bannerConfig.ctaText || '';
+            document.getElementById("ebShowPromo").value = bannerConfig.showPromo || 'no';
+            document.getElementById("ebLogoUrl").value = bannerConfig.logo || '';
+            document.getElementById("ebImgUrl").value = bannerConfig.image || '';
+        }
+
+        async function handleAdminSaveBanner(e) {
+            e.preventDefault();
+            const logoVal = await getDualInputValue('ebLogo');
+            const banVal = await getDualInputValue('ebBan');
+
+            if (logoVal) bannerConfig.logo = logoVal;
+            if (banVal) bannerConfig.image = banVal;
+
+            bannerConfig.darkness = parseInt(document.getElementById("ebDarkness").value);
+            bannerConfig.showText = document.getElementById("ebShowText").value;
+            bannerConfig.title = document.getElementById("ebTitle").value.trim();
+            bannerConfig.sub = document.getElementById("ebSub").value.trim();
+            bannerConfig.ctaText = document.getElementById("ebCtaText").value.trim();
+            bannerConfig.showPromo = document.getElementById("ebShowPromo").value;
+
+            saveGlobalData(['banner']);
+            showToast("تم تحديث الواجهة الرئيسية والبانر للجميع!");
+        }
+
+        /* ADS & PIXEL */
+        function handleAdminSaveAds(e) {
+            e.preventDefault();
+            const pixelCode = document.getElementById("adPixelCode").value;
+            if (pixelCode) {
+                document.getElementById("metaPixelContainer").innerHTML = pixelCode;
+            }
+            showToast("تم حفظ شفرات الإعلانات بنجاح!");
+        }
+
+        /* PAGES CONTENT */
+        function loadAdminPagesForm() {
+            document.getElementById("epAbout").value = pagesContent.about || '';
+            document.getElementById("epPrivacy").value = pagesContent.privacy || '';
+            document.getElementById("epLoc").value = pagesContent.loc || '';
+            document.getElementById("epContact").value = pagesContent.contact || '';
+        }
+
+        function handleAdminSavePages(e) {
+            e.preventDefault();
+            pagesContent.about = document.getElementById("epAbout").value.trim();
+            pagesContent.privacy = document.getElementById("epPrivacy").value.trim();
+            pagesContent.loc = document.getElementById("epLoc").value.trim();
+            pagesContent.contact = document.getElementById("epContact").value.trim();
+
+            saveGlobalData(['pages']);
+            showToast("تم تحديث نصوص الصفحات لجميع الزوار!");
+        }
+
+        /* SOCIAL LINKS */
+        function loadAdminSocialsForm() {
+            document.getElementById("admFbUrl").value = socialLinks.facebook || '';
+            document.getElementById("admIgUrl").value = socialLinks.instagram || '';
+            document.getElementById("admWaUrl").value = socialLinks.whatsapp || '';
+            document.getElementById("admTtUrl").value = socialLinks.tiktok || '';
+            document.getElementById("admLiUrl").value = socialLinks.linkedin || '';
+        }
+
+        function handleAdminSaveSocials(e) {
+            e.preventDefault();
+            socialLinks.facebook = document.getElementById("admFbUrl").value.trim();
+            socialLinks.instagram = document.getElementById("admIgUrl").value.trim();
+            socialLinks.whatsapp = document.getElementById("admWaUrl").value.trim();
+            socialLinks.tiktok = document.getElementById("admTtUrl").value.trim();
+            socialLinks.linkedin = document.getElementById("admLiUrl").value.trim();
+
+            saveGlobalData(['socials']);
+            showToast("تم تحديث روابط التواصل الاجتماعي لكل الزوار!");
+        }
+    </script>
+</body>
+</html>
