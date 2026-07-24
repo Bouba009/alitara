@@ -1,667 +1,6 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <!-- Meta Data -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>العطارة التركمانية | منصة مبيعات الجملة B2B</title>
-    <meta name="description" content="منصة مبيعات الجملة B2B للأعشاب الطبيعية، الزيوت النقية، التوابل والصابون الطبيعي في الجزائر لكافة الولايات.">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph SEO -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="العطارة التركمانية | منصة مبيعات الجملة B2B">
-    <meta property="og:description" content="تزويد الموزعين والمتاجر بأجود الأعشاب والمنتجات الطبيعية النقية بأسعار الجملة التنافسية.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80">
-
-    <!-- Google Fonts: Cairo -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- FIREBASE SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-    <div id="metaPixelContainer"></div>
-
-    <style>
-        /* ==========================================
-           1. CORE STYLES & LUXURY PALETTE
-           ========================================== */
-        :root {
-            --bg-body: #FAF8F5;
-            --bg-surface: #FFFFFF;
-            --bg-subtle: #F2ECE4;
-            
-            --brand-dark: #0A1C12;
-            --brand-green: #143622;
-            --brand-leaf: #1F5234;
-            --brand-gold: #C8A135;
-            --brand-gold-dark: #A48122;
-            --brand-gold-light: #FBF6E9;
-
-            --text-primary: #101E16;
-            --text-secondary: #4E6054;
-
-            --border-color: #E0DAD0;
-            --border-subtle: #EBE6DC;
-
-            --danger: #D9383A;
-            --success: #218A60;
-
-            --shadow-xs: 0 2px 6px rgba(10, 28, 18, 0.04);
-            --shadow-sm: 0 4px 14px rgba(10, 28, 18, 0.06);
-            --shadow-md: 0 8px 24px rgba(10, 28, 18, 0.1);
-            --shadow-lg: 0 20px 48px rgba(10, 28, 18, 0.16);
-
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-            --radius-full: 9999px;
-
-            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            box-sizing: border-box; margin: 0; padding: 0;
-            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a { text-decoration: none; color: inherit; }
-        button, input, select, textarea { font-family: inherit; outline: none; border: none; }
-        button { cursor: pointer; }
-
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
-
-        /* Splash Loader */
-        #app-loader {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--brand-dark); z-index: 99999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; transition: opacity 0.4s ease;
-        }
-        .loader-spin {
-            width: 48px; height: 48px; border: 4px solid rgba(200, 161, 53, 0.2);
-            border-top-color: var(--brand-gold); border-radius: 50%;
-            animation: spin 0.8s linear infinite; margin-bottom: 16px;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* TICKER BANNER */
-        .top-ticker {
-            background: var(--brand-dark); color: #E2ECE6; font-size: 0.82rem; padding: 8px 0;
-            overflow: hidden; position: relative; border-bottom: 1px solid rgba(200, 161, 53, 0.25);
-            direction: ltr;
-        }
-        .ticker-track {
-            display: flex; white-space: nowrap; gap: 50px;
-            animation: moveTickerLeftToRight 26s linear infinite; width: max-content; direction: rtl;
-        }
-        .ticker-track:hover { animation-play-state: paused; }
-        .ticker-item { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
-        .ticker-item strong { color: var(--brand-gold); font-weight: 800; }
-
-        @keyframes moveTickerLeftToRight {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-        }
-
-        .promo-offer-bar {
-            background: var(--brand-green); color: white; text-align: center;
-            padding: 10px 16px; font-size: 0.88rem; font-weight: 800;
-            border-bottom: 2px solid var(--brand-gold); display: none;
-        }
-
-        /* HEADER */
-        .header {
-            background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px);
-            position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-xs);
-            border-bottom: 1px solid var(--border-subtle);
-        }
-        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-        .header-brand { display: flex; align-items: center; gap: 12px; }
-
-        .btn-drawer-menu {
-            width: 42px; height: 42px; background: var(--bg-subtle); border-radius: var(--radius-md);
-            display: flex; align-items: center; justify-content: center; color: var(--brand-dark); border: 1px solid var(--border-color);
-        }
-
-        .logo-small { display: flex; align-items: center; gap: 10px; }
-        .logo-small img { width: 42px; height: 42px; object-fit: contain; border-radius: 50%; border: 1px solid var(--border-color); }
-        .logo-text h1 { font-size: 1.15rem; font-weight: 900; color: var(--brand-dark); line-height: 1.1; }
-        .logo-text span { font-size: 0.7rem; color: var(--text-secondary); font-weight: 700; }
-
-        .nav-menu { display: flex; gap: 24px; }
-        .nav-link { font-weight: 700; color: var(--text-primary); font-size: 0.92rem; transition: var(--transition); }
-        .nav-link:hover, .nav-link.active { color: var(--brand-leaf); }
-
-        .header-actions { display: flex; align-items: center; gap: 10px; }
-
-        .action-circle-btn {
-            position: relative; background: var(--bg-subtle); width: 42px; height: 42px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: var(--brand-dark); border: 1px solid var(--border-color); transition: var(--transition);
-        }
-        .action-circle-btn:hover { background: var(--brand-gold); border-color: var(--brand-gold); transform: translateY(-2px); }
-
-        .badge-pill {
-            position: absolute; top: -4px; right: -4px; background: var(--brand-gold);
-            color: var(--brand-dark); font-size: 0.72rem; font-weight: 900; min-width: 20px;
-            height: 20px; padding: 0 4px; border-radius: var(--radius-full);
-            display: flex; align-items: center; justify-content: center; border: 2px solid white;
-        }
-
-        /* HERO BANNER */
-        .hero-banner {
-            position: relative; min-height: 250px; border-radius: var(--radius-lg);
-            overflow: hidden; margin: 16px 0 24px 0; display: flex; align-items: center; justify-content: center;
-            box-shadow: var(--shadow-md); background-color: var(--brand-dark);
-        }
-        .hero-banner-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; transition: var(--transition); }
-        .hero-content { position: relative; z-index: 2; text-align: center; color: white; padding: 32px 20px; max-width: 760px; }
-        .hero-badge { display: inline-block; background: rgba(200, 161, 53, 0.25); border: 1px solid var(--brand-gold); color: var(--brand-gold); padding: 4px 14px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 800; margin-bottom: 12px; }
-        .hero-content h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; line-height: 1.25; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .hero-content p { font-size: 1rem; color: #E8F0EC; text-shadow: 0 1px 6px rgba(0,0,0,0.5); margin-bottom: 16px; }
-
-        .btn-hero-cta { display: inline-block; background: var(--brand-gold); color: var(--brand-dark); padding: 10px 26px; border-radius: var(--radius-md); font-weight: 800; transition: var(--transition); box-shadow: var(--shadow-sm); }
-        .btn-hero-cta:hover { background: white; transform: translateY(-2px); }
-
-        /* FEATURES STRIP */
-        .features-strip-wrapper { margin-bottom: 30px; }
-        .features-grid-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: var(--bg-surface); border-radius: var(--radius-lg); padding: 18px 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
-        .feature-card-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 6px; border-left: 1px solid var(--border-subtle); }
-        .feature-card-item:last-child { border-left: none; }
-        .feature-icon-box { width: 50px; height: 50px; background: var(--brand-gold-light); border: 1px solid rgba(200, 161, 53, 0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brand-green); margin-bottom: 8px; transition: var(--transition); }
-        .feature-card-title { font-weight: 800; font-size: 0.92rem; color: var(--brand-dark); }
-        .feature-card-desc { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; }
-
-        /* CATEGORIES SLIDER */
-        .categories-showcase-section { margin-bottom: 40px; }
-        .section-header-title { font-size: 1.35rem; font-weight: 900; color: var(--brand-dark); display: flex; align-items: center; gap: 10px; }
-        .section-header-title::before { content: ''; width: 5px; height: 22px; background: var(--brand-gold); border-radius: var(--radius-full); }
-
-        .slider-control-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--brand-dark); font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: var(--transition); box-shadow: var(--shadow-xs); }
-        .slider-control-btn:hover { background: var(--brand-green); color: white; border-color: var(--brand-green); }
-
-        .categories-cards-slider { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 10px 4px 18px 4px; scrollbar-width: thin; scrollbar-color: var(--brand-gold) var(--bg-subtle); }
-        .categories-cards-slider::-webkit-scrollbar { height: 6px; }
-        .categories-cards-slider::-webkit-scrollbar-thumb { background: var(--brand-gold); border-radius: var(--radius-full); }
-
-        .category-visual-card { flex: 0 0 160px; scroll-snap-align: start; background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-color); text-align: center; padding: 16px 10px; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-xs); }
-        .category-visual-card:hover { transform: translateY(-6px); border-color: var(--brand-gold); background: var(--brand-gold-light); }
-        .category-visual-img { width: 76px; height: 76px; object-fit: cover; border-radius: 50%; margin: 0 auto 10px auto; border: 2px solid var(--brand-gold); transition: var(--transition); }
-        .category-visual-card:hover .category-visual-img { transform: scale(1.08); }
-        .category-visual-name { font-size: 0.92rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        /* CATALOG & PRODUCTS */
-        .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 28px; margin-bottom: 60px; }
-        .sidebar-filter { background: var(--bg-surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); height: fit-content; }
-        .filter-group { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
-        .filter-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .filter-title { font-size: 0.95rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 12px; }
-
-        .search-input-wrap input { width: 100%; padding: 10px 14px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
-
-        .category-nav-list { display: flex; flex-direction: column; gap: 6px; }
-        .category-nav-btn { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: transparent; border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.88rem; font-weight: 700; width: 100%; text-align: right; }
-        .category-nav-btn.active { background: var(--brand-green); color: white; }
-
-        .products-grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-surface); padding: 12px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
-        .sort-select-modern { padding: 8px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-body); color: var(--brand-dark); font-weight: 800; font-size: 0.88rem; cursor: pointer; }
-
-        .products-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
-        .product-card { background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow: hidden; display: flex; flex-direction: column; position: relative; transition: var(--transition); }
-        .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--brand-leaf); }
-
-        .card-img-container { position: relative; width: 100%; height: 185px; background: #F4F0E8; cursor: pointer; }
-        .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .badge-tag-pill { position: absolute; top: 10px; right: 10px; padding: 3px 10px; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 800; z-index: 2; }
-        .tag-popular { background: var(--brand-dark); color: var(--brand-gold); }
-        .tag-new { background: var(--brand-leaf); color: white; }
-
-        .btn-wishlist-toggle { position: absolute; top: 10px; left: 10px; width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, 0.9); display: flex; align-items: center; justify-content: center; color: #999; z-index: 2; transition: var(--transition); }
-        .btn-wishlist-toggle.active { color: var(--danger); }
-
-        .card-body { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
-        .product-name { font-size: 1rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 4px; cursor: pointer; }
-
-        .moq-highlight-bar { background: var(--brand-gold-light); border: 1px dashed var(--brand-gold); color: var(--brand-gold-dark); padding: 4px 8px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; }
-        .price-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
-        .price-val { font-size: 1.2rem; font-weight: 900; color: var(--brand-green); }
-
-        .qty-control-box { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 8px; }
-        .qty-btn { width: 36px; height: 36px; background: var(--bg-body); font-weight: 800; font-size: 1.1rem; }
-        .qty-num-input { width: 100%; text-align: center; background: transparent; font-weight: 800; font-size: 0.9rem; }
-
-        .btn-cart-add { width: 100%; padding: 11px; background: var(--brand-green); color: white; border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition); }
-        .btn-cart-add:hover { background: var(--brand-dark); transform: translateY(-1px); }
-
-        .pagination-container { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 35px; margin-bottom: 20px; }
-        .page-btn { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 800; font-size: 0.9rem; color: var(--brand-dark); transition: var(--transition); }
-        .page-btn:hover, .page-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
-
-        /* DEDICATED PRODUCT PAGE (#product/ID) */
-        #productDetailPage { display: none; padding: 30px 0 60px 0; }
-        .breadcrumb-bar { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 24px; }
-        .breadcrumb-bar a { color: var(--brand-leaf); }
-
-        .p-detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; background: var(--bg-surface); border-radius: var(--radius-xl); padding: 30px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 40px; }
-        .p-detail-img-box { position: relative; width: 100%; height: 380px; border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-subtle); border: 1px solid var(--border-color); }
-        .p-detail-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .p-detail-title { font-size: 1.8rem; font-weight: 900; color: var(--brand-dark); margin-bottom: 10px; line-height: 1.25; }
-        .p-detail-price { font-size: 1.8rem; font-weight: 900; color: var(--brand-green); margin-bottom: 16px; }
-        .p-detail-desc { font-size: 0.98rem; color: var(--text-primary); line-height: 1.8; margin-bottom: 24px; }
-
-        .tech-sheet-card {
-            background: linear-gradient(135deg, #0F2B1C 0%, #1A422B 100%);
-            color: white; border-radius: var(--radius-lg); padding: 20px;
-            margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: var(--shadow-xs); border: 1px solid var(--brand-gold);
-        }
-        
-        .lab-cert-card {
-            background: linear-gradient(135deg, #FDF8E7 0%, #F5E8C4 100%);
-            color: var(--brand-dark); border-radius: var(--radius-lg); padding: 20px;
-            margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: var(--shadow-xs); border: 1px solid var(--brand-gold);
-        }
-
-        .doc-card-info { display: flex; align-items: center; gap: 12px; }
-        .doc-card-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
-        
-        .btn-doc-download-action {
-            display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
-            border-radius: var(--radius-md); font-weight: 800; font-size: 0.85rem;
-            transition: var(--transition); box-shadow: var(--shadow-xs);
-        }
-        .btn-dl-gold { background: var(--brand-gold); color: var(--brand-dark); }
-        .btn-dl-gold:hover { background: white; }
-        .btn-dl-dark { background: var(--brand-dark); color: white; }
-        .btn-dl-dark:hover { background: var(--brand-green); }
-
-        /* FLOATING WHATSAPP BUTTON */
-        .floating-whatsapp-btn {
-            position: fixed; bottom: 24px; left: 24px; width: 58px; height: 58px;
-            background: var(--brand-green); border: 2px solid var(--brand-gold);
-            color: var(--brand-gold); border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; box-shadow: 0 8px 24px rgba(10, 28, 18, 0.35);
-            z-index: 4000; transition: var(--transition); animation: whatsappPulseSiteTheme 2s infinite;
-        }
-        .floating-whatsapp-btn:hover { transform: scale(1.1); background: var(--brand-dark); color: white; }
-
-        @keyframes whatsappPulseSiteTheme {
-            0% { box-shadow: 0 0 0 0 rgba(200, 161, 53, 0.5); }
-            70% { box-shadow: 0 0 0 16px rgba(200, 161, 53, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(200, 161, 53, 0); }
-        }
-
-        /* DRAWERS & MODALS */
-        .drawer-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 28, 18, 0.65); backdrop-filter: blur(6px); z-index: 2500; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .drawer-backdrop.open { opacity: 1; pointer-events: all; }
-
-        .side-drawer-panel { position: fixed; top: 0; right: 0; width: 390px; max-width: 88%; height: 100%; background: var(--bg-surface); z-index: 2600; box-shadow: var(--shadow-lg); transform: translateX(100%); transition: transform 0.35s ease; display: flex; flex-direction: column; padding: 24px; }
-        .drawer-backdrop.open .side-drawer-panel { transform: translateX(0); }
-        .drawer-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 18px; }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); backdrop-filter: blur(6px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 16px; }
-        .modal-overlay.active { opacity: 1; pointer-events: all; }
-
-        .modal-dialog { background: white; width: 100%; max-width: 580px; border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto; transform: scale(0.92) translateY(20px); transition: var(--transition); }
-        .modal-overlay.active .modal-dialog { transform: scale(1) translateY(0); }
-
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; color: var(--brand-dark); }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
-
-        .dual-input-switch { display: flex; gap: 6px; margin-bottom: 6px; }
-        .btn-switch-opt { padding: 4px 10px; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 800; background: var(--bg-subtle); color: var(--brand-dark); cursor: pointer; }
-        .btn-switch-opt.active { background: var(--brand-green); color: white; }
-
-        .btn-submit-action { width: 100%; padding: 12px; background: var(--brand-green); color: white; font-weight: 800; border-radius: var(--radius-md); font-size: 0.95rem; text-align: center; }
-
-        /* FOOTER */
-        .footer { background: var(--brand-dark); color: #C0D1C7; padding: 60px 0 30px 0; border-top: 4px solid var(--brand-gold); }
-        .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.6fr; gap: 35px; margin-bottom: 40px; }
-        .footer-logo-large { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-        .footer-logo-large img { width: 70px; height: 70px; object-fit: contain; border-radius: 50%; border: 2px solid var(--brand-gold); }
-        .footer-logo-large h3 { color: white; font-size: 1.5rem; font-weight: 900; line-height: 1.1; }
-
-        .footer-map-frame { width: 100%; height: 140px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15); overflow: hidden; margin-top: 10px; }
-        .social-icons-group { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-        .social-brand-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; color: var(--brand-gold); transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.12); }
-        .social-brand-btn:hover { background: var(--brand-gold); color: var(--brand-dark); transform: translateY(-3px); }
-        .footer-bottom-row { padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
-
-        /* ==========================================
-           9. MODERNIZED SIDEBAR ADMIN DASHBOARD
-           ========================================== */
-        .admin-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #F0F4F2; z-index: 5000; display: none; overflow-y: auto; }
-        .admin-page.active { display: block; }
-
-        .admin-header { background: var(--brand-dark); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand-gold); sticky: top; }
-        
-        .admin-dashboard-layout {
-            display: grid; grid-template-columns: 270px 1fr; gap: 24px; padding: 24px 0 50px 0;
-        }
-
-        .admin-sidebar {
-            background: white; border-radius: var(--radius-lg); padding: 18px 12px;
-            border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;
-            height: fit-content; box-shadow: var(--shadow-xs); sticky: top;
-        }
-
-        .admin-side-btn {
-            display: flex; align-items: center; gap: 10px; padding: 12px 14px;
-            border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem;
-            color: var(--brand-dark); background: var(--bg-body); transition: var(--transition);
-            text-align: right; border: 1px solid transparent; width: 100%;
-        }
-
-        .admin-side-btn:hover { background: var(--bg-subtle); color: var(--brand-leaf); }
-        .admin-side-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); box-shadow: var(--shadow-xs); }
-
-        .stats-grid-six {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;
-        }
-
-        .stat-mini-card {
-            padding: 20px 16px; border-radius: var(--radius-lg); color: white;
-            box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between;
-        }
-
-        .bg-mini-1 { background: linear-gradient(135deg, #0B2B1B 0%, #154D31 100%); border-right: 4px solid #2ECC71; }
-        .bg-mini-2 { background: linear-gradient(135deg, #184232 0%, #2A6C50 100%); border-right: 4px solid #1ABC9C; }
-        .bg-mini-3 { background: linear-gradient(135deg, #2D3E33 0%, #445D4B 100%); border-right: 4px solid #95A5A6; }
-        .bg-mini-4 { background: linear-gradient(135deg, #8C6D18 0%, #C8A135 100%); border-right: 4px solid #F1C40F; }
-        .bg-mini-5 { background: linear-gradient(135deg, #125438 0%, #27AE60 100%); border-right: 4px solid #2ECC71; }
-        .bg-mini-6 { background: linear-gradient(135deg, #6B1D1E 0%, #C0392B 100%); border-right: 4px solid #E74C3C; }
-
-        .stat-mini-title { font-size: 0.82rem; font-weight: 700; opacity: 0.9; }
-        .stat-mini-num { font-size: 1.6rem; font-weight: 900; margin-top: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
-
-        .chart-box { background: white; padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 28px; box-shadow: var(--shadow-xs); }
-        .chart-bars { display: flex; align-items: flex-end; gap: 18px; height: 180px; margin-top: 24px; padding-top: 20px; border-bottom: 2px solid var(--border-color); }
-        .chart-bar-single { flex: 1; background: linear-gradient(180deg, var(--brand-leaf) 0%, var(--brand-green) 100%); border-radius: 6px 6px 0 0; position: relative; text-align: center; }
-        .chart-bar-single span { position: absolute; top: -24px; width: 100%; font-size: 0.78rem; font-weight: 800; color: var(--brand-dark); }
-        .chart-bar-label { font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-top: 6px; }
-
-        .admin-table-wrap { background: white; border-radius: var(--radius-lg); border: 1px solid var(--border-color); overflow-x: auto; box-shadow: var(--shadow-xs); }
-        .admin-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
-        .admin-table th, .admin-table td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle); }
-        .admin-table th { background: var(--bg-body); font-weight: 800; color: var(--brand-dark); }
-
-        .btn-action-sm { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 800; margin-left: 4px; transition: var(--transition); border:none; }
-        .btn-edit-sm { background: var(--brand-gold); color: var(--brand-dark); }
-        .btn-delete-sm { background: var(--danger); color: white; }
-
-        .toast { position: fixed; bottom: 24px; left: 24px; background: var(--brand-dark); color: white; padding: 12px 20px; border-radius: var(--radius-md); border-right: 4px solid var(--brand-gold); box-shadow: var(--shadow-lg); z-index: 6000; transform: translateY(100px); opacity: 0; transition: var(--transition); font-size: 0.88rem; font-weight: 700; }
-        .toast.show { transform: translateY(0); opacity: 1; }
-
-        @media (max-width: 992px) {
-            .nav-menu { display: none; }
-            .catalog-layout { grid-template-columns: 1fr; }
-            .admin-dashboard-layout { grid-template-columns: 1fr; }
-            .sidebar-filter { display: none; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .p-detail-layout { grid-template-columns: 1fr; gap: 20px; }
-        }
-        @media (max-width: 600px) {
-            .features-grid-row { grid-template-columns: repeat(4, 1fr); padding: 8px 4px; gap: 4px; }
-            .feature-card-item { border-left: none; }
-            .feature-icon-box { width: 38px; height: 38px; }
-            .feature-card-title { font-size: 0.72rem; }
-            .feature-card-desc { display: none; }
-            .products-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .category-visual-card { flex: 0 0 130px; padding: 12px 8px; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .stats-grid-six { grid-template-columns: repeat(2, 1fr); }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- APP SPLASH LOADER -->
-    <div id="app-loader">
-        <div class="loader-spin"></div>
-        <h3 style="font-weight:800; font-size:1.1rem;">العطارة التركمانية B2B</h3>
-        <p style="font-size:0.85rem; color:#A4B8AC;">جاري مزامنة البيانات الحية للسيرفر...</p>
-    </div>
-
-    <!-- PROMO OFFER BAR -->
-    <div class="promo-offer-bar" id="promoOfferBar">
-        🔥 عرض خاص للشركاء والموزعين: خصم 15% على كافّة الطلبيات التي تتجاوز 100,000 د.ج!
-    </div>
-
-    <!-- 1. TICKER BANNER -->
-    <div class="top-ticker">
-        <div class="ticker-track">
-            <div class="ticker-item">🚚 توصيل سريع لجميع الولايات <strong>(69 ولاية)</strong></div>
-            <div class="ticker-item">✨ عروض خاصة للشركاء والموزعين وخصومات كبرى على كميات الجملة</div>
-            <div class="ticker-item">🌿 أعشاب ونباتات طبيعية 100% مضمونة النقاوة والجودة</div>
-            <div class="ticker-item">📦 تعبئة وتغليف احترافي مهيأ لإعادة البيع مباشرة</div>
-            <!-- Duplication -->
-            <div class="ticker-item">🚚 توصيل سريع لجميع الولايات <strong>(69 ولاية)</strong></div>
-            <div class="ticker-item">✨ عروض خاصة للشركاء والموزعين وخصومات كبرى على كميات الجملة</div>
-            <div class="ticker-item">🌿 أعشاب ونباتات طبيعية 100% مضمونة النقاوة والجودة</div>
-            <div class="ticker-item">📦 تعبئة وتغليف احترافي مهيأ لإعادة البيع مباشرة</div>
-        </div>
-    </div>
-
-    <!-- 2. HEADER -->
-    <header class="header">
-        <div class="container header-inner">
-            <div class="header-brand">
-                <button class="btn-drawer-menu" onclick="toggleBackdrop('menuDrawerBackdrop', true)" title="القائمة الجانبية">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="18" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                </button>
-
-                <a href="#" class="logo-small">
-                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=100&q=80" id="headerLogoImg" alt="العطارة التركمانية">
-                    <div class="logo-text">
-                        <h1>العطارة التركمانية</h1>
-                        <span>منتجات طبيعية وأصيلة B2B</span>
-                    </div>
-                </a>
-            </div>
-
-            <nav class="nav-menu">
-                <a href="#" class="nav-link active">الرئيسية</a>
-                <a href="#categoriesSection" class="nav-link">التصنيفات</a>
-                <a href="#catalog" class="nav-link">كتالوج المنتجات</a>
-                <a href="#" onclick="openPageModal('من نحن')" class="nav-link">من نحن</a>
-                <a href="#" onclick="openPageModal('اتصل بنا')" class="nav-link">اتصل بنا</a>
-            </nav>
-
-            <div class="header-actions">
-                <button class="action-circle-btn" onclick="toggleBackdrop('wishlistDrawerBackdrop', true)" title="المفضلة">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span class="badge-pill" id="wishlistBadgeCount">0</span>
-                </button>
-
-                <button class="action-circle-btn" onclick="toggleBackdrop('cartDrawerBackdrop', true); renderCartDrawer();" title="السلة">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    <span class="badge-pill" id="cartBadgeCount">0</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN HOME VIEW CONTAINER -->
-    <div id="mainHomeView">
-        <!-- 3. HERO BANNER -->
-        <div class="container">
-            <section class="hero-banner" id="heroBannerWrapper">
-                <img src="https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80" id="heroBannerImg" class="hero-banner-img" alt="منتجات طبيعية">
-                <div class="hero-content" id="heroContentBox">
-                    <div class="hero-badge">🌿 منصة مبيعات الجملة B2B</div>
-                    <h2 id="heroBannerTitle">منتجات طبيعية 100% بالجملة</h2>
-                    <p id="heroBannerSub">خياركم الموثوق للحصول على أجود الأعشاب، الزيوت، والبهارات الطبيعية بأفضل الأسعار للموزعين والمحلات التجاريـة.</p>
-                    <a href="#catalog" id="heroCtaBtn" class="btn-hero-cta">تصفح الكتالوج الآن</a>
-                </div>
-            </section>
-        </div>
-
-        <!-- 4. FEATURES STRIP -->
-        <div class="container features-strip-wrapper">
-            <div class="features-grid-row">
-                <div class="feature-card-item">
-                    <div class="feature-icon-box">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                    </div>
-                    <div class="feature-card-title">توصيل سريع</div>
-                    <div class="feature-card-desc">لكافة الولايات (69 ولاية)</div>
-                </div>
-                <div class="feature-card-item">
-                    <div class="feature-icon-box">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                    </div>
-                    <div class="feature-card-title">دفع وعروض تنافسية</div>
-                    <div class="feature-card-desc">تسهيلات خاصة للموزعين</div>
-                </div>
-                <div class="feature-card-item">
-                    <div class="feature-icon-box">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                    </div>
-                    <div class="feature-card-title">تغليف احترافي</div>
-                    <div class="feature-card-desc">جاهز لإعادة البيع فوراً</div>
-                </div>
-                <div class="feature-card-item">
-                    <div class="feature-icon-box">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    </div>
-                    <div class="feature-card-title">جودة مضمونة</div>
-                    <div class="feature-card-desc">منتجات طبيعية 100%</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. CATEGORIES SHOWCASE SLIDER -->
-        <section class="container categories-showcase-section" id="categoriesSection">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h3 class="section-header-title">تصفح المنتجات حسب الفئة</h3>
-                <div style="display:flex; gap:8px;">
-                    <button class="slider-control-btn" onclick="slideCategories(220)" title="السابق">❯</button>
-                    <button class="slider-control-btn" onclick="slideCategories(-220)" title="التالي">❮</button>
-                </div>
-            </div>
-            
-            <div class="categories-cards-slider" id="visualCategoriesSlider"></div>
-        </section>
-
-        <!-- 6. MAIN CATALOG & PRODUCTS -->
-        <main class="container" id="catalog">
-            <div class="catalog-layout">
-                <aside class="sidebar-filter">
-                    <div class="filter-group">
-                        <div class="filter-title">تصفية المنتجات</div>
-                        <div class="search-input-wrap">
-                            <input type="text" id="searchInput" oninput="handleSearchInput(this.value)" placeholder="ابحث عن منتج...">
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <div class="filter-title">التصنيفات</div>
-                        <div class="category-nav-list" id="categoryNavList"></div>
-                    </div>
-                </aside>
-
-                <section>
-                    <div class="products-grid-header">
-                        <div style="font-weight:800; color:var(--brand-dark); font-size:0.95rem;">قائمة المنتجات الطبيعية بالجملة</div>
-                        <select id="sortSelect" onchange="handleSortChange(this.value)" class="sort-select-modern">
-                            <option value="popular">الأكثر مبيعاً</option>
-                            <option value="price-low">السعر: المنخفض للأعلى</option>
-                            <option value="price-high">السعر: الأعلى للمنخفض</option>
-                        </select>
-                    </div>
-
-                    <div class="products-cards-grid" id="productsGrid"></div>
-
-                    <div class="pagination-container" id="paginationControls"></div>
-                </section>
-            </div>
-        </main>
-    </div>
-
-    <!-- DEDICATED FULL PRODUCT PAGE (#product/ID) -->
-    <div id="productDetailPage" class="container">
-        <div class="breadcrumb-bar">
-            <a href="#">الرئيسية</a> / <a href="#catalog">كتالوج المنتجات</a> / <span id="pdpBreadcrumbTitle">-</span>
-        </div>
-
-        <div class="p-detail-layout">
-            <div>
-                <div class="p-detail-img-box">
-                    <img id="pdpImg" src="" alt="منتج">
-                </div>
-            </div>
-            <div>
-                <span class="p-detail-meta-pill" id="pdpCategory" style="background:var(--brand-gold-light); color:var(--brand-gold-dark); padding:4px 10px; border-radius:12px; font-weight:800; font-size:0.8rem;">-</span>
-                <h1 class="p-detail-title" id="pdpTitle" style="margin-top:10px;">-</h1>
-                <div class="p-detail-price" id="pdpPrice">-</div>
-                
-                <div class="moq-highlight-bar" id="pdpMoq" style="margin-bottom:20px; font-size:0.88rem; padding:8px 12px;">-</div>
-
-                <p class="p-detail-desc" id="pdpDesc">-</p>
-
-                <div id="pdpTechSheetCard" class="tech-sheet-card" style="display:none;">
-                    <div class="doc-card-info">
-                        <div class="doc-card-icon" style="background:rgba(255,255,255,0.15);">📄</div>
-                        <div>
-                            <h4 style="font-size:0.95rem; font-weight:800;">البطاقة الفنية للمنتج (Technical Data Sheet)</h4>
-                            <p style="font-size:0.75rem; opacity:0.85;">المواصفات الفنية ومعايير الجودة والاستعمال</p>
-                        </div>
-                    </div>
-                    <a id="pdpTechSheetBtn" href="#" target="_blank" class="btn-doc-download-action btn-dl-gold">
-                        <span>تحميل الملف</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    </a>
-                </div>
-
-                <div id="pdpLabCertCard" class="lab-cert-card" style="display:none;">
-                    <div class="doc-card-info">
-                        <div class="doc-card-icon" style="background:rgba(200,161,53,0.25);">🔬</div>
-                        <div>
-                            <h4 style="font-size:0.95rem; font-weight:800;">شهادة التحاليل المخبرية المعتمدة (Certificate of Analysis)</h4>
-                            <p style="font-size:0.75rem; color:var(--text-secondary);">نتائج الفحص المخبري لضمان الخلو من التلوث والاصطناع</p>
-                        </div>
-                    </div>
-                    <a id="pdpLabCertBtn" href="#" target="_blank" class="btn-doc-download-action btn-dl-dark">
-                        <span>تحميل الملف</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    </a>
-                </div>
-
-                <div style="display:flex; gap:12px; align-items:center; margin-bottom:20px;">
-                    <div class="qty-control-box" style="width:140px; margin-bottom:0;">
-                        <button class="qty-btn" onclick="adjustPdpQty(-1)">-</button>
-                        <input type="number" id="pdpQtyInput" value="1" class="qty-num-input" readonly>
-                        <button class="qty-btn" onclick="adjustPdpQty(1)">+</button>
-                    </div>
-                    <button class="btn-cart-add" id="pdpAddToCartBtn" style="flex:1; padding:12px;">إضافة لسلة الجملة 🛒</button>
-                </div>
-
-                <a href="#catalog" style="display:inline-block; font-weight:800; color:var(--brand-leaf); text-decoration:underline;">← العودة لتصفح باقي المنتجات</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/213550000000" id="floatingWhatsappBtn" target="_blank" class="floating-whatsapp-btn" title="تواصل معنا عبر الواتساب">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-        </svg>
+<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
     </a>
 
     <!-- DRAWERS & MODALS -->
@@ -755,7 +94,7 @@
                     <input type="file" id="epImgFile" accept="image/*" class="dual-field-epImg" style="display:none;">
                 </div>
 
-                <button type="submit" class="btn-submit-action">حفظ التعديلات والتحديث لجميع الزوار</button>
+                <button type="submit" class="btn-submit-action">حفظ التعديلات والتحديث لجميع الزوار عبر Firebase</button>
             </form>
         </div>
     </div>
@@ -834,13 +173,12 @@
         <div class="admin-header">
             <div>
                 <h2>لوحة تحكم الأدمن (العطارة التركمانية B2B)</h2>
-                <span style="font-size:0.8rem; opacity:0.8;">مزامنة حية ومباشرة مع كافة المستخدمين والسيرفر</span>
+                <span style="font-size:0.8rem; opacity:0.8;">مزامنة حية ومباشرة مع كافة المستخدمين والسيرفر عبر Firebase</span>
             </div>
             <button onclick="exitAdmin()" style="background:var(--danger); color:white; padding:8px 18px; border-radius:6px; font-weight:800;">تسجيل الخروج</button>
         </div>
 
         <div class="container admin-dashboard-layout">
-            <!-- ORGANIZED SIDEBAR NAVIGATION -->
             <aside class="admin-sidebar">
                 <button class="admin-side-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات والتوزيع</button>
                 <button class="admin-side-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات المباشرة (<span id="admOrdersBadge">0</span>)</button>
@@ -852,9 +190,7 @@
                 <button class="admin-side-btn" onclick="switchAdminTab('socials')">🌐 روابط منصات التواصل</button>
             </aside>
 
-            <!-- MAIN ADMIN CONTENT AREA -->
             <main>
-                <!-- TOP 6 VIBRANT REAL STATS METRICS -->
                 <div class="stats-grid-six">
                     <div class="stat-mini-card bg-mini-1">
                         <div class="stat-mini-title">زيارات اليوم الحقيقية</div>
@@ -882,7 +218,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 1: STATS & CHARTS -->
                 <div id="admTab-stats" class="admin-tab-sec">
                     <div class="chart-box">
                         <h3 style="color:var(--brand-dark);">التوزيع الحقيقي المباشر للمنتجات حسب التصنيفات الفعالة</h3>
@@ -890,7 +225,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: ORDERS TABLE -->
                 <div id="admTab-orders" class="admin-tab-sec" style="display:none;">
                     <h3 style="margin-bottom:14px; color:var(--brand-dark);">جدول طلبيات الزبائن وتأطير المبيعات B2B</h3>
                     <div class="admin-table-wrap">
@@ -913,10 +247,9 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: PRODUCTS FULL MANAGE & EDIT & DELETE -->
                 <div id="admTab-products" class="admin-tab-sec" style="display:none;">
                     <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; margin-bottom:28px; box-shadow:var(--shadow-xs);">
-                        <h3 style="color:var(--brand-dark);">إضافة منتج جديد للكتالوج (مع خيار رفع الملفات)</h3>
+                        <h3 style="color:var(--brand-dark);">إضافة منتج جديد للكتالوج (تُحفظ فوراً لجميع الزوار)</h3>
                         <form onsubmit="handleAdminAddProduct(event)" style="margin-top:16px;">
                             <div class="form-group"><label>اسم المنتج</label><input type="text" id="npTitle" required></div>
                             <div class="form-group"><label>التصنيف</label><select id="npCategory" required></select></div>
@@ -956,7 +289,7 @@
                                 <input type="file" id="npLabFile" accept=".pdf,image/*" class="dual-field-npLab" style="display:none;">
                             </div>
 
-                            <button type="submit" class="btn-submit-action" style="margin-top:10px;">حفظ ونشر المنتج للجميع</button>
+                            <button type="submit" class="btn-submit-action" style="margin-top:10px;">حفظ ونشر المنتج لجميع الزوار عبر Firebase</button>
                         </form>
                     </div>
 
@@ -978,7 +311,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: CATEGORIES MANAGEMENT -->
                 <div id="admTab-categories" class="admin-tab-sec" style="display:none;">
                     <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:550px; box-shadow:var(--shadow-xs); margin-bottom:24px;">
                         <h3>إضافة تصنيف جديد</h3>
@@ -993,7 +325,7 @@
                                 <input type="url" id="ncImgUrl" placeholder="https://..." class="dual-field-ncImg">
                                 <input type="file" id="ncImgFile" accept="image/*" class="dual-field-ncImg" style="display:none;">
                             </div>
-                            <button type="submit" class="btn-submit-action">إضافة التصنيف للعامة</button>
+                            <button type="submit" class="btn-submit-action">إضافة التصنيف للعامة عبر Firebase</button>
                         </form>
                     </div>
 
@@ -1003,7 +335,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 5: BANNER & BRANDING WITH DUAL UPLOAD -->
                 <div id="admTab-banner" class="admin-tab-sec" style="display:none;">
                     <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:650px; box-shadow:var(--shadow-xs);">
                         <h3>إعدادات البانر الرئيسي والشعار</h3>
@@ -1034,12 +365,11 @@
                             <div class="form-group"><label>الوصف القصير</label><input type="text" id="ebSub"></div>
                             <div class="form-group"><label>نص زر البانر</label><input type="text" id="ebCtaText"></div>
                             <div class="form-group"><label>إظهار شريط العروض الأخضر العلوي؟</label><select id="ebShowPromo"><option value="no">لا</option><option value="yes">نعم</option></select></div>
-                            <button type="submit" class="btn-submit-action">تطبيق التعديلات</button>
+                            <button type="submit" class="btn-submit-action">تطبيق التعديلات للجميع</button>
                         </form>
                     </div>
                 </div>
 
-                <!-- TAB 6: ADS & PIXEL -->
                 <div id="admTab-ads" class="admin-tab-sec" style="display:none;">
                     <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
                         <h3>إعدادات Meta Pixel والإعلانات المنبثقة</h3>
@@ -1052,7 +382,6 @@
                     </div>
                 </div>
 
-                <!-- TAB 7: PAGES CONTENT -->
                 <div id="admTab-pages" class="admin-tab-sec" style="display:none;">
                     <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
                         <h3>تعديل محتوى نصوص الصفحات المعرفية</h3>
@@ -1061,12 +390,11 @@
                             <div class="form-group"><label>سياسة الخصوصية</label><textarea id="epPrivacy" rows="3"></textarea></div>
                             <div class="form-group"><label>مقرنا الرئيسي</label><textarea id="epLoc" rows="2"></textarea></div>
                             <div class="form-group"><label>اتصل بنا</label><textarea id="epContact" rows="2"></textarea></div>
-                            <button type="submit" class="btn-submit-action">حفظ نصوص الصفحات</button>
+                            <button type="submit" class="btn-submit-action">حفظ نصوص الصفحات عبر Firebase</button>
                         </form>
                     </div>
                 </div>
 
-                <!-- TAB 8: SOCIAL LINKS -->
                 <div id="admTab-socials" class="admin-tab-sec" style="display:none;">
                     <div style="background:white; padding:22px; border-radius:10px; max-width:600px; border:1px solid #ddd;">
                         <h3>إدارة روابط منصات التواصل الاجتماعي</h3>
@@ -1076,7 +404,7 @@
                             <div class="form-group"><label>رابط WhatsApp (رقم أو wa.me)</label><input type="text" id="admWaUrl" required></div>
                             <div class="form-group"><label>رابط TikTok</label><input type="url" id="admTtUrl" required></div>
                             <div class="form-group"><label>رابط LinkedIn</label><input type="url" id="admLiUrl" required></div>
-                            <button type="submit" class="btn-submit-action">حفظ وتحديث الروابط</button>
+                            <button type="submit" class="btn-submit-action">حفظ وتحديث الروابط عبر Firebase</button>
                         </form>
                     </div>
                 </div>
@@ -1084,97 +412,55 @@
         </div>
     </div>
 
-    <!-- TOAST -->
     <div class="toast" id="toast"><span id="toastTxt">تمت العملية بنجاح</span></div>
 
     <!-- ==========================================
-       JAVASCRIPT APPLICATION LOGIC
+       JAVASCRIPT REALTIME FIREBASE SYSTEM
        ========================================== -->
     <script>
-        /* 1. FIREBASE & LIVE CROSS-DEVICE REALTIME SYNC INTEGRATION */
+        /* YOUR EXACT FIREBASE CONFIGURATION INTEGRATED */
         const firebaseConfig = {
-            apiKey: "AIzaSyB_Placeholder_Key",
-            authDomain: "turkmani-b2b.firebaseapp.com",
-            projectId: "turkmani-b2b",
-            storageBucket: "turkmani-b2b.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
+            apiKey: "AIzaSyAFNictu-KWi_XcVvNmnzbbF68V0LPGT6E",
+            authDomain: "el-aitara-rukmania.firebaseapp.com",
+            databaseURL: "https://el-aitara-rukmania-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "el-aitara-rukmania",
+            storageBucket: "el-aitara-rukmania.firebasestorage.app",
+            messagingSenderId: "521141694012",
+            appId: "1:521141694012:web:f21510ae706643eeee5d39",
+            measurementId: "G-PRJV85KKH9"
         };
 
         let db = null;
-        try {
-            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-        } catch(e) {
-            console.log("Running on Local-Live Hybrid Mode");
+
+        function initFirebaseSystem() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                db = firebase.firestore();
+                setupFirestoreRealtimeListeners();
+            } catch(e) {
+                console.error("Firebase init error:", e);
+            }
         }
 
-        // Live Broadcast Channel for cross-tab realtime sync
-        const broadcastSync = new BroadcastChannel('turkmani_b2b_live_sync');
-        broadcastSync.onmessage = (event) => {
-            if (event.data && event.data.type === 'REFRESH_ALL') {
-                loadGlobalData();
-            }
-        };
-
-        function triggerGlobalRefresh() {
-            broadcastSync.postMessage({ type: 'REFRESH_ALL' });
-            if (db) {
-                try {
-                    db.collection("app_state").doc("sync").set({ lastUpdated: Date.now() });
-                } catch(e) {}
-            }
-            loadGlobalData();
-        }
-
-        const algeriaWilayas = [
-            "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
-            "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر العاصمة", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
-            "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة",
-            "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة",
-            "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان", "49 - تيميمون", "50 - برج باجي مختار",
-            "51 - أولاد جلال", "52 - بني عباس", "53 - عين صالح", "54 - عين قزام", "55 - تقرت", "56 - جانت", "57 - المغير", "58 - المنيعة", "59 - آفلو", "60 - بريكة",
-            "61 - القنطرة", "62 - بئر العاتر", "63 - العريشة", "64 - قصر الشلالة", "65 - عين وسارة", "66 - مسعد", "67 - قصر البخاري", "68 - بوسعادة", "69 - الأبيض سيدي الشيخ"
-        ];
-
-        let visualCategoriesData = [
-            { name: "الأعشاب الطبية", img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80" },
-            { name: "الزيوت الطبيعية", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=200&q=80" },
-            { name: "البهارات والتوابل", img: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=200&q=80" },
-            { name: "العسل الطبيعي", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=200&q=80" },
-            { name: "الصابون والمنتجات", img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=200&q=80" },
-            { name: "المساحيق الطبيعية", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=200&q=80" }
-        ];
-
-        let socialLinks = {
-            facebook: "https://facebook.com", instagram: "https://instagram.com",
-            whatsapp: "https://wa.me/213550000000", tiktok: "https://tiktok.com", linkedin: "https://linkedin.com"
-        };
-
-        let products = [
-            { id: "1", name: "زيت الزيتون البكر الممتاز", category: "الزيوت الطبيعية", weight: "250 مل", price: 1650, moq: 10, pkgType: "زجاجة", desc: "زيت زيتون معصور على البارد نقي 100% موجه للاستهلاك الطبي والصيدلاني.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", techSheet: "#", labCert: "#" },
-            { id: "2", name: "أوراق السنا الطبيعية", category: "الأعشاب الطبية", weight: "500 غ", price: 1200, moq: 5, pkgType: "كيس", desc: "أوراق سنا مكي مجففة طبيعياً بدون مواد حافظة.", badge: "الأكثر مبيعاً", tagClass: "tag-popular", image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=400&q=80" },
-            { id: "3", name: "بابونج أزهار نقي", category: "الأعشاب الطبية", weight: "500 غ", price: 980, moq: 5, pkgType: "كيس", desc: "أزهار بابونج ذهبية معطرة ذات نقاوة عالية.", badge: null, image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" },
-            { id: "4", name: "قرفة أعواد فاخرة", category: "البهارات والتوابل", weight: "500 غ", price: 1100, moq: 10, pkgType: "كيس", desc: "أعواد قرفة سيلانية فاخرة.", badge: null, image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=400&q=80" }
-        ];
-
-        let categories = ["الكل", "الأعشاب الطبية", "الزيوت الطبيعية", "البهارات والتوابل", "العسل الطبيعي", "الصابون والمنتجات", "المساحيق الطبيعية"];
+        // Global State Variables
+        let visualCategoriesData = [];
+        let socialLinks = { facebook: "#", instagram: "#", whatsapp: "#", tiktok: "#", linkedin: "#" };
+        let products = [];
+        let categories = ["الكل"];
         let cart = JSON.parse(localStorage.getItem('f_cart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('f_wishlist')) || [];
         let orders = [];
+        let visitStats = { today: 1, thisMonth: 1, lastMonth: 0 };
 
         let bannerConfig = {
             logo: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=100&q=80",
             image: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80",
-            darkness: 45, showText: "yes", title: "منتجات طبيعية 100% بالجملة", sub: "خياركم الموثوق للحصول على أجود الأعشاب والمستخلصات بأسعار الموزعين.", ctaText: "تصفح الكتالوج الآن", showPromo: "no"
+            darkness: 45, showText: "yes", title: "منتجات طبيعية 100% بالجملة", sub: "خياركم الموثوق بأسعار الموزعين.", ctaText: "تصفح الكتالوج الآن", showPromo: "no"
         };
 
-        let pagesContent = {
-            about: "المؤسسة الأولى والمتخصصة في توريد وتوزيع النباتات والزيوت والأعشاب الطبيعية والمستخلصات النقية بأسعار الجملة لكل المتاجر بالجزائر.",
-            privacy: "نحن نلتزم بالحفاظ على خصوصية زبائننا وشركائنا B2B. جميع المعلومات المدخلة تُستخدم فقط لإتمام الطلبيات والخدمات اللوجستية.",
-            loc: "الجزائر العاصمة، الجزائر",
-            contact: "الهاتف: 0550 00 00 00 | البريد: b2b@turkmani.dz"
-        };
+        let pagesContent = { about: "", privacy: "", loc: "", contact: "" };
 
         let activeCategory = "الكل";
         let searchQuery = "";
@@ -1183,76 +469,113 @@
         const itemsPerPage = 10;
         let currentPdpItem = null;
 
-        /* REAL ANALYTICS TRACKER */
+        /* REAL-TIME LISTENERS FOR FIREBASE FIRESTORE */
+        function setupFirestoreRealtimeListeners() {
+            if (!db) return;
+
+            // 1. Listen to Products
+            db.collection("products").onSnapshot(snapshot => {
+                products = [];
+                snapshot.forEach(doc => {
+                    products.push({ id: doc.id, ...doc.data() });
+                });
+                renderProductsPage();
+                if (isAdminActive()) renderAdminManageProductsTable();
+            });
+
+            // 2. Listen to Categories
+            db.collection("categories").doc("list").onSnapshot(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    categories = data.categories || ["الكل"];
+                    visualCategoriesData = data.visCats || [];
+                    renderCategoryNav();
+                    renderVisualCategoriesSlider();
+                }
+            });
+
+            // 3. Listen to Banner & Settings
+            db.collection("settings").doc("banner").onSnapshot(doc => {
+                if (doc.exists) {
+                    bannerConfig = doc.data();
+                    applyBannerAndBrandingConfig();
+                }
+            });
+
+            // 4. Listen to Social Links
+            db.collection("settings").doc("socials").onSnapshot(doc => {
+                if (doc.exists) {
+                    socialLinks = doc.data();
+                    renderSocialIcons();
+                }
+            });
+
+            // 5. Listen to Pages
+            db.collection("settings").doc("pages").onSnapshot(doc => {
+                if (doc.exists) {
+                    pagesContent = doc.data();
+                }
+            });
+
+            // 6. Listen to Orders
+            db.collection("orders").onSnapshot(snapshot => {
+                orders = [];
+                snapshot.forEach(doc => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+                if (isAdminActive()) {
+                    renderAdminOrders();
+                    renderAdminRealStatsAndCharts();
+                }
+            });
+
+            // Track Visits
+            trackRealVisitorHit();
+        }
+
+        /* VISITORS COUNTER VIA FIREBASE */
         function trackRealVisitorHit() {
+            if (!db) return;
             const now = new Date();
             const todayStr = now.toISOString().split('T')[0];
-            const currentMonthStr = todayStr.substring(0, 7);
-            
-            let visitsData = JSON.parse(localStorage.getItem('g_visits_data')) || {
-                daily: {},
-                monthly: {}
-            };
+            const monthStr = todayStr.substring(0, 7);
 
-            if (!sessionStorage.getItem('visited_today_session')) {
-                sessionStorage.setItem('visited_today_session', 'true');
-                visitsData.daily[todayStr] = (visitsData.daily[todayStr] || 0) + 1;
-                visitsData.monthly[currentMonthStr] = (visitsData.monthly[currentMonthStr] || 0) + 1;
-                localStorage.setItem('g_visits_data', JSON.stringify(visitsData));
+            if (!sessionStorage.getItem('v_hit_logged')) {
+                sessionStorage.setItem('v_hit_logged', 'true');
+                const docRef = db.collection("analytics").doc("visits");
+                
+                db.runTransaction(transaction => {
+                    return transaction.get(docRef).then(doc => {
+                        let data = doc.exists ? doc.data() : { daily: {}, monthly: {} };
+                        data.daily = data.daily || {};
+                        data.monthly = data.monthly || {};
+                        data.daily[todayStr] = (data.daily[todayStr] || 0) + 1;
+                        data.monthly[monthStr] = (data.monthly[monthStr] || 0) + 1;
+                        transaction.set(docRef, data, { merge: true });
+                    });
+                }).catch(e => console.log("Visit hit error:", e));
             }
+
+            db.collection("analytics").doc("visits").onSnapshot(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const daily = data.daily || {};
+                    const monthly = data.monthly || {};
+                    const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                    const lastMonthStr = lastMonthDate.toISOString().substring(0, 7);
+
+                    visitStats = {
+                        today: daily[todayStr] || 1,
+                        thisMonth: monthly[monthStr] || 1,
+                        lastMonth: monthly[lastMonthStr] || 0
+                    };
+                    if (isAdminActive()) renderAdminRealStatsAndCharts();
+                }
+            });
         }
 
-        function getRealVisitsStats() {
-            const visitsData = JSON.parse(localStorage.getItem('g_visits_data')) || { daily: {}, monthly: {} };
-            const now = new Date();
-            const todayStr = now.toISOString().split('T')[0];
-            const currentMonthStr = todayStr.substring(0, 7);
-            
-            const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-            const lastMonthStr = lastMonthDate.toISOString().substring(0, 7);
-
-            return {
-                today: visitsData.daily[todayStr] || 1,
-                thisMonth: visitsData.monthly[currentMonthStr] || 1,
-                lastMonth: visitsData.monthly[lastMonthStr] || 0
-            };
-        }
-
-        /* DATA STORAGE & SYNC MANAGER */
-        function loadGlobalData() {
-            if (localStorage.getItem('g_products')) products = JSON.parse(localStorage.getItem('g_products'));
-            if (localStorage.getItem('g_categories')) categories = JSON.parse(localStorage.getItem('g_categories'));
-            if (localStorage.getItem('g_vis_cats')) visualCategoriesData = JSON.parse(localStorage.getItem('g_vis_cats'));
-            if (localStorage.getItem('g_banner')) bannerConfig = JSON.parse(localStorage.getItem('g_banner'));
-            if (localStorage.getItem('g_socials')) socialLinks = JSON.parse(localStorage.getItem('g_socials'));
-            if (localStorage.getItem('g_pages')) pagesContent = JSON.parse(localStorage.getItem('g_pages'));
-            if (localStorage.getItem('g_orders')) orders = JSON.parse(localStorage.getItem('g_orders'));
-
-            applyBannerAndBrandingConfig();
-            renderSocialIcons();
-            renderVisualCategoriesSlider();
-            renderCategoryNav();
-            renderProductsPage();
-            updateBadges();
-
-            if (document.getElementById("adminPage").classList.contains("active")) {
-                renderAdminRealStatsAndCharts();
-                renderAdminOrders();
-                renderAdminManageProductsTable();
-                renderAdminManageCategoriesList();
-            }
-        }
-
-        function saveGlobalData(keysToSave = ['products', 'categories', 'vis_cats', 'banner', 'socials', 'pages', 'orders']) {
-            if (keysToSave.includes('products')) localStorage.setItem('g_products', JSON.stringify(products));
-            if (keysToSave.includes('categories')) localStorage.setItem('g_categories', JSON.stringify(categories));
-            if (keysToSave.includes('vis_cats')) localStorage.setItem('g_vis_cats', JSON.stringify(visualCategoriesData));
-            if (keysToSave.includes('banner')) localStorage.setItem('g_banner', JSON.stringify(bannerConfig));
-            if (keysToSave.includes('socials')) localStorage.setItem('g_socials', JSON.stringify(socialLinks));
-            if (keysToSave.includes('pages')) localStorage.setItem('g_pages', JSON.stringify(pagesContent));
-            if (keysToSave.includes('orders')) localStorage.setItem('g_orders', JSON.stringify(orders));
-
-            triggerGlobalRefresh();
+        function isAdminActive() {
+            return document.getElementById("adminPage").classList.contains("active");
         }
 
         function applyBannerAndBrandingConfig() {
@@ -1308,10 +631,19 @@
             }
         }
 
+        const algeriaWilayas = [
+            "01 - أدرار", "02 - الشلف", "03 - الأغواط", "04 - أم البواقي", "05 - باتنة", "06 - بجاية", "07 - بسكرة", "08 - بشار", "09 - البليدة", "10 - البويرة",
+            "11 - تمنراست", "12 - تبسة", "13 - تلمسان", "14 - تيارت", "15 - تيزي وزو", "16 - الجزائر العاصمة", "17 - الجلفة", "18 - جيجل", "19 - سطيف", "20 - سعيدة",
+            "21 - سكيكدة", "22 - سيدي بلعباس", "23 - عنابة", "24 - قالمة", "25 - قسنطينة", "26 - المدية", "27 - مستغانم", "28 - المسيلة", "29 - معسكر", "30 - ورقلة",
+            "31 - وهران", "32 - البيض", "33 - إليزي", "34 - برج بوعريريج", "35 - بومرداس", "36 - الطارف", "37 - تندوف", "38 - تيسمسيلت", "39 - الوادي", "40 - خنشلة",
+            "41 - سوق أهراس", "42 - تيبازة", "43 - ميلة", "44 - عين الدفلى", "45 - النعامة", "46 - عين تموشنت", "47 - غرداية", "48 - غليزان", "49 - تيميمون", "50 - برج باجي مختار",
+            "51 - أولاد جلال", "52 - بني عباس", "53 - عين صالح", "54 - عين قزام", "55 - تقرت", "56 - جانت", "57 - المغير", "58 - المنيعة", "59 - آفلو", "60 - بريكة",
+            "61 - القنطرة", "62 - بئر العاتر", "63 - العريشة", "64 - قصر الشلالة", "65 - عين وسارة", "66 - مسعد", "67 - قصر البخاري", "68 - بوسعادة", "69 - الأبيض سيدي الشيخ"
+        ];
+
         window.addEventListener("DOMContentLoaded", () => {
-            trackRealVisitorHit();
+            initFirebaseSystem();
             initWilayasDropdown();
-            loadGlobalData();
 
             window.addEventListener('hashchange', handleRouting);
             handleRouting();
@@ -1319,22 +651,13 @@
             setTimeout(() => {
                 const loader = document.getElementById("app-loader");
                 if (loader) { loader.style.opacity = "0"; setTimeout(() => loader.style.display = "none", 400); }
-            }, 300);
+            }, 400);
         });
 
         function handleRouting() {
             const hash = window.location.hash;
-
-            if (hash === "#admin1") {
-                triggerAdminPanel();
-                return;
-            }
-
-            if (hash.startsWith("#product/")) {
-                const prodId = hash.replace("#product/", "");
-                showDedicatedProductPage(prodId);
-                return;
-            }
+            if (hash === "#admin1") { triggerAdminPanel(); return; }
+            if (hash.startsWith("#product/")) { showDedicatedProductPage(hash.replace("#product/", "")); return; }
 
             document.getElementById("productDetailPage").style.display = "none";
             document.getElementById("mainHomeView").style.display = "block";
@@ -1348,17 +671,15 @@
         function renderSocialIcons() {
             const container = document.getElementById("footerSocialIconsGroup");
             if (!container) return;
-
-            const waHref = socialLinks.whatsapp.startsWith("http") ? socialLinks.whatsapp : `https://wa.me/${socialLinks.whatsapp.replace(/\D/g,'')}`;
+            const waHref = socialLinks.whatsapp ? (socialLinks.whatsapp.startsWith("http") ? socialLinks.whatsapp : `https://wa.me/${socialLinks.whatsapp.replace(/\D/g,'')}`) : "#";
 
             container.innerHTML = `
-                <a href="${socialLinks.facebook}" target="_blank" class="social-brand-btn" title="Facebook">FB</a>
-                <a href="${socialLinks.instagram}" target="_blank" class="social-brand-btn" title="Instagram">IG</a>
-                <a href="${waHref}" target="_blank" class="social-brand-btn" title="WhatsApp">WA</a>
-                <a href="${socialLinks.tiktok}" target="_blank" class="social-brand-btn" title="TikTok">TT</a>
-                <a href="${socialLinks.linkedin}" target="_blank" class="social-brand-btn" title="LinkedIn">IN</a>
+                <a href="${socialLinks.facebook || '#'}" target="_blank" class="social-brand-btn">FB</a>
+                <a href="${socialLinks.instagram || '#'}" target="_blank" class="social-brand-btn">IG</a>
+                <a href="${waHref}" target="_blank" class="social-brand-btn">WA</a>
+                <a href="${socialLinks.tiktok || '#'}" target="_blank" class="social-brand-btn">TT</a>
+                <a href="${socialLinks.linkedin || '#'}" target="_blank" class="social-brand-btn">IN</a>
             `;
-
             const floatBtn = document.getElementById("floatingWhatsappBtn");
             if (floatBtn) floatBtn.href = waHref;
         }
@@ -1419,7 +740,7 @@
             const grid = document.getElementById("productsGrid");
             let filtered = products.filter(p => {
                 const matchCat = activeCategory === "الكل" || p.category === activeCategory;
-                const matchSearch = p.name.includes(searchQuery);
+                const matchSearch = p.name ? p.name.includes(searchQuery) : true;
                 return matchCat && matchSearch;
             });
 
@@ -1433,7 +754,7 @@
             const paginatedItems = filtered.slice(startIndex, startIndex + itemsPerPage);
 
             if (paginatedItems.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">لا توجد منتجات مطابقة في هذا التصنيف.</div>`;
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">لا توجد منتجات مطابقة حالياً.</div>`;
                 document.getElementById("paginationControls").innerHTML = "";
                 return;
             }
@@ -1471,7 +792,6 @@
         function renderPaginationControls(totalPages) {
             const container = document.getElementById("paginationControls");
             if (totalPages <= 1) { container.innerHTML = ""; return; }
-
             let html = "";
             for (let i = 1; i <= totalPages; i++) {
                 html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
@@ -1580,13 +900,8 @@
             else el.classList.remove("open");
         }
 
-        function openModal(id) {
-            document.getElementById(id).classList.add("active");
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.remove("active");
-        }
+        function openModal(id) { document.getElementById(id).classList.add("active"); }
+        function closeModal(id) { document.getElementById(id).classList.remove("active"); }
 
         function showToast(msg) {
             const toast = document.getElementById("toast");
@@ -1638,8 +953,9 @@
 
         function handleOrderSubmit(e) {
             e.preventDefault();
+            const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
             const order = {
-                id: "ORD-" + Math.floor(100000 + Math.random() * 900000),
+                id: orderId,
                 name: document.getElementById("custName").value,
                 phone: document.getElementById("custPhone").value,
                 wilaya: document.getElementById("custWilaya").value,
@@ -1651,18 +967,18 @@
                 status: "قيد المعالجة"
             };
 
-            orders.unshift(order);
-            saveGlobalData(['orders']);
-
-            cart = [];
-            localStorage.setItem('f_cart', JSON.stringify(cart));
-            updateBadges();
-
-            closeModal("checkoutModal");
-            showToast("تم إرسال الطلبية بنجاح! سيتصل بك فريق المبيعات فوراً.");
+            if (db) {
+                db.collection("orders").doc(orderId).set(order).then(() => {
+                    cart = [];
+                    localStorage.setItem('f_cart', JSON.stringify(cart));
+                    updateBadges();
+                    closeModal("checkoutModal");
+                    showToast("تم إرسال الطلبية بنجاح ومزامنتها مع السيرفر!");
+                });
+            }
         }
 
-        /* SECURE ADMIN PANEL LOGIN */
+        /* ADMIN LOGIN & NAVIGATION */
         function triggerAdminPanel() {
             document.getElementById("adminLoginErr").style.display = "none";
             document.getElementById("adminPassInput").value = "";
@@ -1671,8 +987,7 @@
 
         function verifyAdminPass(e) {
             e.preventDefault();
-            const pass = document.getElementById("adminPassInput").value;
-            if (pass === "abobob123@") {
+            if (document.getElementById("adminPassInput").value === "abobob123@") {
                 closeModal("adminLoginModal");
                 document.getElementById("mainHomeView").style.display = "none";
                 document.getElementById("productDetailPage").style.display = "none";
@@ -1707,9 +1022,8 @@
             if (tab === "pages") loadAdminPagesForm();
         }
 
-        /* REAL ACCURATE ADMIN STATS & CHARTS CALCULATIONS */
+        /* REAL STATS RENDERER */
         function renderAdminRealStatsAndCharts() {
-            const visitStats = getRealVisitsStats();
             document.getElementById("statTodayVisits").innerText = visitStats.today.toLocaleString();
             document.getElementById("statThisMonthVisits").innerText = visitStats.thisMonth.toLocaleString();
             document.getElementById("statLastMonthVisits").innerText = visitStats.lastMonth.toLocaleString();
@@ -1723,7 +1037,6 @@
             document.getElementById("admConfirmedOrdersCnt").innerText = confirmedOrders;
             document.getElementById("admCancelledOrdersCnt").innerText = cancelledOrders;
 
-            // CATEGORY DISTRIBUTION BAR CHART (REAL PRODUCT COUNTS)
             const chartContainer = document.getElementById("dynamicCategoryChart");
             if (!chartContainer) return;
 
@@ -1759,8 +1072,8 @@
                     <td>${ord.name}</td>
                     <td>${ord.phone}</td>
                     <td>${ord.wilaya}<br><small style="color:#666;">${ord.address}</small></td>
-                    <td>${ord.items.map(i => `${i.name} (x${i.qty})`).join('<br>')}</td>
-                    <td><strong style="color:var(--brand-green);">${ord.total.toLocaleString()} د.ج</strong></td>
+                    <td>${ord.items ? ord.items.map(i => `${i.name} (x${i.qty})`).join('<br>') : ''}</td>
+                    <td><strong style="color:var(--brand-green);">${ord.total ? ord.total.toLocaleString() : 0} د.ج</strong></td>
                     <td><small>${ord.date}</small></td>
                     <td>
                         <select onchange="updateOrderStatus('${ord.id}', this.value)" style="padding:4px; border-radius:4px; font-weight:700;">
@@ -1777,32 +1090,33 @@
         }
 
         function updateOrderStatus(id, newStatus) {
-            const ord = orders.find(o => o.id === id);
-            if (ord) {
-                ord.status = newStatus;
-                saveGlobalData(['orders']);
-                showToast("تم تحديث حالة الطلب بنجاح");
+            if (db) {
+                db.collection("orders").doc(id).update({ status: newStatus }).then(() => {
+                    showToast("تم تحديث حالة الطلب في Firebase!");
+                });
             }
         }
 
         function deleteOrder(id) {
             if (confirm("هل أنت تأكد من حذف هذا الطلب؟")) {
-                orders = orders.filter(o => o.id !== id);
-                saveGlobalData(['orders']);
-                renderAdminOrders();
-                showToast("تم حذف الطلب");
+                if (db) {
+                    db.collection("orders").doc(id).delete().then(() => {
+                        showToast("تم حذف الطلب نهائياً!");
+                    });
+                }
             }
         }
 
-        /* ADD & EDIT & DELETE PRODUCTS (GLOBALLY SYNCED) */
+        /* ADD, EDIT & DELETE PRODUCTS IN FIREBASE */
         async function handleAdminAddProduct(e) {
             e.preventDefault();
             const imgVal = await getDualInputValue('npImg');
             const techVal = await getDualInputValue('npTech');
             const labVal = await getDualInputValue('npLab');
+            const newId = Date.now().toString();
 
             const newProd = {
-                id: Date.now().toString(),
+                id: newId,
                 name: document.getElementById("npTitle").value.trim(),
                 category: document.getElementById("npCategory").value,
                 price: parseFloat(document.getElementById("npPrice").value),
@@ -1817,10 +1131,12 @@
                 tagClass: "tag-new"
             };
 
-            products.unshift(newProd);
-            saveGlobalData(['products']);
-            e.target.reset();
-            showToast("تمت إضافة المنتج ونشره لجميع الزوار فوراً!");
+            if (db) {
+                db.collection("products").doc(newId).set(newProd).then(() => {
+                    e.target.reset();
+                    showToast("تمت إضافة المنتج ونشره لجميع الزوار فوراً!");
+                });
+            }
         }
 
         function renderAdminManageProductsTable() {
@@ -1830,7 +1146,7 @@
                     <td><img src="${p.image}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;"></td>
                     <td><strong>${p.name}</strong></td>
                     <td>${p.category}</td>
-                    <td>${p.price.toLocaleString()} د.ج</td>
+                    <td>${Number(p.price).toLocaleString()} د.ج</td>
                     <td>${p.moq}</td>
                     <td>
                         <button class="btn-action-sm btn-edit-sm" onclick="openEditProductModal('${p.id}')">تعديل</button>
@@ -1859,33 +1175,37 @@
         async function handleSaveEditedProduct(e) {
             e.preventDefault();
             const id = document.getElementById("epId").value;
-            const p = products.find(prod => prod.id === id);
-            if (!p) return;
-
             const newImg = await getDualInputValue('epImg');
 
-            p.name = document.getElementById("epTitle").value.trim();
-            p.category = document.getElementById("epCategory").value;
-            p.price = parseFloat(document.getElementById("epPrice").value);
-            p.weight = document.getElementById("epWeight").value.trim();
-            p.moq = parseInt(document.getElementById("epMoq").value);
-            p.desc = document.getElementById("epDesc").value.trim();
-            if (newImg) p.image = newImg;
+            const updatedData = {
+                name: document.getElementById("epTitle").value.trim(),
+                category: document.getElementById("epCategory").value,
+                price: parseFloat(document.getElementById("epPrice").value),
+                weight: document.getElementById("epWeight").value.trim(),
+                moq: parseInt(document.getElementById("epMoq").value),
+                desc: document.getElementById("epDesc").value.trim()
+            };
+            if (newImg) updatedData.image = newImg;
 
-            saveGlobalData(['products']);
-            closeModal("editProductModal");
-            showToast("تم تحديث بيانات المنتج الموفر للجميع!");
+            if (db) {
+                db.collection("products").doc(id).update(updatedData).then(() => {
+                    closeModal("editProductModal");
+                    showToast("تم تحديث بيانات المنتج لجميع الزوار فوراً!");
+                });
+            }
         }
 
         function deleteProduct(id) {
             if (confirm("هل أنت متأكد من حذف هذا المنتج نهائياً لجميع المستخدمين؟")) {
-                products = products.filter(p => p.id !== id);
-                saveGlobalData(['products']);
-                showToast("تم حذف المنتج فوراً!");
+                if (db) {
+                    db.collection("products").doc(id).delete().then(() => {
+                        showToast("تم حذف المنتج فوراً من قاعدة البيانات!");
+                    });
+                }
             }
         }
 
-        /* CATEGORIES MANAGEMENT */
+        /* CATEGORIES MANAGEMENT IN FIREBASE */
         async function handleAdminAddCat(e) {
             e.preventDefault();
             const name = document.getElementById("ncInput").value.trim();
@@ -1897,9 +1217,16 @@
                     name: name,
                     img: img || "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=200&q=80"
                 });
-                saveGlobalData(['categories', 'vis_cats']);
-                e.target.reset();
-                showToast("تمت إضافة التصنيف وتعميمه بنجاح!");
+
+                if (db) {
+                    db.collection("categories").doc("list").set({
+                        categories: categories,
+                        visCats: visualCategoriesData
+                    }).then(() => {
+                        e.target.reset();
+                        showToast("تمت إضافة التصنيف وتعميمه في Firebase!");
+                    });
+                }
             }
         }
 
@@ -1917,12 +1244,18 @@
             if (confirm(`هل أنت متأكد من حذف تصنيف "${cat}"؟`)) {
                 categories = categories.filter(c => c !== cat);
                 visualCategoriesData = visualCategoriesData.filter(vc => vc.name !== cat);
-                saveGlobalData(['categories', 'vis_cats']);
-                showToast("تم حذف التصنيف!");
+                if (db) {
+                    db.collection("categories").doc("list").set({
+                        categories: categories,
+                        visCats: visualCategoriesData
+                    }).then(() => {
+                        showToast("تم حذف التصنيف وتحديث الجميع!");
+                    });
+                }
             }
         }
 
-        /* BANNER & BRANDING FORM */
+        /* BANNER, PAGES, SOCIALS & ADS SAVERS */
         function loadAdminBannerForm() {
             document.getElementById("ebDarkness").value = bannerConfig.darkness || 45;
             document.getElementById("ebShowText").value = bannerConfig.showText || 'yes';
@@ -1949,21 +1282,22 @@
             bannerConfig.ctaText = document.getElementById("ebCtaText").value.trim();
             bannerConfig.showPromo = document.getElementById("ebShowPromo").value;
 
-            saveGlobalData(['banner']);
-            showToast("تم تحديث الواجهة الرئيسية والبانر للجميع!");
+            if (db) {
+                db.collection("settings").doc("banner").set(bannerConfig).then(() => {
+                    showToast("تم تحديث الواجهة والبانر في قاعدة البيانات!");
+                });
+            }
         }
 
-        /* ADS & PIXEL */
         function handleAdminSaveAds(e) {
             e.preventDefault();
             const pixelCode = document.getElementById("adPixelCode").value;
             if (pixelCode) {
                 document.getElementById("metaPixelContainer").innerHTML = pixelCode;
             }
-            showToast("تم حفظ شفرات الإعلانات بنجاح!");
+            showToast("تم حفظ إعدادات الإعلانات!");
         }
 
-        /* PAGES CONTENT */
         function loadAdminPagesForm() {
             document.getElementById("epAbout").value = pagesContent.about || '';
             document.getElementById("epPrivacy").value = pagesContent.privacy || '';
@@ -1978,11 +1312,13 @@
             pagesContent.loc = document.getElementById("epLoc").value.trim();
             pagesContent.contact = document.getElementById("epContact").value.trim();
 
-            saveGlobalData(['pages']);
-            showToast("تم تحديث نصوص الصفحات لجميع الزوار!");
+            if (db) {
+                db.collection("settings").doc("pages").set(pagesContent).then(() => {
+                    showToast("تم حفظ وتحديث النصوص لجميع الزوار!");
+                });
+            }
         }
 
-        /* SOCIAL LINKS */
         function loadAdminSocialsForm() {
             document.getElementById("admFbUrl").value = socialLinks.facebook || '';
             document.getElementById("admIgUrl").value = socialLinks.instagram || '';
@@ -1999,8 +1335,11 @@
             socialLinks.tiktok = document.getElementById("admTtUrl").value.trim();
             socialLinks.linkedin = document.getElementById("admLiUrl").value.trim();
 
-            saveGlobalData(['socials']);
-            showToast("تم تحديث روابط التواصل الاجتماعي لكل الزوار!");
+            if (db) {
+                db.collection("settings").doc("socials").set(socialLinks).then(() => {
+                    showToast("تم تحديث روابط التواصل الاجتماعي في Firebase!");
+                });
+            }
         }
     </script>
 </body>
