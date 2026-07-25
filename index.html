@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -352,8 +350,10 @@
 
         .admin-header { background: var(--brand-dark); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--brand-gold); }
         
+        .admin-dashboard-container { padding: 24px 0 50px 0; }
+
         .admin-dashboard-layout {
-            display: grid; grid-template-columns: 270px 1fr; gap: 24px; padding: 24px 0 50px 0;
+            display: grid; grid-template-columns: 270px 1fr; gap: 24px; margin-top: 24px;
         }
 
         .admin-sidebar {
@@ -373,12 +373,16 @@
         .admin-side-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); box-shadow: var(--shadow-xs); }
 
         .stats-grid-six {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;
         }
 
         .stat-mini-card {
             padding: 20px 16px; border-radius: var(--radius-lg); color: white;
             box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between;
+            transition: var(--transition);
+        }
+        .stat-mini-card.clickable:hover {
+            transform: translateY(-4px); box-shadow: var(--shadow-md); opacity: 0.95;
         }
 
         .bg-mini-1 { background: linear-gradient(135deg, #0B2B1B 0%, #154D31 100%); border-right: 4px solid #2ECC71; }
@@ -402,8 +406,9 @@
         .admin-table th, .admin-table td { padding: 14px 18px; border-bottom: 1px solid var(--border-subtle); }
         .admin-table th { background: var(--bg-body); font-weight: 800; color: var(--brand-dark); }
 
-        .btn-action-sm { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 800; margin-left: 4px; transition: var(--transition); border:none; }
+        .btn-action-sm { padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 800; margin-left: 4px; transition: var(--transition); border:none; display:inline-flex; align-items:center; gap:4px; }
         .btn-edit-sm { background: var(--brand-gold); color: var(--brand-dark); }
+        .btn-print-sm { background: var(--brand-green); color: white; }
         .btn-delete-sm { background: var(--danger); color: white; }
 
         .toast { position: fixed; bottom: 24px; left: 24px; background: var(--brand-dark); color: white; padding: 12px 20px; border-radius: var(--radius-md); border-right: 4px solid var(--brand-gold); box-shadow: var(--shadow-lg); z-index: 6000; transform: translateY(100px); opacity: 0; transition: var(--transition); font-size: 0.88rem; font-weight: 700; }
@@ -436,7 +441,7 @@
     <div id="app-loader">
         <div class="loader-spin"></div>
         <h3 style="font-weight:800; font-size:1.1rem;">العطارة التركمانية B2B</h3>
-        <p style="font-size:0.85rem; color:#A4B8AC;">جاري مزامنة البيانات الحية للسيرفر السحابي...</p>
+        <p style="font-size:0.85rem; color:#A4B8AC;">مرحباً بكم في منصة مبيعات الجملة...</p>
     </div>
 
     <!-- PROMO OFFER BAR -->
@@ -758,7 +763,7 @@
                     <input type="file" id="epImgFile" accept="image/*" class="dual-field-epImg" style="display:none;">
                 </div>
 
-                <button type="submit" class="btn-submit-action">حفظ التعديلات والتحديث لجميع الزوار عبر Firebase</button>
+                <button type="submit" class="btn-submit-action">حفظ التعديلات والتحديث لجميع الزوار</button>
             </form>
         </div>
     </div>
@@ -832,258 +837,272 @@
         </div>
     </footer>
 
-    <!-- MODERNIZED ADMIN DASHBOARD WITH SIDEBAR & TOP 6 VIBRANT REAL STATS -->
+    <!-- MODERNIZED ADMIN DASHBOARD WITH STATS AT TOP & SECTIONS BELOW -->
     <div class="admin-page" id="adminPage">
         <div class="admin-header">
             <div>
                 <h2>لوحة تحكم الأدمن (العطارة التركمانية B2B)</h2>
-                <span style="font-size:0.8rem; opacity:0.8;">مزامنة حية ومباشرة مع كافة المستخدمين والسيرفر عبر Firebase</span>
+                <span style="font-size:0.8rem; opacity:0.8;">لوحة التحكم الرئيسية وإدارة المبيعات</span>
             </div>
             <button onclick="exitAdmin()" style="background:var(--danger); color:white; padding:8px 18px; border-radius:6px; font-weight:800;">تسجيل الخروج</button>
         </div>
 
-        <div class="container admin-dashboard-layout">
-            <!-- ORGANIZED SIDEBAR NAVIGATION -->
-            <aside class="admin-sidebar">
-                <button class="admin-side-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات والتوزيع</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات المباشرة (<span id="admOrdersBadge">0</span>)</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('products')">➕ إضافة وتعديل المنتجات</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('categories')">📂 إدارة الفئات والتصنيفات</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('banner')">🖼️ الشعار وبانر الواجهة والعروض</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('ads')">📢 Meta Pixel والإعلانات</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('pages')">📝 نصوص الصفحات والمعلومات</button>
-                <button class="admin-side-btn" onclick="switchAdminTab('socials')">🌐 روابط منصات التواصل</button>
-            </aside>
-
-            <!-- MAIN ADMIN CONTENT AREA -->
-            <main>
-                <!-- TOP 6 VIBRANT REAL STATS METRICS -->
-                <div class="stats-grid-six">
-                    <div class="stat-mini-card bg-mini-1">
-                        <div class="stat-mini-title">زيارات اليوم الحقيقية</div>
-                        <div class="stat-mini-num" id="statTodayVisits">0</div>
-                    </div>
-                    <div class="stat-mini-card bg-mini-2">
-                        <div class="stat-mini-title">زيارات هذا الشهر</div>
-                        <div class="stat-mini-num" id="statThisMonthVisits">0</div>
-                    </div>
-                    <div class="stat-mini-card bg-mini-3">
-                        <div class="stat-mini-title">زيارات الشهر الماضي</div>
-                        <div class="stat-mini-num" id="statLastMonthVisits">0</div>
-                    </div>
-                    <div class="stat-mini-card bg-mini-4">
-                        <div class="stat-mini-title">طلبات جديدة</div>
-                        <div class="stat-mini-num" id="admNewOrdersCnt">0</div>
-                    </div>
-                    <div class="stat-mini-card bg-mini-5">
-                        <div class="stat-mini-title">طلبات مؤكدة</div>
-                        <div class="stat-mini-num" id="admConfirmedOrdersCnt">0</div>
-                    </div>
-                    <div class="stat-mini-card bg-mini-6">
-                        <div class="stat-mini-title">طلبات ملغية</div>
-                        <div class="stat-mini-num" id="admCancelledOrdersCnt">0</div>
-                    </div>
+        <div class="container admin-dashboard-container">
+            <!-- 1. TOP 6 VIBRANT REAL STATS METRICS (PLACES AT THE VERY TOP) -->
+            <div class="stats-grid-six">
+                <div class="stat-mini-card bg-mini-1">
+                    <div class="stat-mini-title">زيارات اليوم الحقيقية</div>
+                    <div class="stat-mini-num" id="statTodayVisits">0</div>
                 </div>
-
-                <!-- TAB 1: STATS & CHARTS -->
-                <div id="admTab-stats" class="admin-tab-sec">
-                    <div class="chart-box">
-                        <h3 style="color:var(--brand-dark);">التوزيع الحقيقي المباشر للمنتجات حسب التصنيفات الفعالة</h3>
-                        <div class="chart-bars" id="dynamicCategoryChart"></div>
-                    </div>
+                <div class="stat-mini-card bg-mini-2">
+                    <div class="stat-mini-title">زيارات هذا الشهر</div>
+                    <div class="stat-mini-num" id="statThisMonthVisits">0</div>
                 </div>
-
-                <!-- TAB 2: ORDERS TABLE -->
-                <div id="admTab-orders" class="admin-tab-sec" style="display:none;">
-                    <h3 style="margin-bottom:14px; color:var(--brand-dark);">جدول طلبيات الزبائن وتأطير المبيعات B2B</h3>
-                    <div class="admin-table-wrap">
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>اسم الزبون</th>
-                                    <th>الهاتف</th>
-                                    <th>الولاية والعنوان</th>
-                                    <th>المنتجات والكميات</th>
-                                    <th>المبلغ الإجمالي</th>
-                                    <th>التاريخ</th>
-                                    <th>حالة الطلب</th>
-                                    <th>إجراءات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admOrdersTbody"></tbody>
-                        </table>
-                    </div>
+                <div class="stat-mini-card bg-mini-3">
+                    <div class="stat-mini-title">زيارات الشهر الماضي</div>
+                    <div class="stat-mini-num" id="statLastMonthVisits">0</div>
                 </div>
+                <div class="stat-mini-card bg-mini-4 clickable" onclick="navigateToOrdersWithFilter('قيد المعالجة')" title="انقر للانتقال للطلبيات الجديدة">
+                    <div class="stat-mini-title">طلبات جديدة ↗</div>
+                    <div class="stat-mini-num" id="admNewOrdersCnt">0</div>
+                </div>
+                <div class="stat-mini-card bg-mini-5 clickable" onclick="navigateToOrdersWithFilter('مؤكدة')" title="انقر للانتقال للطلبيات المؤكدة">
+                    <div class="stat-mini-title">طلبات مؤكدة ↗</div>
+                    <div class="stat-mini-num" id="admConfirmedOrdersCnt">0</div>
+                </div>
+                <div class="stat-mini-card bg-mini-6 clickable" onclick="navigateToOrdersWithFilter('ملغية')" title="انقر للانتقال للطلبيات الملغية">
+                    <div class="stat-mini-title">طلبات ملغية ↗</div>
+                    <div class="stat-mini-num" id="admCancelledOrdersCnt">0</div>
+                </div>
+            </div>
 
-                <!-- TAB 3: PRODUCTS FULL MANAGE & EDIT & DELETE -->
-                <div id="admTab-products" class="admin-tab-sec" style="display:none;">
-                    <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; margin-bottom:28px; box-shadow:var(--shadow-xs);">
-                        <h3 style="color:var(--brand-dark);">إضافة منتج جديد للكتالوج (تُحفظ فوراً لجميع الزوار)</h3>
-                        <form onsubmit="handleAdminAddProduct(event)" style="margin-top:16px;">
-                            <div class="form-group"><label>اسم المنتج</label><input type="text" id="npTitle" required></div>
-                            <div class="form-group"><label>التصنيف</label><select id="npCategory" required></select></div>
-                            <div class="form-group"><label>سعر الجملة (د.ج)</label><input type="number" id="npPrice" required></div>
-                            <div class="form-group"><label>الوزن / الحجم</label><input type="text" id="npWeight" required placeholder="مثال: 500 غ"></div>
-                            <div class="form-group"><label>نوع التعبئة</label><select id="npPkg"><option value="كيس">كيس</option><option value="عبوة">عبوة</option><option value="زجاجة">زجاجة</option></select></div>
-                            <div class="form-group"><label>الحد الأدنى للطلب (MOQ)</label><input type="number" min="1" value="5" id="npMoq" required></div>
-                            <div class="form-group"><label>وصف المنتج التفصيلي</label><textarea id="npDesc" rows="3" required></textarea></div>
+            <!-- 2. SECTIONS & SETTINGS LAYOUT (BELOW STATS) -->
+            <div class="admin-dashboard-layout">
+                <!-- ORGANIZED SIDEBAR NAVIGATION -->
+                <aside class="admin-sidebar">
+                    <button class="admin-side-btn active" onclick="switchAdminTab('stats')">📊 الإحصائيات والتوزيع</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('orders')">📦 إدارة الطلبيات المباشرة (<span id="admOrdersBadge">0</span>)</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('products')">➕ إضافة وتعديل المنتجات</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('categories')">📂 إدارة الفئات والتصنيفات</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('banner')">🖼️ الشعار وبانر الواجهة والعروض</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('ads')">📢 Meta Pixel والإعلانات</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('pages')">📝 نصوص الصفحات والمعلومات</button>
+                    <button class="admin-side-btn" onclick="switchAdminTab('socials')">🌐 روابط منصات التواصل</button>
+                </aside>
 
-                            <div class="form-group">
-                                <label>صورة المنتج الرئيسية</label>
-                                <div class="dual-input-switch">
-                                    <button type="button" class="btn-switch-opt active" id="btn-sw-npimg-url" onclick="switchDualInput('npImg', 'url')">🔗 رابط URL</button>
-                                    <button type="button" class="btn-switch-opt" id="btn-sw-npimg-file" onclick="switchDualInput('npImg', 'file')">📁 رفع من الجهاز</button>
-                                </div>
-                                <input type="url" id="npImgUrl" placeholder="https://..." class="dual-field-npImg">
-                                <input type="file" id="npImgFile" accept="image/*" class="dual-field-npImg" style="display:none;">
+                <!-- MAIN ADMIN CONTENT AREA -->
+                <main>
+                    <!-- TAB 1: STATS & CHARTS -->
+                    <div id="admTab-stats" class="admin-tab-sec">
+                        <div class="chart-box">
+                            <h3 style="color:var(--brand-dark);">التوزيع الحقيقي المباشر للمنتجات حسب التصنيفات الفعالة</h3>
+                            <div class="chart-bars" id="dynamicCategoryChart"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: ORDERS TABLE -->
+                    <div id="admTab-orders" class="admin-tab-sec" style="display:none;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                            <h3 style="color:var(--brand-dark);">جدول طلبيات الزبائن وتأطير المبيعات B2B</h3>
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <span style="font-size:0.85rem; font-weight:800;">تصفية حسب الحالة:</span>
+                                <select id="orderStatusFilterSelect" onchange="filterOrdersByStatus(this.value)" style="padding:6px 12px; border-radius:6px; border:1px solid var(--border-color); font-weight:800; background:white;">
+                                    <option value="الكل">جميع الطلبيات</option>
+                                    <option value="قيد المعالجة">جديدة (قيد المعالجة)</option>
+                                    <option value="مؤكدة">مؤكدة</option>
+                                    <option value="ملغية">ملغية</option>
+                                </select>
                             </div>
+                        </div>
+                        <div class="admin-table-wrap">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>اسم الزبون</th>
+                                        <th>الهاتف</th>
+                                        <th>الولاية والعنوان</th>
+                                        <th>المنتجات والكميات</th>
+                                        <th>المبلغ الإجمالي</th>
+                                        <th>التاريخ</th>
+                                        <th>حالة الطلب</th>
+                                        <th>إجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admOrdersTbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                            <div class="form-group">
-                                <label>البطاقة الفنية للمنتج (PDF)</label>
-                                <div class="dual-input-switch">
-                                    <button type="button" class="btn-switch-opt active" id="btn-sw-nptech-url" onclick="switchDualInput('npTech', 'url')">🔗 رابط URL</button>
-                                    <button type="button" class="btn-switch-opt" id="btn-sw-nptech-file" onclick="switchDualInput('npTech', 'file')">📁 رفع من الجهاز</button>
+                    <!-- TAB 3: PRODUCTS FULL MANAGE & EDIT & DELETE -->
+                    <div id="admTab-products" class="admin-tab-sec" style="display:none;">
+                        <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; margin-bottom:28px; box-shadow:var(--shadow-xs);">
+                            <h3 style="color:var(--brand-dark);">إضافة منتج جديد للكتالوج</h3>
+                            <form onsubmit="handleAdminAddProduct(event)" style="margin-top:16px;">
+                                <div class="form-group"><label>اسم المنتج</label><input type="text" id="npTitle" required></div>
+                                <div class="form-group"><label>التصنيف</label><select id="npCategory" required></select></div>
+                                <div class="form-group"><label>سعر الجملة (د.ج)</label><input type="number" id="npPrice" required></div>
+                                <div class="form-group"><label>الوزن / الحجم</label><input type="text" id="npWeight" required placeholder="مثال: 500 غ"></div>
+                                <div class="form-group"><label>نوع التعبئة</label><select id="npPkg"><option value="كيس">كيس</option><option value="عبوة">عبوة</option><option value="زجاجة">زجاجة</option></select></div>
+                                <div class="form-group"><label>الحد الأدنى للطلب (MOQ)</label><input type="number" min="1" value="5" id="npMoq" required></div>
+                                <div class="form-group"><label>وصف المنتج التفصيلي</label><textarea id="npDesc" rows="3" required></textarea></div>
+
+                                <div class="form-group">
+                                    <label>صورة المنتج الرئيسية</label>
+                                    <div class="dual-input-switch">
+                                        <button type="button" class="btn-switch-opt active" id="btn-sw-npimg-url" onclick="switchDualInput('npImg', 'url')">🔗 رابط URL</button>
+                                        <button type="button" class="btn-switch-opt" id="btn-sw-npimg-file" onclick="switchDualInput('npImg', 'file')">📁 رفع من الجهاز</button>
+                                    </div>
+                                    <input type="url" id="npImgUrl" placeholder="https://..." class="dual-field-npImg">
+                                    <input type="file" id="npImgFile" accept="image/*" class="dual-field-npImg" style="display:none;">
                                 </div>
-                                <input type="url" id="npTechUrl" placeholder="https://..." class="dual-field-npTech">
-                                <input type="file" id="npTechFile" accept=".pdf,image/*" class="dual-field-npTech" style="display:none;">
-                            </div>
 
-                            <div class="form-group">
-                                <label>شهادة التحاليل المخبرية (PDF)</label>
-                                <div class="dual-input-switch">
-                                    <button type="button" class="btn-switch-opt active" id="btn-sw-nplab-url" onclick="switchDualInput('npLab', 'url')">🔗 رابط URL</button>
-                                    <button type="button" class="btn-switch-opt" id="btn-sw-nplab-file" onclick="switchDualInput('npLab', 'file')">📁 رفع من الجهاز</button>
+                                <div class="form-group">
+                                    <label>البطاقة الفنية للمنتج (PDF)</label>
+                                    <div class="dual-input-switch">
+                                        <button type="button" class="btn-switch-opt active" id="btn-sw-nptech-url" onclick="switchDualInput('npTech', 'url')">🔗 رابط URL</button>
+                                        <button type="button" class="btn-switch-opt" id="btn-sw-nptech-file" onclick="switchDualInput('npTech', 'file')">📁 رفع من الجهاز</button>
+                                    </div>
+                                    <input type="url" id="npTechUrl" placeholder="https://..." class="dual-field-npTech">
+                                    <input type="file" id="npTechFile" accept=".pdf,image/*" class="dual-field-npTech" style="display:none;">
                                 </div>
-                                <input type="url" id="npLabUrl" placeholder="https://..." class="dual-field-npLab">
-                                <input type="file" id="npLabFile" accept=".pdf,image/*" class="dual-field-npLab" style="display:none;">
-                            </div>
 
-                            <button type="submit" class="btn-submit-action" style="margin-top:10px;">حفظ ونشر المنتج لجميع الزوار عبر Firebase</button>
-                        </form>
-                    </div>
-
-                    <div class="admin-table-wrap">
-                        <h4 style="padding:16px; color:var(--brand-dark); border-bottom:1px solid var(--border-color);">قائمة المنتجات الحالية (تعديل وحذف)</h4>
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>الصورة</th>
-                                    <th>اسم المنتج</th>
-                                    <th>التصنيف</th>
-                                    <th>سعر الجملة</th>
-                                    <th>MOQ</th>
-                                    <th>إجراءات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admProductsManageTbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- TAB 4: CATEGORIES MANAGEMENT -->
-                <div id="admTab-categories" class="admin-tab-sec" style="display:none;">
-                    <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:550px; box-shadow:var(--shadow-xs); margin-bottom:24px;">
-                        <h3>إضافة تصنيف جديد</h3>
-                        <form onsubmit="handleAdminAddCat(event)" style="margin-top:14px;">
-                            <div class="form-group"><label>اسم التصنيف</label><input type="text" id="ncInput" required placeholder="اسم التصنيف"></div>
-                            <div class="form-group">
-                                <label>صورة التصنيف</label>
-                                <div class="dual-input-switch">
-                                    <button type="button" class="btn-switch-opt active" id="btn-sw-ncimg-url" onclick="switchDualInput('ncImg', 'url')">🔗 رابط URL</button>
-                                    <button type="button" class="btn-switch-opt" id="btn-sw-ncimg-file" onclick="switchDualInput('ncImg', 'file')">📁 رفع من الجهاز</button>
+                                <div class="form-group">
+                                    <label>شهادة التحاليل المخبرية (PDF)</label>
+                                    <div class="dual-input-switch">
+                                        <button type="button" class="btn-switch-opt active" id="btn-sw-nplab-url" onclick="switchDualInput('npLab', 'url')">🔗 رابط URL</button>
+                                        <button type="button" class="btn-switch-opt" id="btn-sw-nplab-file" onclick="switchDualInput('npLab', 'file')">📁 رفع من الجهاز</button>
+                                    </div>
+                                    <input type="url" id="npLabUrl" placeholder="https://..." class="dual-field-npLab">
+                                    <input type="file" id="npLabFile" accept=".pdf,image/*" class="dual-field-npLab" style="display:none;">
                                 </div>
-                                <input type="url" id="ncImgUrl" placeholder="https://..." class="dual-field-ncImg">
-                                <input type="file" id="ncImgFile" accept="image/*" class="dual-field-ncImg" style="display:none;">
-                            </div>
-                            <button type="submit" class="btn-submit-action">إضافة التصنيف للعامة عبر Firebase</button>
-                        </form>
+
+                                <button type="submit" class="btn-submit-action" style="margin-top:10px;">حفظ ونشر المنتج للعملاء</button>
+                            </form>
+                        </div>
+
+                        <div class="admin-table-wrap">
+                            <h4 style="padding:16px; color:var(--brand-dark); border-bottom:1px solid var(--border-color);">قائمة المنتجات الحالية (تعديل وحذف)</h4>
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>الصورة</th>
+                                        <th>اسم المنتج</th>
+                                        <th>التصنيف</th>
+                                        <th>سعر الجملة</th>
+                                        <th>MOQ</th>
+                                        <th>إجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admProductsManageTbody"></tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <div class="admin-table-wrap" style="max-width:700px;">
-                        <h4 style="padding:16px; color:var(--brand-dark); border-bottom:1px solid var(--border-color);">إدارة التصنيفات المتاحة</h4>
-                        <div id="admCategoriesManageList" style="padding:16px; display:flex; flex-wrap:wrap; gap:10px;"></div>
-                    </div>
-                </div>
-
-                <!-- TAB 5: BANNER & BRANDING WITH DUAL UPLOAD -->
-                <div id="admTab-banner" class="admin-tab-sec" style="display:none;">
-                    <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:650px; box-shadow:var(--shadow-xs);">
-                        <h3>إعدادات البانر الرئيسي والشعار</h3>
-                        <form onsubmit="handleAdminSaveBanner(event)" style="margin-top:14px;">
-                            <div class="form-group">
-                                <label>الشعار (Logo)</label>
-                                <div class="dual-input-switch">
-                                    <button type="button" class="btn-switch-opt active" id="btn-sw-eblogo-url" onclick="switchDualInput('ebLogo', 'url')">🔗 رابط URL</button>
-                                    <button type="button" class="btn-switch-opt" id="btn-sw-eblogo-file" onclick="switchDualInput('ebLogo', 'file')">📁 رفع من الجهاز</button>
+                    <!-- TAB 4: CATEGORIES MANAGEMENT -->
+                    <div id="admTab-categories" class="admin-tab-sec" style="display:none;">
+                        <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:550px; box-shadow:var(--shadow-xs); margin-bottom:24px;">
+                            <h3>إضافة تصنيف جديد</h3>
+                            <form onsubmit="handleAdminAddCat(event)" style="margin-top:14px;">
+                                <div class="form-group"><label>اسم التصنيف</label><input type="text" id="ncInput" required placeholder="اسم التصنيف"></div>
+                                <div class="form-group">
+                                    <label>صورة التصنيف</label>
+                                    <div class="dual-input-switch">
+                                        <button type="button" class="btn-switch-opt active" id="btn-sw-ncimg-url" onclick="switchDualInput('ncImg', 'url')">🔗 رابط URL</button>
+                                        <button type="button" class="btn-switch-opt" id="btn-sw-ncimg-file" onclick="switchDualInput('ncImg', 'file')">📁 رفع من الجهاز</button>
+                                    </div>
+                                    <input type="url" id="ncImgUrl" placeholder="https://..." class="dual-field-ncImg">
+                                    <input type="file" id="ncImgFile" accept="image/*" class="dual-field-ncImg" style="display:none;">
                                 </div>
-                                <input type="url" id="ebLogoUrl" placeholder="https://..." class="dual-field-ebLogo">
-                                <input type="file" id="ebLogoFile" accept="image/*" class="dual-field-ebLogo" style="display:none;">
-                            </div>
+                                <button type="submit" class="btn-submit-action">إضافة التصنيف</button>
+                            </form>
+                        </div>
 
-                            <div class="form-group">
-                                <label>صورة البانر الرئيسي</label>
-                                <div class="dual-input-switch">
-                                    <button type="button" class="btn-switch-opt active" id="btn-sw-ebban-url" onclick="switchDualInput('ebBan', 'url')">🔗 رابط URL</button>
-                                    <button type="button" class="btn-switch-opt" id="btn-sw-ebban-file" onclick="switchDualInput('ebBan', 'file')">📁 رفع من الجهاز</button>
+                        <div class="admin-table-wrap" style="max-width:700px;">
+                            <h4 style="padding:16px; color:var(--brand-dark); border-bottom:1px solid var(--border-color);">إدارة التصنيفات المتاحة</h4>
+                            <div id="admCategoriesManageList" style="padding:16px; display:flex; flex-wrap:wrap; gap:10px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 5: BANNER & BRANDING WITH DUAL UPLOAD -->
+                    <div id="admTab-banner" class="admin-tab-sec" style="display:none;">
+                        <div style="background:white; padding:22px; border-radius:12px; border:1px solid #ddd; max-width:650px; box-shadow:var(--shadow-xs);">
+                            <h3>إعدادات البانر الرئيسي والشعار</h3>
+                            <form onsubmit="handleAdminSaveBanner(event)" style="margin-top:14px;">
+                                <div class="form-group">
+                                    <label>الشعار (Logo)</label>
+                                    <div class="dual-input-switch">
+                                        <button type="button" class="btn-switch-opt active" id="btn-sw-eblogo-url" onclick="switchDualInput('ebLogo', 'url')">🔗 رابط URL</button>
+                                        <button type="button" class="btn-switch-opt" id="btn-sw-eblogo-file" onclick="switchDualInput('ebLogo', 'file')">📁 رفع من الجهاز</button>
+                                    </div>
+                                    <input type="url" id="ebLogoUrl" placeholder="https://..." class="dual-field-ebLogo">
+                                    <input type="file" id="ebLogoFile" accept="image/*" class="dual-field-ebLogo" style="display:none;">
                                 </div>
-                                <input type="url" id="ebImgUrl" placeholder="https://..." class="dual-field-ebBan">
-                                <input type="file" id="ebImgFile" accept="image/*" class="dual-field-ebBan" style="display:none;">
-                            </div>
 
-                            <div class="form-group"><label>تعتيم صورة البانر (من 0 إلى 100)</label><input type="number" min="0" max="100" id="ebDarkness" value="45"></div>
-                            <div class="form-group"><label>إظهار الكتابة فوق البانر؟</label><select id="ebShowText"><option value="yes">نعم</option><option value="no">لا</option></select></div>
-                            <div class="form-group"><label>عنوان البانر</label><input type="text" id="ebTitle"></div>
-                            <div class="form-group"><label>الوصف القصير</label><input type="text" id="ebSub"></div>
-                            <div class="form-group"><label>نص زر البانر</label><input type="text" id="ebCtaText"></div>
-                            <div class="form-group"><label>إظهار شريط العروض الأخضر العلوي؟</label><select id="ebShowPromo"><option value="no">لا</option><option value="yes">نعم</option></select></div>
-                            <button type="submit" class="btn-submit-action">تطبيق التعديلات للجميع</button>
-                        </form>
-                    </div>
-                </div>
+                                <div class="form-group">
+                                    <label>صورة البانر الرئيسي</label>
+                                    <div class="dual-input-switch">
+                                        <button type="button" class="btn-switch-opt active" id="btn-sw-ebban-url" onclick="switchDualInput('ebBan', 'url')">🔗 رابط URL</button>
+                                        <button type="button" class="btn-switch-opt" id="btn-sw-ebban-file" onclick="switchDualInput('ebBan', 'file')">📁 رفع من الجهاز</button>
+                                    </div>
+                                    <input type="url" id="ebImgUrl" placeholder="https://..." class="dual-field-ebBan">
+                                    <input type="file" id="ebImgFile" accept="image/*" class="dual-field-ebBan" style="display:none;">
+                                </div>
 
-                <!-- TAB 6: ADS & PIXEL -->
-                <div id="admTab-ads" class="admin-tab-sec" style="display:none;">
-                    <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
-                        <h3>إعدادات Meta Pixel والإعلانات المنبثقة</h3>
-                        <form onsubmit="handleAdminSaveAds(event)" style="margin-top:14px;">
-                            <div class="form-group"><label>كود Meta Ads Pixel Script</label><textarea id="adPixelCode" rows="4" placeholder="<script>...</script>"></textarea></div>
-                            <div class="form-group"><label>تفعيل إعلان Pop-up المنبثق؟</label><select id="adPopupActive"><option value="no">معطل</option><option value="yes">مفعل</option></select></div>
-                            <div class="form-group"><label>كود إعلان HTML للمنبثقة</label><textarea id="adPopupHtml" rows="4"></textarea></div>
-                            <button type="submit" class="btn-submit-action">حفظ الشفرات والإعلانات</button>
-                        </form>
+                                <div class="form-group"><label>تعتيم صورة البانر (من 0 إلى 100)</label><input type="number" min="0" max="100" id="ebDarkness" value="45"></div>
+                                <div class="form-group"><label>إظهار الكتابة فوق البانر؟</label><select id="ebShowText"><option value="yes">نعم</option><option value="no">لا</option></select></div>
+                                <div class="form-group"><label>عنوان البانر</label><input type="text" id="ebTitle"></div>
+                                <div class="form-group"><label>الوصف القصير</label><input type="text" id="ebSub"></div>
+                                <div class="form-group"><label>نص زر البانر</label><input type="text" id="ebCtaText"></div>
+                                <div class="form-group"><label>إظهار شريط العروض الأخضر العلوي؟</label><select id="ebShowPromo"><option value="no">لا</option><option value="yes">نعم</option></select></div>
+                                <button type="submit" class="btn-submit-action">تطبيق التعديلات للجميع</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!-- TAB 7: PAGES CONTENT -->
-                <div id="admTab-pages" class="admin-tab-sec" style="display:none;">
-                    <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
-                        <h3>تعديل محتوى نصوص الصفحات المعرفية</h3>
-                        <form onsubmit="handleAdminSavePages(event)" style="margin-top:14px;">
-                            <div class="form-group"><label>من نحن</label><textarea id="epAbout" rows="3"></textarea></div>
-                            <div class="form-group"><label>سياسة الخصوصية</label><textarea id="epPrivacy" rows="3"></textarea></div>
-                            <div class="form-group"><label>مقرنا الرئيسي</label><textarea id="epLoc" rows="2"></textarea></div>
-                            <div class="form-group"><label>اتصل بنا</label><textarea id="epContact" rows="2"></textarea></div>
-                            <button type="submit" class="btn-submit-action">حفظ نصوص الصفحات عبر Firebase</button>
-                        </form>
+                    <!-- TAB 6: ADS & PIXEL -->
+                    <div id="admTab-ads" class="admin-tab-sec" style="display:none;">
+                        <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
+                            <h3>إعدادات Meta Pixel والإعلانات المنبثقة</h3>
+                            <form onsubmit="handleAdminSaveAds(event)" style="margin-top:14px;">
+                                <div class="form-group"><label>كود Meta Ads Pixel Script</label><textarea id="adPixelCode" rows="4" placeholder="<script>...</script>"></textarea></div>
+                                <div class="form-group"><label>تفعيل إعلان Pop-up المنبثق؟</label><select id="adPopupActive"><option value="no">معطل</option><option value="yes">مفعل</option></select></div>
+                                <div class="form-group"><label>كود إعلان HTML للمنبثقة</label><textarea id="adPopupHtml" rows="4"></textarea></div>
+                                <button type="submit" class="btn-submit-action">حفظ الشفرات والإعلانات</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!-- TAB 8: SOCIAL LINKS -->
-                <div id="admTab-socials" class="admin-tab-sec" style="display:none;">
-                    <div style="background:white; padding:22px; border-radius:10px; max-width:600px; border:1px solid #ddd;">
-                        <h3>إدارة روابط منصات التواصل الاجتماعي</h3>
-                        <form onsubmit="handleAdminSaveSocials(event)" style="margin-top:14px;">
-                            <div class="form-group"><label>رابط Facebook</label><input type="url" id="admFbUrl" required></div>
-                            <div class="form-group"><label>رابط Instagram</label><input type="url" id="admIgUrl" required></div>
-                            <div class="form-group"><label>رابط WhatsApp (رقم أو wa.me)</label><input type="text" id="admWaUrl" required></div>
-                            <div class="form-group"><label>رابط TikTok</label><input type="url" id="admTtUrl" required></div>
-                            <div class="form-group"><label>رابط LinkedIn</label><input type="url" id="admLiUrl" required></div>
-                            <button type="submit" class="btn-submit-action">حفظ وتحديث الروابط عبر Firebase</button>
-                        </form>
+                    <!-- TAB 7: PAGES CONTENT -->
+                    <div id="admTab-pages" class="admin-tab-sec" style="display:none;">
+                        <div style="background:white; padding:22px; border-radius:10px; border:1px solid #ddd; max-width:650px;">
+                            <h3>تعديل محتوى نصوص الصفحات المعرفية</h3>
+                            <form onsubmit="handleAdminSavePages(event)" style="margin-top:14px;">
+                                <div class="form-group"><label>من نحن</label><textarea id="epAbout" rows="3"></textarea></div>
+                                <div class="form-group"><label>سياسة الخصوصية</label><textarea id="epPrivacy" rows="3"></textarea></div>
+                                <div class="form-group"><label>مقرنا الرئيسي</label><textarea id="epLoc" rows="2"></textarea></div>
+                                <div class="form-group"><label>اتصل بنا</label><textarea id="epContact" rows="2"></textarea></div>
+                                <button type="submit" class="btn-submit-action">حفظ نصوص الصفحات</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </main>
+
+                    <!-- TAB 8: SOCIAL LINKS -->
+                    <div id="admTab-socials" class="admin-tab-sec" style="display:none;">
+                        <div style="background:white; padding:22px; border-radius:10px; max-width:600px; border:1px solid #ddd;">
+                            <h3>إدارة روابط منصات التواصل الاجتماعي</h3>
+                            <form onsubmit="handleAdminSaveSocials(event)" style="margin-top:14px;">
+                                <div class="form-group"><label>رابط Facebook</label><input type="url" id="admFbUrl" required></div>
+                                <div class="form-group"><label>رابط Instagram</label><input type="url" id="admIgUrl" required></div>
+                                <div class="form-group"><label>رابط WhatsApp (رقم أو wa.me)</label><input type="text" id="admWaUrl" required></div>
+                                <div class="form-group"><label>رابط TikTok</label><input type="url" id="admTtUrl" required></div>
+                                <div class="form-group"><label>رابط LinkedIn</label><input type="url" id="admLiUrl" required></div>
+                                <button type="submit" class="btn-submit-action">حفظ وتحديث الروابط</button>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
     </div>
 
@@ -1140,6 +1159,7 @@
         let wishlist = JSON.parse(localStorage.getItem('f_wishlist')) || [];
         let orders = [];
         let visitStats = { today: 1, thisMonth: 1, lastMonth: 0 };
+        let activeOrdersFilterStatus = "الكل";
 
         let bannerConfig = {
             logo: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=100&q=80",
@@ -1655,7 +1675,7 @@
                     localStorage.setItem('f_cart', JSON.stringify(cart));
                     updateBadges();
                     closeModal("checkoutModal");
-                    showToast("تم إرسال الطلبية بنجاح ومزامنتها مع السيرفر!");
+                    showToast("تم إرسال الطلبية بنجاح!");
                 });
             }
         }
@@ -1693,7 +1713,14 @@
             document.querySelectorAll(".admin-side-btn").forEach(btn => btn.classList.remove("active"));
             
             document.getElementById("admTab-" + tab).style.display = "block";
-            if (event && event.target) event.target.classList.add("active");
+            
+            // Activate button matching the tab
+            const btnList = document.querySelectorAll(".admin-side-btn");
+            btnList.forEach(btn => {
+                if (btn.getAttribute("onclick") && btn.getAttribute("onclick").includes(`'${tab}'`)) {
+                    btn.classList.add("active");
+                }
+            });
 
             if (tab === "stats") renderAdminRealStatsAndCharts();
             if (tab === "orders") renderAdminOrders();
@@ -1702,6 +1729,11 @@
             if (tab === "socials") loadAdminSocialsForm();
             if (tab === "banner") loadAdminBannerForm();
             if (tab === "pages") loadAdminPagesForm();
+        }
+
+        function navigateToOrdersWithFilter(status) {
+            switchAdminTab('orders');
+            filterOrdersByStatus(status);
         }
 
         /* REAL STATS RENDERER */
@@ -1741,14 +1773,26 @@
             }).join('');
         }
 
+        function filterOrdersByStatus(status) {
+            activeOrdersFilterStatus = status;
+            const selectEl = document.getElementById("orderStatusFilterSelect");
+            if (selectEl) selectEl.value = status;
+            renderAdminOrders();
+        }
+
         function renderAdminOrders() {
             const tbody = document.getElementById("admOrdersTbody");
-            if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:#888;">لا توجد طلبيات مسجلة بعد</td></tr>`;
+            let filteredOrders = orders;
+            if (activeOrdersFilterStatus !== "الكل") {
+                filteredOrders = orders.filter(o => o.status === activeOrdersFilterStatus);
+            }
+
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:#888;">لا توجد طلبيات مطابقة في هذا الفلتر</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = orders.map(ord => `
+            tbody.innerHTML = filteredOrders.map(ord => `
                 <tr>
                     <td><strong>${ord.id}</strong></td>
                     <td>${ord.name}</td>
@@ -1765,16 +1809,94 @@
                         </select>
                     </td>
                     <td>
-                        <button class="btn-action-sm btn-delete-sm" onclick="deleteOrder('${ord.id}')">حذف</button>
+                        <button class="btn-action-sm btn-print-sm" onclick="printOrderReceipt('${ord.id}')" title="طباعة فاتورة">🖨️ طباعة</button>
+                        <button class="btn-action-sm btn-delete-sm" onclick="deleteOrder('${ord.id}')" title="حذف">حذف</button>
                     </td>
                 </tr>
             `).join('');
         }
 
+        /* PRINT RECEIPT FOR SMALL THERMAL PRINTERS (80mm) */
+        function printOrderReceipt(orderId) {
+            const ord = orders.find(o => o.id === orderId);
+            if (!ord) return;
+
+            const printWin = window.open('', '_blank', 'width=450,height=650');
+            const itemsRows = (ord.items || []).map(item => `
+                <tr>
+                    <td style="text-align:right; padding:4px 0; border-bottom:1px dashed #ccc;">${item.name}</td>
+                    <td style="text-align:center; padding:4px 0; border-bottom:1px dashed #ccc;">${item.qty}</td>
+                    <td style="text-align:left; padding:4px 0; border-bottom:1px dashed #ccc;">${(item.price * item.qty).toLocaleString()} د.ج</td>
+                </tr>
+            `).join('');
+
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="ar" dir="rtl">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>وصل طلبية - ${ord.id}</title>
+                    <style>
+                        body { font-family: 'Cairo', system-ui, sans-serif; width: 78mm; margin: 0 auto; padding: 10px; font-size: 12px; color: #000; background:#fff; }
+                        .text-center { text-align: center; }
+                        .header { border-bottom: 2px dashed #000; padding-bottom: 8px; margin-bottom: 10px; }
+                        .header h2 { margin: 0; font-size: 16px; font-weight: 900; }
+                        .header p { margin: 2px 0; font-size: 11px; }
+                        .info-table { width: 100%; margin-bottom: 10px; font-size: 11px; border-collapse:collapse; }
+                        .info-table td { padding: 2px 0; vertical-align: top; }
+                        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 11px; }
+                        .items-table th { border-bottom: 1px solid #000; text-align: right; padding-bottom: 4px; }
+                        .total-box { border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 6px 0; font-size: 14px; font-weight: 900; margin-top: 10px; display: flex; justify-content: space-between; }
+                        .footer { text-align: center; margin-top: 12px; font-size: 10px; border-top: 1px dashed #000; padding-top: 6px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header text-center">
+                        <h2>العطارة التركمانية B2B</h2>
+                        <p>وصل طلبية تجارية رسمية</p>
+                        <p><strong>رقم الطلب: ${ord.id}</strong></p>
+                        <p>التاريخ: ${ord.date}</p>
+                    </div>
+                    <table class="info-table">
+                        <tr><td style="width:60px;"><strong>الزبون:</strong></td><td>${ord.name}</td></tr>
+                        <tr><td><strong>الهاتف:</strong></td><td>${ord.phone}</td></tr>
+                        <tr><td><strong>الولاية:</strong></td><td>${ord.wilaya}</td></tr>
+                        <tr><td><strong>العنوان:</strong></td><td>${ord.address}</td></tr>
+                        ${ord.notes ? `<tr><td><strong>ملاحظات:</strong></td><td>${ord.notes}</td></tr>` : ''}
+                    </table>
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>المنتج</th>
+                                <th style="text-align:center;">الكمية</th>
+                                <th style="text-align:left;">المجموع</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsRows}
+                        </tbody>
+                    </table>
+                    <div class="total-box">
+                        <span>المبلغ الإجمالي:</span>
+                        <span>${ord.total ? ord.total.toLocaleString() : 0} د.ج</span>
+                    </div>
+                    <div class="footer">
+                        <p>شكراً لتعاملكم مع العطارة التركمانية</p>
+                        <p>منصة توريد وتوزيع الأعشاب والزيوت للجملة</p>
+                    </div>
+                    <script>
+                        window.onload = function() { window.print(); setTimeout(function(){ window.close(); }, 500); };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
         function updateOrderStatus(id, newStatus) {
             if (db) {
                 db.collection("orders").doc(id).update({ status: newStatus }).then(() => {
-                    showToast("تم تحديث حالة الطلب في Firebase!");
+                    showToast("تم تحديث حالة الطلب بنجاح!");
                 });
             }
         }
@@ -1816,7 +1938,7 @@
             if (db) {
                 db.collection("products").doc(newId).set(newProd).then(() => {
                     e.target.reset();
-                    showToast("تمت إضافة المنتج ونشره لجميع الزوار فوراً!");
+                    showToast("تمت إضافة المنتج ونشره بنجاح!");
                 });
             }
         }
@@ -1872,16 +1994,16 @@
             if (db) {
                 db.collection("products").doc(id).update(updatedData).then(() => {
                     closeModal("editProductModal");
-                    showToast("تم تحديث بيانات المنتج لجميع الزوار فوراً!");
+                    showToast("تم تحديث بيانات المنتج بنجاح!");
                 });
             }
         }
 
         function deleteProduct(id) {
-            if (confirm("هل أنت متأكد من حذف هذا المنتج نهائياً لجميع المستخدمين؟")) {
+            if (confirm("هل أنت متأكد من حذف هذا المنتج نهائياً؟")) {
                 if (db) {
                     db.collection("products").doc(id).delete().then(() => {
-                        showToast("تم حذف المنتج فوراً من قاعدة البيانات!");
+                        showToast("تم حذف المنتج بنجاح!");
                     });
                 }
             }
@@ -1906,7 +2028,7 @@
                         visCats: visualCategoriesData
                     }).then(() => {
                         e.target.reset();
-                        showToast("تمت إضافة التصنيف وتعميمه في Firebase!");
+                        showToast("تمت إضافة التصنيف بنجاح!");
                     });
                 }
             }
@@ -1931,7 +2053,7 @@
                         categories: categories,
                         visCats: visualCategoriesData
                     }).then(() => {
-                        showToast("تم حذف التصنيف وتحديث الجميع!");
+                        showToast("تم حذف التصنيف بنجاح!");
                     });
                 }
             }
@@ -1966,7 +2088,7 @@
 
             if (db) {
                 db.collection("settings").doc("banner").set(bannerConfig).then(() => {
-                    showToast("تم تحديث الواجهة والبانر في قاعدة البيانات!");
+                    showToast("تم تحديث الواجهة والبانر بنجاح!");
                 });
             }
         }
@@ -1977,7 +2099,7 @@
             if (pixelCode) {
                 document.getElementById("metaPixelContainer").innerHTML = pixelCode;
             }
-            showToast("تم حفظ إعدادات الإعلانات!");
+            showToast("تم حفظ إعدادات الإعلانات بنجاح!");
         }
 
         function loadAdminPagesForm() {
@@ -1996,7 +2118,7 @@
 
             if (db) {
                 db.collection("settings").doc("pages").set(pagesContent).then(() => {
-                    showToast("تم حفظ وتحديث النصوص لجميع الزوار!");
+                    showToast("تم حفظ وتحديث نصوص الصفحات بنجاح!");
                 });
             }
         }
@@ -2019,7 +2141,7 @@
 
             if (db) {
                 db.collection("settings").doc("socials").set(socialLinks).then(() => {
-                    showToast("تم تحديث روابط التواصل الاجتماعي في Firebase!");
+                    showToast("تم تحديث روابط التواصل الاجتماعي بنجاح!");
                 });
             }
         }
