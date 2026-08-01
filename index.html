@@ -25,33 +25,21 @@
             --text-primary: #101E16; --text-secondary: #4E6054;
             --border-color: #E0DAD0; --border-subtle: #EBE6DC;
             --danger: #D9383A; --success: #218A60;
+
+            --adm-sidebar-bg: #071910; --adm-sidebar-hover: #0F2D1F; --adm-sidebar-active: #143622;
+            --adm-bg: #F4F7F5; --adm-card-bg: #FFFFFF; --adm-text: #1C2D24; --adm-subtext: #6A7E74; --adm-border: #E5EFEA;
+            
             --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px;
             --shadow-xs: 0 2px 6px rgba(10, 28, 18, 0.04);
             --shadow-sm: 0 4px 14px rgba(10, 28, 18, 0.06);
             --shadow-md: 0 8px 24px rgba(10, 28, 18, 0.1);
             --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-
-            /* Admin Light/Dark Mode Variables */
-            --adm-sidebar-bg: #071910;
-            --adm-sidebar-hover: #0F2D1F;
-            --adm-sidebar-active: #143622;
-            --adm-bg: #F4F7F5;
-            --adm-card-bg: #FFFFFF;
-            --adm-text: #1C2D24;
-            --adm-subtext: #6A7E74;
-            --adm-border: #E5EFEA;
         }
 
-        /* Dark Mode Theme Classes for Admin */
+        /* Dark Theme Override for Admin Dashboard */
         .admin-page.dark-theme {
-            --adm-sidebar-bg: #040D0B;
-            --adm-sidebar-hover: #0B1E17;
-            --adm-sidebar-active: #113324;
-            --adm-bg: #0B1410;
-            --adm-card-bg: #12211B;
-            --adm-text: #EAF2EC;
-            --adm-subtext: #8FA89B;
-            --adm-border: #1E332A;
+            --adm-sidebar-bg: #040D0B; --adm-sidebar-hover: #0B1E17; --adm-sidebar-active: #113324;
+            --adm-bg: #0B1410; --adm-card-bg: #12211B; --adm-text: #EAF2EC; --adm-subtext: #8FA89B; --adm-border: #1E332A;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -61,7 +49,7 @@
         button { cursor: pointer; }
         .container { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
 
-        /* App Splash Loader */
+        /* Loader */
         #app-loader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--brand-dark); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; transition: opacity 0.4s ease; }
         .loader-spin { width: 44px; height: 44px; border: 4px solid rgba(200, 161, 53, 0.2); border-top-color: var(--brand-gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 16px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -103,37 +91,36 @@
         .btn-hero-cta { display: inline-block; background: var(--brand-gold); color: var(--brand-dark); padding: 10px 26px; border-radius: var(--radius-md); font-weight: 800; transition: var(--transition); }
         .btn-hero-cta:hover { background: white; transform: translateY(-2px); }
 
-        /* Modern Single Row Features Slider with Animated Vector Icons */
+        /* Single Row Features Slider with Animated Vector Icons */
         .features-strip-wrapper { margin-bottom: 30px; }
         .features-slider-track {
             display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
             padding: 4px 2px 12px 2px; scrollbar-width: none;
         }
         .features-slider-track::-webkit-scrollbar { display: none; }
-        
         .feature-card-item {
-            flex: 0 0 260px; scroll-snap-align: start;
-            display: flex; align-items: center; gap: 14px;
+            flex: 0 0 160px; scroll-snap-align: start;
+            display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center;
             background: var(--bg-surface); border-radius: var(--radius-lg);
-            padding: 16px 18px; border: 1px solid var(--border-color);
+            padding: 16px 12px; border: 1px solid var(--border-color);
             box-shadow: var(--shadow-xs); transition: var(--transition);
         }
         .feature-card-item:hover { transform: translateY(-4px); border-color: var(--brand-gold); box-shadow: var(--shadow-sm); }
         .feature-icon-box {
-            width: 48px; height: 48px; background: var(--brand-gold-light);
+            width: 50px; height: 50px; background: var(--brand-gold-light);
             border: 1px solid rgba(200, 161, 53, 0.4); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            color: var(--brand-green); flex-shrink: 0; transition: var(--transition);
+            color: var(--brand-green); margin-bottom: 10px; transition: var(--transition);
         }
         .feature-card-item:hover .feature-icon-box { transform: scale(1.1) rotate(-5deg); background: var(--brand-gold); color: var(--brand-dark); }
-        .feature-card-title { font-weight: 800; font-size: 0.92rem; color: var(--brand-dark); line-height: 1.2; }
-        .feature-card-desc { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; }
+        .feature-card-title { font-weight: 800; font-size: 0.88rem; color: var(--brand-dark); line-height: 1.2; }
+        .feature-card-desc { font-size: 0.72rem; color: var(--text-secondary); font-weight: 600; margin-top: 4px; }
 
         /* Single Row Categories Slider */
         .categories-showcase-section { margin-bottom: 36px; }
         .section-header-title { font-size: 1.3rem; font-weight: 900; color: var(--brand-dark); display: flex; align-items: center; gap: 10px; }
         .section-header-title::before { content: ''; width: 5px; height: 22px; background: var(--brand-gold); border-radius: 999px; }
-        .slider-control-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--brand-dark); font-weight: 800; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .slider-control-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--brand-dark); font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
         .slider-control-btn:hover { background: var(--brand-green); color: white; border-color: var(--brand-green); }
         .categories-cards-slider { display: flex; gap: 14px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 10px 2px 14px 2px; scrollbar-width: none; }
         .categories-cards-slider::-webkit-scrollbar { display: none; }
@@ -142,16 +129,12 @@
         .category-visual-img { width: 70px; height: 70px; object-fit: cover; border-radius: 50%; margin: 0 auto 8px auto; border: 2px solid var(--brand-gold); }
         .category-visual-name { font-size: 0.88rem; font-weight: 800; color: var(--brand-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Catalog Layout */
+        /* Catalog Layout with Quick Search Only */
         .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 28px; margin-bottom: 60px; }
         .sidebar-filter { background: var(--bg-surface); border-radius: var(--radius-lg); padding: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); height: fit-content; }
-        .filter-group { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
-        .filter-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .filter-group { margin-bottom: 0; padding-bottom: 0; border: none; }
         .filter-title { font-size: 0.95rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 12px; }
-        .search-input-wrap input { width: 100%; padding: 10px 14px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; }
-        .category-nav-list { display: flex; flex-direction: column; gap: 6px; }
-        .category-nav-btn { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: transparent; border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.88rem; font-weight: 700; width: 100%; text-align: right; }
-        .category-nav-btn.active { background: var(--brand-green); color: white; }
+        .search-input-wrap input { width: 100%; padding: 11px 14px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 700; }
 
         .products-grid-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--bg-surface); padding: 12px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
         .sort-select-modern { padding: 8px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-body); color: var(--brand-dark); font-weight: 800; font-size: 0.88rem; cursor: pointer; }
@@ -173,13 +156,13 @@
         .qty-control-box { display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 8px; }
         .qty-btn { width: 36px; height: 36px; background: var(--bg-body); font-weight: 800; font-size: 1.1rem; }
         .qty-num-input { width: 100%; text-align: center; background: transparent; font-weight: 800; font-size: 0.9rem; }
-        .btn-cart-add { width: 100%; padding: 11px; background: var(--brand-green); color: white; border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-cart-add { width: 100%; padding: 11px; background: var(--brand-green); color: white; border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition); }
 
         .pagination-container { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 35px; margin-bottom: 20px; }
         .page-btn { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 800; font-size: 0.9rem; color: var(--brand-dark); }
         .page-btn.active { background: var(--brand-green); color: white; border-color: var(--brand-green); }
 
-        /* Dedicated Product Page */
+        /* Product Detail Page */
         #productDetailPage { display: none; padding: 24px 0 60px 0; }
         .breadcrumb-bar { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 20px; }
         .p-detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; background: var(--bg-surface); border-radius: var(--radius-xl); padding: 28px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 40px; }
@@ -194,17 +177,14 @@
         .doc-simple-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: #F8F5EE; border: 1px solid var(--border-color); border-radius: var(--radius-md); margin-bottom: 12px; }
         .btn-doc-download-sm { padding: 6px 16px; background: var(--brand-gold); color: var(--brand-dark); border-radius: var(--radius-sm); font-weight: 800; font-size: 0.8rem; }
 
-        /* Floating Animated WhatsApp Button with Pulsing Waves */
+        /* Floating Animated WhatsApp Button */
         .floating-whatsapp-btn {
             position: fixed; bottom: 24px; left: 24px; width: 58px; height: 58px;
             background: var(--brand-green); border: 2px solid var(--brand-gold);
             color: var(--brand-gold); border-radius: 50%; display: flex; align-items: center;
             justify-content: center; box-shadow: 0 8px 24px rgba(10, 28, 18, 0.35);
-            z-index: 4000; transition: var(--transition);
-            animation: whatsappPulseWave 2s infinite;
+            z-index: 4000; animation: whatsappPulseWave 2s infinite;
         }
-        .floating-whatsapp-btn:hover { transform: scale(1.12); background: var(--brand-dark); color: white; }
-
         @keyframes whatsappPulseWave {
             0% { box-shadow: 0 0 0 0 rgba(200, 161, 53, 0.6); }
             70% { box-shadow: 0 0 0 18px rgba(200, 161, 53, 0); }
@@ -220,7 +200,7 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); backdrop-filter: blur(6px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 16px; }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
-        .modal-dialog { background: white; width: 100%; max-width: 580px; border-radius: var(--radius-lg); padding: 26px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto; }
+        .modal-dialog { background: white; width: 100%; max-width: 580px; border-radius: var(--radius-lg); padding: 26px; max-height: 90vh; overflow-y: auto; }
 
         .form-group { margin-bottom: 14px; }
         .form-group label { display: block; font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; color: var(--brand-dark); }
@@ -230,16 +210,20 @@
         .btn-switch-opt.active { background: var(--brand-green); color: white; }
         .btn-submit-action { width: 100%; padding: 12px; background: var(--brand-green); color: white; font-weight: 800; border-radius: var(--radius-md); font-size: 0.95rem; text-align: center; }
 
-        .footer { background: var(--brand-dark); color: #C0D1C7; padding: 60px 0 30px 0; border-top: 4px solid var(--brand-gold); }
-        .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.6fr; gap: 35px; margin-bottom: 40px; }
+        /* Footer & Social Media Icons */
+        .footer { background: var(--brand-dark); color: #C0D1C7; padding: 50px 0 30px 0; border-top: 4px solid var(--brand-gold); }
+        .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.6fr; gap: 30px; margin-bottom: 35px; }
         .footer-logo-large { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-        .footer-logo-large img { width: 70px; height: 70px; object-fit: contain; border-radius: 50%; border: 2px solid var(--brand-gold); }
-        .footer-map-frame { width: 100%; height: 140px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15); overflow: hidden; margin-top: 10px; }
-        .social-icons-group { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-        .social-brand-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; color: var(--brand-gold); border: 1px solid rgba(255, 255, 255, 0.12); }
-        .footer-bottom-row { padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+        .footer-logo-large img { width: 64px; height: 64px; object-fit: contain; border-radius: 50%; border: 2px solid var(--brand-gold); }
+        .footer-map-frame { width: 100%; height: 130px; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.15); overflow: hidden; margin-top: 10px; }
+        
+        .social-icons-group { display: flex; flex-direction: row; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: nowrap; }
+        .social-brand-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: center; color: var(--brand-gold); border: 1px solid rgba(255, 255, 255, 0.15); font-weight: 800; font-size: 0.8rem; transition: var(--transition); }
+        .social-brand-btn:hover { background: var(--brand-gold); color: var(--brand-dark); }
+        
+        .footer-bottom-row { padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 700; }
 
-        /* Modern Admin Dashboard */
+        /* Admin Dashboard Layout */
         .admin-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--adm-bg); color: var(--adm-text); z-index: 5000; display: none; overflow: hidden; }
         .admin-page.active { display: flex; }
 
@@ -256,11 +240,10 @@
         .adm-nav-item.active { background: var(--adm-sidebar-active); color: white; border-right: 4px solid var(--brand-gold); }
         .adm-nav-link-inner { display: flex; align-items: center; gap: 12px; }
 
-        /* Modern Card-Style Accordion Submenu */
         .adm-submenu { display: none; flex-direction: column; gap: 4px; padding: 6px 14px 6px 10px; margin: 4px 10px 6px 10px; background: rgba(255,255,255,0.04); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.06); }
         .adm-submenu.open { display: flex; }
-        .adm-sub-item { padding: 7px 12px; font-size: 0.82rem; color: #9EBAAE; font-weight: 700; border-radius: 6px; cursor: pointer; transition: var(--transition); }
-        .adm-sub-item:hover, .adm-sub-item.active { color: white; background: var(--adm-sidebar-hover); }
+        .adm-sub-item { padding: 7px 12px; font-size: 0.82rem; color: #9EBAAE; font-weight: 700; border-radius: 6px; cursor: pointer; }
+        .adm-sub-item:hover { color: white; background: var(--adm-sidebar-hover); }
 
         .adm-sidebar-bottom { padding: 20px; border-top: 1px solid rgba(255,255,255,0.08); }
         .adm-btn-logout { width: 100%; padding: 11px; background: rgba(217, 56, 58, 0.15); color: #FF7B7B; border: 1px solid rgba(217, 56, 58, 0.3); border-radius: var(--radius-md); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -275,13 +258,7 @@
         .adm-icon-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--adm-bg); display: flex; align-items: center; justify-content: center; color: var(--adm-text); position: relative; border: 1px solid var(--adm-border); cursor: pointer; }
         .adm-icon-badge { position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; background: var(--danger); color: white; border-radius: 50%; font-size: 0.65rem; font-weight: 900; display: flex; align-items: center; justify-content: center; }
 
-        /* Notifications Popup Dropdown */
-        .notif-popup-card {
-            position: absolute; top: 52px; right: 0; width: 320px;
-            background: var(--adm-card-bg); border: 1px solid var(--adm-border);
-            border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
-            padding: 16px; z-index: 500; display: none; flex-direction: column; gap: 10px;
-        }
+        .notif-popup-card { position: absolute; top: 52px; right: 0; width: 320px; background: var(--adm-card-bg); border: 1px solid var(--adm-border); border-radius: var(--radius-lg); box-shadow: 0 8px 24px rgba(0,0,0,0.1); padding: 16px; z-index: 500; display: none; flex-direction: column; gap: 10px; }
         .notif-popup-card.open { display: flex; }
         .notif-item { padding: 8px 10px; background: var(--adm-bg); border-radius: var(--radius-md); font-size: 0.82rem; font-weight: 700; color: var(--adm-text); }
 
@@ -290,14 +267,8 @@
 
         .adm-content-container { padding: 24px 28px; display: flex; flex-direction: column; gap: 24px; }
         
-        /* Modern Vibrant Gradient KPI Metric Cards */
         .adm-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-        .adm-kpi-card {
-            border-radius: var(--radius-lg); padding: 20px; color: white;
-            box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between;
-            transition: var(--transition);
-        }
-        .adm-kpi-card:hover { transform: translateY(-3px); }
+        .adm-kpi-card { border-radius: var(--radius-lg); padding: 20px; color: white; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; transition: var(--transition); }
         .kpi-grad-1 { background: linear-gradient(135deg, #052E16 0%, #15803D 100%); border-right: 4px solid #4ADE80; }
         .kpi-grad-2 { background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%); border-right: 4px solid #818CF8; }
         .kpi-grad-3 { background: linear-gradient(135deg, #78350F 0%, #D97706 100%); border-right: 4px solid #FBBF24; }
@@ -353,7 +324,10 @@
             .p-detail-layout { grid-template-columns: 1fr; gap: 20px; }
             .catalog-layout { grid-template-columns: 1fr; }
             .nav-menu { display: none; }
+            .features-slider-track { justify-content: flex-start; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
+        @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -421,7 +395,7 @@
         </div>
     </header>
 
-    <!-- Main Front View -->
+    <!-- Main Front Store View -->
     <div id="mainHomeView">
         <div class="container">
             <section class="hero-banner" id="heroBannerWrapper">
@@ -435,7 +409,7 @@
             </section>
         </div>
 
-        <!-- Single Row Features Slider with SVG Vector Icons & Animation -->
+        <!-- Features Slider -->
         <div class="container features-strip-wrapper">
             <div class="features-slider-track">
                 <div class="feature-card-item">
@@ -480,7 +454,7 @@
             </div>
         </div>
 
-        <!-- Single Row Categories Slider -->
+        <!-- Categories Slider -->
         <section class="container categories-showcase-section" id="categoriesSection">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                 <h3 class="section-header-title">تصفح المنتجات حسب الفئة</h3>
@@ -492,7 +466,7 @@
             <div class="categories-cards-slider" id="visualCategoriesSlider"></div>
         </section>
 
-        <!-- Main Catalog with Search Input -->
+        <!-- Catalog -->
         <main class="container" id="catalog">
             <div class="catalog-layout">
                 <aside class="sidebar-filter">
@@ -501,10 +475,6 @@
                         <div class="search-input-wrap">
                             <input type="text" id="searchInput" oninput="handleSearchInput(this.value)" placeholder="ابحث عن اسم منتج...">
                         </div>
-                    </div>
-                    <div class="filter-group">
-                        <div class="filter-title">التصنيفات</div>
-                        <div class="category-nav-list" id="categoryNavList"></div>
                     </div>
                 </aside>
 
@@ -542,7 +512,6 @@
 
                 <p class="p-detail-desc" id="pdpDesc">-</p>
 
-                <!-- Simplified Document Bars -->
                 <div id="pdpTechSheetCard" class="doc-simple-bar" style="display:none;">
                     <div class="doc-simple-title">📄 <span>البطاقة الفنية</span></div>
                     <a id="pdpTechSheetBtn" href="#" target="_blank" class="btn-doc-download-sm">تحميل</a>
@@ -567,7 +536,7 @@
         </div>
     </div>
 
-    <!-- Animated Wave WhatsApp Button -->
+    <!-- Animated WhatsApp Button -->
     <a href="https://wa.me/213550000000" id="floatingWhatsappBtn" target="_blank" class="floating-whatsapp-btn" title="تواصل معنا عبر الواتساب">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
@@ -704,7 +673,7 @@
         </div>
     </footer>
 
-    <!-- Modern Admin Dashboard Matching Image Mockup -->
+    <!-- Modern Admin Dashboard -->
     <div class="admin-page" id="adminPage">
         <aside class="adm-sidebar">
             <div class="adm-sidebar-top">
@@ -715,7 +684,6 @@
                 <div class="adm-nav-list">
                     <div class="adm-nav-item active" onclick="switchAdminTab('dashboard')"><div class="adm-nav-link-inner"><span class="adm-nav-icon">🏠</span> <span>الرئيسية</span></div></div>
                     
-                    <!-- Modern Card-Style Dropdown Accordion Menu -->
                     <div class="adm-nav-item" onclick="toggleSubmenu('products')"><div class="adm-nav-link-inner"><span class="adm-nav-icon">📦</span> <span>المنتجات</span></div><span style="font-size:0.75rem;">▾</span></div>
                     <div class="adm-submenu" id="submenu-products">
                         <div class="adm-sub-item" onclick="switchAdminTab('products-add')">• إضافة منتج</div>
@@ -738,7 +706,6 @@
         </aside>
 
         <main class="adm-main-body">
-            <!-- Topbar with Active Dark Mode & Notifications Bell -->
             <header class="adm-topbar">
                 <div class="adm-topbar-right">
                     <div class="adm-profile-pill">
@@ -746,21 +713,19 @@
                         <div class="adm-user-info"><div class="adm-user-name">المدير ▾</div></div>
                     </div>
 
-                    <!-- Active Notifications Bell with Insights Pop-up -->
                     <div style="position:relative;">
                         <div class="adm-icon-btn" onclick="toggleNotifPopup()" title="تنبيهات النظام">
                             🔔<span class="adm-icon-badge" id="notifBadgeCnt">3</span>
                         </div>
                         <div class="notif-popup-card" id="notifPopupCard">
                             <div style="font-weight:800; border-bottom:1px solid var(--adm-border); padding-bottom:6px;">📊 تحليلات ورؤى حية</div>
-                            <div class="notif-item" id="notifTopProduct">🔥 الأكثر زيارة: -</div>
-                            <div class="notif-item" id="notifMostOrdered">🛍️ الأكثر طلباً: -</div>
+                            <div class="notif-item" id="notifTopProduct">🔥 الأكثر طلباً: -</div>
+                            <div class="notif-item" id="notifMostOrdered">⭐ الأعلى تقييماً: -</div>
                             <div class="notif-item" id="notifLeastOrdered">⚡ الأقل طلباً: -</div>
                         </div>
                     </div>
 
-                    <!-- Active Dark Mode Toggle Button -->
-                    <div class="adm-icon-btn" onclick="toggleAdminDarkMode()" id="btnDarkModeToggle" title="تبديل الوضع الليلي/النهاري">
+                    <div class="adm-icon-btn" onclick="toggleAdminDarkMode()" id="btnDarkModeToggle" title="الوضع الليلي">
                         🌙
                     </div>
                 </div>
@@ -770,13 +735,12 @@
             </header>
 
             <div class="adm-content-container">
-                <!-- Dashboard Overview Panel -->
+                <!-- Dashboard Overview Pane -->
                 <div id="admTab-dashboard" class="adm-tab-pane">
                     <div class="adm-page-heading" style="margin-bottom:20px;">
                         <div class="adm-page-title"><h2>لوحة التحكم 🏠</h2><p>مرحباً بك، المدير</p></div>
                     </div>
 
-                    <!-- Vibrant Gradient Modern KPI Metric Cards -->
                     <div class="adm-kpi-grid">
                         <div class="adm-kpi-card kpi-grad-1">
                             <div>
@@ -1042,10 +1006,9 @@
         </main>
     </div>
 
-    <!-- Toast Notification -->
     <div class="toast" id="toast"><span id="toastTxt">تمت العملية بنجاح</span></div>
 
-    <!-- Application JavaScript Code -->
+    <!-- JavaScript Application Core -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyAFNictu-KWi_XcVvNmnzbbF68V0LPGT6E",
@@ -1162,7 +1125,6 @@
             trackRealVisitorHit();
         }
 
-        /* Real Visitor Tracker */
         function trackRealVisitorHit() {
             if (!db) return;
             const now = new Date();
@@ -1198,28 +1160,23 @@
             });
         }
 
-        /* Admin Dark Mode Toggle */
         function toggleAdminDarkMode() {
             const adminEl = document.getElementById("adminPage");
             adminEl.classList.toggle("dark-theme");
-            const btn = document.getElementById("btnDarkModeToggle");
-            btn.innerText = adminEl.classList.contains("dark-theme") ? "☀️" : "🌙";
+            document.getElementById("btnDarkModeToggle").innerText = adminEl.classList.contains("dark-theme") ? "☀️" : "🌙";
         }
 
-        /* Notifications Popup Toggle & Insights Calculator */
         function toggleNotifPopup() {
-            const pop = document.getElementById("notifPopupCard");
-            pop.classList.toggle("open");
+            document.getElementById("notifPopupCard").classList.toggle("open");
         }
 
         function updateInsightsNotifications() {
             if (products.length === 0) return;
             const topProd = products[0];
             const leastProd = products[products.length - 1];
-
             document.getElementById("notifTopProduct").innerText = `🔥 الأكثر طلباً: ${topProd ? topProd.name : '-'}`;
             document.getElementById("notifMostOrdered").innerText = `⭐ الأعلى تقييماً: ${products[1] ? products[1].name : topProd.name}`;
-            document.getElementById("notifLeastOrdered").innerText = `⚡ بحاجة لترويج: ${leastProd ? leastProd.name : '-'}`;
+            document.getElementById("notifLeastOrdered").innerText = `⚡ الأقل طلباً: ${leastProd ? leastProd.name : '-'}`;
         }
 
         function isAdminActive() { return document.getElementById("adminPage").classList.contains("active"); }
@@ -1654,7 +1611,6 @@
             printWin.document.close();
         }
 
-        /* Real Calculated Metrics for Admin KPIs */
         function renderAdminRealStatsAndCharts() {
             document.getElementById("kpiVisits").innerText = (visitStats.today || 24850).toLocaleString();
             document.getElementById("kpiProducts").innerText = products.length;
